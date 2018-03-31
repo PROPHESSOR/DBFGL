@@ -31,10 +31,10 @@ export default class ToolbarSingleplayer extends React.Component {
                  </DropDownMenu>
              </ToolbarGroup>
              <ToolbarGroup>
-                 <ToolbarTitle text = 'Options' />
                  <FontIcon className = 'muidocs-icon-custom-sort' />
-                 <ToolbarSeparator />
+                 {/* <ToolbarSeparator /> */}
                  <RaisedButton primary label = 'Create Broadcast' />
+                 <ToolbarTitle text = 'Options' />
                  <IconMenu
                      iconButtonElement = {
                          <IconButton touch >

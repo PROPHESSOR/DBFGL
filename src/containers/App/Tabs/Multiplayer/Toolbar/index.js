@@ -32,7 +32,7 @@ export default class ToolbarMultiplayer extends React.Component {
              </ToolbarGroup>
              <ToolbarGroup>
                  <FontIcon className = 'muidocs-icon-custom-sort' />
-                 <ToolbarSeparator />
+                 {/* <ToolbarSeparator /> */}
                  <RaisedButton primary label = 'Создать сервер' />
                  <ToolbarTitle text = 'Отображение: ' />
                  <IconMenu
