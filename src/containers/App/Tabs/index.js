@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
-// import Slider from 'material-ui/Slider';
+import Singleplayer from './Singleplayer';
+import Multiplayer from './Multiplayer';
 
 const styles = {
     headline: {
@@ -15,22 +16,12 @@ const TabsExampleSimple = () => (
     <Tabs>
         <Tab label = 'Одиночная игра' >
             <div>
-                <h2 style = { styles.headline }>Одиночная игра</h2>
-                <p>
-                    This is an example tab.
-                </p>
-                <p>
-                    You can put any sort of HTML or react component in here. It even keeps the component state!
-                </p>
-                {/* <Slider name = 'slider0' defaultValue = { 0.5 } /> */}
+                <Singleplayer />
             </div>
         </Tab>
         <Tab label = 'Мультиплеер' >
             <div>
-                <h2 style = { styles.headline }>Мультиплеер</h2>
-                <p>
-                    This is another example tab.
-                </p>
+                <Multiplayer />
             </div>
         </Tab>
         {/* <Tab

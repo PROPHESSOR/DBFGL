@@ -5,6 +5,7 @@ import Provider from 'material-ui/styles/MuiThemeProvider';
 import Bar from './Bar';
 import Tabs from './Tabs';
 import Panel from './Panel';
+import StartButton from './StartButton';
 
 export default class App extends Component {
     state = {
@@ -32,7 +33,7 @@ export default class App extends Component {
                 <Panel open = { panel } togglePanel = { this.togglePanel } />
                 <Bar togglePanel = { this.togglePanel } />
                 <Tabs />
-                <div>It works</div>
+                <StartButton />
             </Provider>
         );
     }
