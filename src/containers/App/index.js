@@ -7,6 +7,9 @@ import Tabs from './Tabs';
 import Panel from './Panel';
 import StartButton from './StartButton';
 
+import theme from './theme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 export default class App extends Component {
     state = {
         panel: false
@@ -29,7 +32,7 @@ export default class App extends Component {
 
 
         return (
-            <Provider>
+            <Provider muiTheme = { getMuiTheme(theme) }>
                 <Panel open = { panel } togglePanel = { this.togglePanel } />
                 <Bar togglePanel = { this.togglePanel } />
                 <Tabs />
