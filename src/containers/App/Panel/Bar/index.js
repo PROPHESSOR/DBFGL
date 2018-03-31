@@ -3,20 +3,25 @@ import type from 'prop-types';
 
 // Components
 import { AppBar } from 'material-ui';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 export default class Bar extends Component {
     static propTypes = {
         togglePanel: type.func.isRequired
     }
 
-    render () {
-        const { togglePanel } = this.props;
+    close = () => {
+        this.props.togglePanel(false);
+    }
 
+    render () {
         return (
             <AppBar
                 iconClassNameRight = 'muidocs-icon-navigation-expand-more'
-                title = 'DooM BFG Launcher'
-                onLeftIconButtonClick = { togglePanel }
+                iconElementLeft = { <IconButton><NavigationClose /></IconButton> }
+                title = ''
+                onLeftIconButtonClick = { this.close }
             />
         );
     }
