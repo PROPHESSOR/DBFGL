@@ -11,6 +11,8 @@ import theme from './theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
+import Styles from './styles.scss';
+
 export default class App extends Component {
     state = {
         panel: false
@@ -34,11 +36,12 @@ export default class App extends Component {
 
         return (
             <Provider muiTheme = { getMuiTheme(theme) }>
+                <div className = { Styles.app } style = { { background: theme.palette.canvasColor } }>
                     <Panel open = { panel } togglePanel = { this.togglePanel } />
                     <Bar togglePanel = { this.togglePanel } />
                     <Tabs />
                     <StartButton />
-					<div styles={{backgroundColor: '#fff'}}>Hello</div>
+                </div>
             </Provider>
         );
     }
