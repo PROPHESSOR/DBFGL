@@ -6,6 +6,10 @@
   "homepage": "http://github.com/PROPHESSOR/DBFGL",
   "private": true,
   "main": "http://localhost:3000",
+  "window": {
+	  "width": 1024,
+	  "height": 768
+  },
   "dependencies": {
     "autoprefixer": "7.1.2",
     "babel-core": "6.25.0",

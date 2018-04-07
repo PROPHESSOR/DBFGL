@@ -9,6 +9,7 @@ import StartButton from './StartButton';
 
 import theme from './theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 export default class App extends Component {
     state = {
@@ -33,10 +34,11 @@ export default class App extends Component {
 
         return (
             <Provider muiTheme = { getMuiTheme(theme) }>
-                <Panel open = { panel } togglePanel = { this.togglePanel } />
-                <Bar togglePanel = { this.togglePanel } />
-                <Tabs />
-                <StartButton />
+                    <Panel open = { panel } togglePanel = { this.togglePanel } />
+                    <Bar togglePanel = { this.togglePanel } />
+                    <Tabs />
+                    <StartButton />
+					<div styles={{backgroundColor: '#fff'}}>Hello</div>
             </Provider>
         );
     }

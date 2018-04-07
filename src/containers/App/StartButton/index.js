@@ -5,13 +5,13 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Styles from './styles.scss';
 
 const StartButton = () => (
-    <div>
+    // <div>
         <FloatingActionButton
             className = { Styles.startbutton }>
             <span>&#9658;</span>
             {/* <ContentAdd /> */}
         </FloatingActionButton>
-    </div>
+    // </div>
 );
 
 export default StartButton;
