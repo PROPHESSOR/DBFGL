@@ -23,8 +23,9 @@ export default class Panel extends React.Component {
                 <Bar
                     togglePanel = { togglePanel }
                 />
-                <MenuItem>Menu Item</MenuItem>
-                <MenuItem>Menu Item 2</MenuItem>
+                <MenuItem>Oblige</MenuItem>
+                <MenuItem>Настройки</MenuItem>
+                <MenuItem>О программе</MenuItem>
             </Drawer>
         );
     }
