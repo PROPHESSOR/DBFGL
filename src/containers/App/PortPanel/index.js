@@ -1,7 +1,7 @@
 import React from 'react';
 import type from 'prop-types';
 
-import Bar from './Bar';
+// import Bar from './Bar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -17,12 +17,13 @@ export default class Panel extends React.Component {
 
         return (
             <Drawer
+                openSecondary
                 docked = { false }
                 open = { open }
                 onRequestChange = { (mode) => togglePanel(mode) }>
-                <Bar
+                {/* <Bar0
                     togglePanel = { togglePanel }
-                />
+                /> */}
                 <MenuItem>Menu Item</MenuItem>
                 <MenuItem>Menu Item 2</MenuItem>
             </Drawer>
