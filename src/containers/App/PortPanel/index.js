@@ -4,6 +4,7 @@ import type from 'prop-types';
 // import Bar from './Bar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import AppBar from 'material-ui/AppBar';
 
 export default class Panel extends React.Component {
     static propTypes = {
@@ -21,11 +22,17 @@ export default class Panel extends React.Component {
                 docked = { false }
                 open = { open }
                 onRequestChange = { (mode) => togglePanel(mode) }>
-                {/* <Bar0
-                    togglePanel = { togglePanel }
-                /> */}
-                <MenuItem>Menu Item</MenuItem>
-                <MenuItem>Menu Item 2</MenuItem>
+                <AppBar
+                    title = 'Выбор порта'
+                />
+                <MenuItem>GZDoom</MenuItem>
+                <MenuItem>Zandronum</MenuItem>
+                <MenuItem>QZDoom</MenuItem>
+                <MenuItem>PrBoomPlus</MenuItem>
+                <MenuItem>Retro Doom</MenuItem>
+                <MenuItem>Chocolate Doom</MenuItem>
+                <MenuItem>Doom</MenuItem>
+                <MenuItem>Doom 2</MenuItem>
             </Drawer>
         );
     }

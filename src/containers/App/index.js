@@ -10,7 +10,6 @@ import StartButton from './StartButton';
 
 import theme from './theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 import Styles from './styles.scss';
 
@@ -24,11 +23,7 @@ export default class App extends Component {
      * @param  {bool} mode - true - показать; false - скрыть
      * @returns {void}
      */
-    togglePanel = (mode) => {
-        if (typeof mode !== 'boolean') {
-            mode = !this.state.panel;
-        }
-        // console.log(`togglePanel(${mode})`);
+    togglePanel = (mode = !this.state.panel) => {
         this.setState({ panel: Boolean(mode) });
     }
 
@@ -36,11 +31,7 @@ export default class App extends Component {
      * @param  {bool} mode - true - показать; false - скрыть
      * @returns {void}
      */
-    toggleRPanel = (mode) => {
-        if (typeof mode !== 'boolean') {
-            mode = !this.state.rpanel;
-        }
-        // console.log(`togglePanel(${mode})`);
+    toggleRPanel = (mode = !this.state.rpanel) => {
         this.setState({ rpanel: Boolean(mode) });
     }
 
@@ -55,7 +46,7 @@ export default class App extends Component {
                     <PortPanel open = { rpanel } togglePanel = { this.toggleRPanel } />
                     <Bar togglePanel = { this.togglePanel } />
                     <Tabs />
-                    <StartButton />
+                    <StartButton onClick = { this.toggleRPanel } />
                 </div>
             </Provider>
         );

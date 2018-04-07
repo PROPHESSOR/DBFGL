@@ -1,41 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
+import SwipeableViews from 'react-swipeable-views';
+
 import { Tabs, Tab } from 'material-ui/Tabs';
+
 import Singleplayer from './Singleplayer';
 import Multiplayer from './Multiplayer';
 
-const styles = {
-    headline: {
-        fontSize:     24,
-        paddingTop:   16,
-        marginBottom: 12,
-        fontWeight:   400
+export default class TabsExampleSimple extends Component {
+    state = {
+        slideIndex: 0
     }
-};
 
-const TabsExampleSimple = () => (
-    <Tabs>
-        <Tab label = 'Одиночная игра' >
-            <div>
-                <Singleplayer />
-            </div>
-        </Tab>
-        <Tab label = 'Мультиплеер' >
-            <div>
-                <Multiplayer />
-            </div>
-        </Tab>
-        {/* <Tab
-            data-route = '/home'
-            label = 'onActive'
-            onActive = { handleActive }>
-            <div>
-                <h2 style = { styles.headline }>Tab Three</h2>
-                <p>
-          This is a third example tab.
-                </p>
-            </div>
-        </Tab> */}
-    </Tabs>
-);
+    handleChange = (value) => {
+        this.setState({
+            slideIndex: value
+        });
+    };
 
-export default TabsExampleSimple;
+    render () {
+        return (<div>
+            <Tabs
+                value = { this.state.slideIndex }
+                onChange = { this.handleChange }>
+                <Tab label = 'Одиночная игра' value = { 0 } />
+                <Tab label = 'Мультиплеер' value = { 1 } />
+            </Tabs>
+            <SwipeableViews
+                index = { this.state.slideIndex }
+                onChangeIndex = { this.handleChange }>
+                <div>
+                    <Singleplayer />
+                </div>
+                <div>
+                    <Multiplayer />
+                </div>
+            </SwipeableViews>
+        </div>
+        );
+    }
+}
