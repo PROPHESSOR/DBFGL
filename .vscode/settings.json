@@ -1,4 +1,5 @@
 {
 	"editor.detectIndentation": false,
-	"easysass.compileAfterSave": false
+	"easysass.compileAfterSave": false,
+	"editor.insertSpaces": true
 }

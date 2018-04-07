@@ -23,6 +23,7 @@ export default class Panel extends React.Component {
                 open = { open }
                 onRequestChange = { (mode) => togglePanel(mode) }>
                 <AppBar
+                    showMenuIconButton = { false }
                     title = 'Выбор порта'
                 />
                 <MenuItem>GZDoom</MenuItem>
