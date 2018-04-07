@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import type from 'prop-types';
 
 import Toolbar from './Toolbar';
+import WadController from './WadController';
 
 export default class Singleplayer extends Component {
     static propTypes = {}
 
     state = {
-        showDrop: 0,
+        showDrop: 1,
         sortDrop: 0
     };
 
@@ -16,12 +17,15 @@ export default class Singleplayer extends Component {
 
     render () {
         return (
-            <Toolbar
-                showDrop = { this.state.showDrop }
-                sortDrop = { this.state.sortDrop }
-                onChangeShow = { this.onChangeShow }
-                onChangeSort = { this.onChangeSort }
-            />
+            <Fragment>
+                <Toolbar
+                    showDrop = { this.state.showDrop }
+                    sortDrop = { this.state.sortDrop }
+                    onChangeShow = { this.onChangeShow }
+                    onChangeSort = { this.onChangeSort }
+                />
+                <WadController />
+            </Fragment>
         );
     }
 }

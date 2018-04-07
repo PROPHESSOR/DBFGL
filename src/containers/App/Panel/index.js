@@ -20,9 +20,7 @@ export default class Panel extends React.Component {
                 docked = { false }
                 open = { open }
                 onRequestChange = { (mode) => togglePanel(mode) }>
-                <Bar
-                    togglePanel = { togglePanel }
-                />
+                <Bar />
                 <MenuItem>Oblige</MenuItem>
                 <MenuItem>Настройки</MenuItem>
                 <MenuItem>О программе</MenuItem>
