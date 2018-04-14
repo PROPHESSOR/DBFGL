@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import type from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
@@ -7,6 +8,10 @@ import Singleplayer from './Singleplayer';
 import Multiplayer from './Multiplayer';
 
 export default class TabsExampleSimple extends Component {
+    static propTypes = {
+        toggleTab: type.func.isRequired
+    }
+
     state = {
         slideIndex: 0
     }
@@ -15,6 +20,8 @@ export default class TabsExampleSimple extends Component {
         this.setState({
             slideIndex: value
         });
+
+        return this.props.toggleTab(value ? 'multiplayer' : 'singleplayer');
     };
 
     render () {

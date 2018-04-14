@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2018 PROPHESSOR
+ * 
+ * В данном файле находится управление основными состояниями программы
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
 import React, { Component } from 'react';
 
 // Components
@@ -16,7 +25,8 @@ import Styles from './styles.scss';
 export default class App extends Component {
     state = {
         panel:  false,
-        rpanel: false
+        rpanel: false,
+        tab:    'singleplayer'
     }
 
     /** Переключает панель
@@ -35,6 +45,21 @@ export default class App extends Component {
         this.setState({ rpanel: Boolean(mode) });
     }
 
+    /** Переключает табы
+     * @param  {string} tab - singleplayer/multiplayer
+     * @returns {void}
+     */
+    toggleTab = (tab) => {
+        console.log(`Toggle tab: ${tab}`);
+        if (tab === 'singleplayer' || tab === 'multiplayer') {
+            this.setState({
+                tab
+            });
+        } else {
+            throw new TypeError('Нет такого таба!');
+        }
+    }
+
     render () {
         const { panel, rpanel } = this.state;
 
@@ -45,7 +70,7 @@ export default class App extends Component {
                     <Panel open = { panel } togglePanel = { this.togglePanel } />
                     <PortPanel open = { rpanel } togglePanel = { this.toggleRPanel } />
                     <Bar togglePanel = { this.togglePanel } />
-                    <Tabs />
+                    <Tabs toggleTab = { this.toggleTab } />
                     <StartButton onClick = { this.toggleRPanel } />
                 </div>
             </Provider>
