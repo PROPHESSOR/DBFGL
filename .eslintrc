@@ -17,6 +17,9 @@ env:
   jest: true
   es6: true
 
+globals:
+    global: false
+
 rules:
   no-cond-assign: 1
   no-console: 0
