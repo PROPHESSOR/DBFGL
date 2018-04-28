@@ -1,0 +1,22 @@
+{
+    "gzdoom": {
+        "full": "{iwad} {wads} {host} {join} {port} {flags} {other}",
+        "iwad": "-iwad {}",
+        "wads": "-file {}",
+        "host": "-host {}",
+        "join": "-join {}",
+        "port": "-port {}",
+        "flags": "-{}",
+        "other": "-{}"
+    },
+    "prboom": {
+        "full": "{iwad} {wads} {other}",
+        "iwad": "-iwad {}",
+        "wads": "-pwad {}",
+        "host": null,
+        "join": null,
+        "port": null,
+        "flags": null,
+        "other": "-{}"
+    }
+}
