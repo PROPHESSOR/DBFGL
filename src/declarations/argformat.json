@@ -1,4 +1,14 @@
 {
+    "default": {
+        "full": null,
+        "iwad": null,
+        "wads": null,
+        "host": null,
+        "join": null,
+        "port": null,
+        "flags": null,
+        "other": null
+    },
     "gzdoom": {
         "full": "{iwad} {wads} {host} {join} {port} {flags} {other}",
         "iwad": "-iwad {}",
