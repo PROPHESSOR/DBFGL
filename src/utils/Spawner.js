@@ -1,6 +1,6 @@
 const { isNative } = window.DBFGL;
 
-const cp = isNative ? require('child_process') : null;
+const cp = isNative ? window.require('child_process') : null;
 
 class Spawner {
     constructor () {
@@ -25,6 +25,8 @@ class Spawner {
 
         this.processes.set(idname, process);
 
+        global.DBFGL.emit('game.start', idname, process.pid);
+
         return process.pid;
     }
 
@@ -45,6 +47,8 @@ class Spawner {
 
         this.processes.delete(idname);
 
+        global.DBFGL.emit('game.stop', idname, killed);
+
         return killed;
     }
 
@@ -63,9 +67,9 @@ class Spawner {
 
         const killed = this.processes.get(idname).kill('SIGKILL');
 
-        if (killed) {
-            this.processes.delete(idname);
-        }
+        this.processes.delete(idname);
+
+        global.DBFGL.emit('game.stop', idname, killed);
 
         return killed;
     }

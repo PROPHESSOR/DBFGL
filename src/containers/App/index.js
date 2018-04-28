@@ -23,6 +23,16 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Styles from './styles.scss';
 
+global.DBFGL.on('game.end', () => {
+    //TODO: Maximize
+    global.DBFGL.emit('window.maximize');
+});
+
+global.DBFGL.on('game.start', () => {
+    //TODO: Minimize
+    global.DBFGL.emit('window.minimize');
+});
+
 export default class App extends Component {
     state = {
         panel:  false,

@@ -1,5 +1,6 @@
 import React from 'react';
 import type from 'prop-types';
+import Spawner from '../../../utils/Spawner';
 
 // import Bar from './Bar';
 import Drawer from 'material-ui/Drawer';
@@ -12,9 +13,15 @@ export default class Panel extends React.Component {
         togglePanel: type.func.isRequired
     }
 
+    run (event) {
+        const port = event.target.innerText.toLowerCase();
+
+        console.log(`Запускаю ${port}...`);
+        console.log(Spawner.spawn('port', port));
+    }
+
     render () {
         const { open, togglePanel } = this.props;
-
 
         return (
             <Drawer
@@ -26,14 +33,14 @@ export default class Panel extends React.Component {
                     showMenuIconButton = { false }
                     title = 'Выбор порта'
                 />
-                <MenuItem>GZDoom</MenuItem>
-                <MenuItem>Zandronum</MenuItem>
-                <MenuItem>QZDoom</MenuItem>
-                <MenuItem>PrBoomPlus</MenuItem>
-                <MenuItem>Retro Doom</MenuItem>
-                <MenuItem>Chocolate Doom</MenuItem>
-                <MenuItem>Doom</MenuItem>
-                <MenuItem>Doom 2</MenuItem>
+                <MenuItem onClick = { this.run }>GZDoom</MenuItem>
+                <MenuItem onClick = { this.run }>Zandronum</MenuItem>
+                <MenuItem onClick = { this.run }>QZDoom</MenuItem>
+                <MenuItem onClick = { this.run }>PrBoomPlus</MenuItem>
+                <MenuItem onClick = { this.run }>Retro Doom</MenuItem>
+                <MenuItem onClick = { this.run }>Chocolate Doom</MenuItem>
+                <MenuItem onClick = { this.run }>Doom</MenuItem>
+                <MenuItem onClick = { this.run }>Doom 2</MenuItem>
             </Drawer>
         );
     }
