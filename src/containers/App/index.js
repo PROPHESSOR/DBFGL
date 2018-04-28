@@ -8,6 +8,7 @@
  */
 
 import React, { Component } from 'react';
+import ___ from './global'; // eslint-disable-line
 
 // Components
 import Provider from 'material-ui/styles/MuiThemeProvider';

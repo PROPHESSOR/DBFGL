@@ -6,6 +6,7 @@
   "homepage": "http://github.com/PROPHESSOR/DBFGL",
   "private": true,
   "main": "http://localhost:3000",
+  "node-remote" : "http://localhost:3000",
   "window": {
     "width": 1024,
     "height": 768
