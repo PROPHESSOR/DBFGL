@@ -1,0 +1,80 @@
+{
+    "ports": {
+        "gzdoom": {
+            "supportPk3": true,
+            "supportPk7": true,
+            "supportDecorate": true,
+            "supportMultiplayer": true,
+            "support3dFloors": true,
+            "supportDeHacked": true
+        },
+        "zandronum": {
+            "supportPk3": true,
+            "supportPk7": true,
+            "supportDecorate": true,
+            "supportMultiplayer": true,
+            "support3dFloors": true,
+            "supportDeHacked": true
+        },
+        "qzdoom": {
+            "supportPk3": true,
+            "supportPk7": true,
+            "supportDecorate": true,
+            "supportMultiplayer": true,
+            "support3dFloors": true,
+            "supportDeHacked": true
+        },
+        "prboom": {
+            "supportPk3": false,
+            "supportPk7": false,
+            "supportDecorate": false,
+            "supportMultiplayer": true,
+            "support3dFloors": false,
+            "supportDeHacked": false
+        },
+        "chocolatedoom": {
+            "supportPk3": false,
+            "supportPk7": false,
+            "supportDecorate": false,
+            "supportMultiplayer": true,
+            "support3dFloors": false,
+            "supportDeHacked": false
+        },
+        "doom": {
+            "supportPk3": false,
+            "supportPk7": false,
+            "supportDecorate": false,
+            "supportMultiplayer": false,
+            "support3dFloors": false,
+            "supportDeHacked": false
+        },
+        "doom2": {
+            "supportPk3": false,
+            "supportPk7": false,
+            "supportDecorate": false,
+            "supportMultiplayer": false,
+            "support3dFloors": false,
+            "supportDeHacked": false
+        }
+    },
+    "theme": {
+        "theme": "default",
+        "colors": {
+            "primary1Color":      "green500",
+            "primary2Color":      "green700",
+            "primary3Color":      "grey400",
+            "accent1Color":       "blueA200",
+            "accent2Color":       "grey800",
+            "accent3Color":       "grey500",
+            "textColor":          "fullWhite",
+            "secondaryTextColor": "rgba(255, 255, 255, 0.7)",
+            "alternateTextColor": "white",
+            "canvasColor":        "#303030",
+            "borderColor":        "grey300",
+            "disabledColor":      "rgba(0, 0, 0, 0.3)",
+            "pickerHeaderColor":  "green500",
+            "clockCircleColor":   "rgba(0, 0, 0, 0.07)",
+            "shadowColor":        "fullBlack"
+        }
+    }
+}

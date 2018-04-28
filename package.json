@@ -6,7 +6,7 @@
   "homepage": "http://github.com/PROPHESSOR/DBFGL",
   "private": true,
   "main": "http://localhost:3000",
-  "node-remote" : "http://localhost:3000",
+  "node-remote": "http://localhost:3000",
   "window": {
     "width": 1024,
     "height": 768
@@ -39,6 +39,7 @@
     "jest": "^21.2.1",
     "material-ui": "^0.20.0",
     "moment": "^2.18.1",
+    "nconf": "^0.10.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
