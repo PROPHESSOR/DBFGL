@@ -16,6 +16,6 @@ export default class Wad {
         this.type = 'WAD';
         this.picture = 'doom';
 
-        Object.assign(this, options)
+        Object.assign(this, options);
     }
 }
