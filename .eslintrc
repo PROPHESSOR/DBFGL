@@ -94,7 +94,7 @@ rules:
   no-new: 1
   no-octal-escape: 1
   no-octal: 1
-  no-param-reassign: 1
+  no-param-reassign: 0
   no-proto: 1
   no-redeclare: 1
   no-restricted-properties: 1
@@ -165,7 +165,7 @@ rules:
   newline-per-chained-call: 0
   no-array-constructor: 1
   no-bitwise: 0
-  no-continue: 1
+  no-continue: 0
   no-inline-comments: 0
   no-lonely-if: 1
   no-mixed-operators: 1
