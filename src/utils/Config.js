@@ -1,13 +1,14 @@
 import defaultConfig from '../declarations/defaultconfig.json';
 
 const nconf = DBFGL.isNative ? window.require('nconf') : null;
+const path = DBFGL.isNative ? window.require('path') : null;
 
 
 if (DBFGL.isNative) {
     nconf.argv()
         .env()
         .defaults(defaultConfig)
-        .file({ file: DBFGL.appData });
+        .file({ file: path.join(DBFGL.appData, 'config.json') });
 }
 
 

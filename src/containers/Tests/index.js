@@ -25,31 +25,34 @@ export default class DialogExampleScrollable extends React.Component {
         });
     }
 
-  close = () => {
-      DBFGL.emit('window.close', 'test');
-  };
+    close = () => {
+        DBFGL.emit('window.close', 'test');
+    };
 
-  getFromConfig = () => {
-      const res = prompt('Что вы хотите получить?');
+    getFromConfig = () => {
+        const res = prompt('Что вы хотите получить?');
 
-      if (res) {
-          alert(Config.get(res));
-      }
-  }
+        if (res) {
+            alert(Config.get(res));
+        }
+    }
 
-  setToConfig = () => {
-      const to = prompt('Куда сохранить');
+    setToConfig = () => {
+        const to = prompt('Куда сохранить');
 
-      if (!to) {
-          return;
-      }
-      const what = prompt(`Что сохранить? Сейчас там: ${Config.get(to)}`);
+        if (!to) {
+            return;
+        }
+        const what = prompt(`Что сохранить? Сейчас там: ${Config.get(to)}`);
 
-      if (!what) {
-          return;
-      }
-      Config.set(to, what);
-  }
+        if (!what) {
+            return;
+        }
+        Config.set(to, what);
+    }
+    saveConfig = () => {
+        Config.save();
+    }
     openWindow = () => {
         const name = prompt('Какое окно открыть? (test)');
 
@@ -123,6 +126,12 @@ export default class DialogExampleScrollable extends React.Component {
                     fullWidth
                     primary
                     label = 'Записать данные в конфиг'
+                    onClick = { this.setToConfig }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Сохранить конфиг'
                     onClick = { this.setToConfig }
                 />
                 <FlatButton
