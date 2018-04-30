@@ -1,8 +1,8 @@
 import React from 'react';
+import Config from '../../utils/Config';
+
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-
 
 export default class DialogExampleScrollable extends React.Component {
     constructor () {
@@ -29,34 +29,133 @@ export default class DialogExampleScrollable extends React.Component {
       DBFGL.emit('window.close', 'test');
   };
 
-  render () {
-      const actions = <FlatButton
-          primary
-          label = 'Закрыть'
-          onClick = { this.close }
-      />;
+  getFromConfig = () => {
+      const res = prompt('Что вы хотите получить?');
 
-      return (
-          <Dialog
-              autoScrollBodyContent
-              actions = { actions }
-              modal = { false }
-              open = { this.state.open }
-              title = 'Раздел тестирования'
-              onRequestClose = { this.close }>
-              <FlatButton
-                  fullWidth
-                  primary
-                  label = 'Закрыть'
-                  onClick = { this.close }
-              />
-              {/* <RadioButtonGroup defaultSelected = 'not_light' name = 'shipSpeed'>
-                  <RadioButton
-                      label = 'Option'
-                      value = 'value'
-                  />
-              </RadioButtonGroup> */}
-          </Dialog>
-      );
+      if (res) {
+          alert(Config.get(res));
+      }
   }
+
+  setToConfig = () => {
+      const to = prompt('Куда сохранить');
+
+      if (!to) {
+          return;
+      }
+      const what = prompt(`Что сохранить? Сейчас там: ${Config.get(to)}`);
+
+      if (!what) {
+          return;
+      }
+      Config.set(to, what);
+  }
+    openWindow = () => {
+        const name = prompt('Какое окно открыть? (test)');
+
+        if (!name) {
+            return;
+        }
+        DBFGL.emit('window.open', name);
+    }
+    openPanel = () => {
+        const name = prompt('Какую панель открыть? (left/right)');
+
+        if (!name) {
+            return;
+        }
+        DBFGL.emit('panel.open', name);
+    }
+    startProcess = () => {
+        const name = prompt('Введите id процесса (строка):');
+
+        if (!name) {
+            return;
+        }
+        const command = prompt('Введите команду для запуска (путь к игре):');
+
+        if (!command) {
+            return;
+        }
+        DBFGL.emit('game.start', name, command);
+    }
+    stopProcess = () => {
+        const name = prompt('Введите id процесса (строка):');
+
+        if (!name) {
+            return;
+        }
+
+        DBFGL.emit('game.stop', name);
+    }
+    killProcess = () => {
+        const name = prompt('Введите id процесса (строка):');
+
+        if (!name) {
+            return;
+        }
+
+        DBFGL.emit('game.kill', name);
+    }
+
+    render () {
+        const actions = <FlatButton
+            primary
+            label = 'Закрыть'
+            onClick = { this.close }
+        />;
+
+        return (
+            <Dialog
+                autoScrollBodyContent
+                actions = { actions }
+                modal = { false }
+                open = { this.state.open }
+                title = 'Раздел тестирования'
+                onRequestClose = { this.close }>
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Получить данные с конфига'
+                    onClick = { this.getFromConfig }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Записать данные в конфиг'
+                    onClick = { this.setToConfig }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Открыть окно'
+                    onClick = { this.openWindow }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Открыть панель'
+                    onClick = { this.openPanel }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Запустить процесс'
+                    onClick = { this.startProcess }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Остановить процесс'
+                    onClick = { this.stopProcess }
+                />
+                <FlatButton
+                    fullWidth
+                    primary
+                    label = 'Убить процесс'
+                    onClick = { this.killProcess }
+                />
+            </Dialog>
+        );
+    }
 }
