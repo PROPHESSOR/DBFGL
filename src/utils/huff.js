@@ -117,9 +117,7 @@ export default class Huffman {
         this.tree = this.tree[minat1];
 
         // Create a lookup table from the binary tree
-        const treeWalker = (branch, path) => {
-            path = path || '';
-
+        const treeWalker = (branch, path = '') => {
             // Go through a branch finding leaves while tracking the path taken
             if ('0' in branch) {
                 treeWalker(branch[0], `${path}0`);
