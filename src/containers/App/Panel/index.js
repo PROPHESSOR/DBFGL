@@ -1,5 +1,4 @@
 import React from 'react';
-import type from 'prop-types';
 
 import Bar from './Bar';
 import Drawer from 'material-ui/Drawer';

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import type from 'prop-types';
 
 // Components
 import { AppBar } from 'material-ui';

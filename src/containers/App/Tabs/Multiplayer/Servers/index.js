@@ -9,7 +9,7 @@ import {
     TableRowColumn
 } from 'material-ui/Table';
 
-import Server from './Server';
+// import Server from './Server'; //TODO:
 import ServerClass from './Server/Server';
 
 const servers = [

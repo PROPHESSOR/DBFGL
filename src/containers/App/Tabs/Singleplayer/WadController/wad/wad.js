@@ -1,5 +1,3 @@
-import { UrlObjectCommon } from 'url';
-
 export default class Wad {
 
     /**

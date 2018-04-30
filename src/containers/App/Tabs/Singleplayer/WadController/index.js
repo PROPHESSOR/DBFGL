@@ -3,7 +3,7 @@ import type from 'prop-types';
 
 import { List, makeSelectable } from 'material-ui/List';
 
-import Wad from './wad';          // Component
+import Wad from './wad'; // Component
 import WadClass from './wad/wad'; // Class
 
 const wads = [

@@ -9,7 +9,7 @@ export default class Port extends Component {
         port: type.func.isRequired
     }
 
-    run = (event) => {
+    run = () => {
         const { port } = this.props;
 
         console.log(`Запускаю ${port.name}...`);

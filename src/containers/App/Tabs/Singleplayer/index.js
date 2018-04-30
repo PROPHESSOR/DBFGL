@@ -1,12 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import type from 'prop-types';
 
 import Toolbar from './Toolbar';
 import WadController from './WadController';
 
 export default class Singleplayer extends Component {
-    static propTypes = {}
-
     state = {
         showDrop: 1,
         sortDrop: 0
