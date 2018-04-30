@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-const NW = window.require('nw.gui');
+const NW = window.require ? window.require('nw.gui') : null;
 
 class GlobalClass extends EventEmitter {
     constructor () {
@@ -20,6 +20,10 @@ class GlobalClass extends EventEmitter {
     }
 
     get appData () {
+        if (!DBFGL.isNative) {
+            throw new Error('Не могу получить путь папки лаунчера в браузере!');
+        }
+
         return NW.App.getDataPath();
     }
 }
