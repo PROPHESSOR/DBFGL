@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+const NW = window.require('nw.gui');
 
 class GlobalClass extends EventEmitter {
     constructor () {
@@ -16,6 +17,10 @@ class GlobalClass extends EventEmitter {
 
     get isNative () {
         return typeof window.require === 'function';
+    }
+
+    get appData () {
+        return NW.App.getDataPath();
     }
 }
 
