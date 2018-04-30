@@ -19,22 +19,41 @@ const tmp = [
 ];
 
 export default class Panel extends React.Component {
-    static propTypes = {
-        open:        type.bool.isRequired,
-        togglePanel: type.func.isRequired
+    constructor () {
+        super();
+
+        this.state = {
+            open: false
+        };
+
+        DBFGL.on('panel.open', (panel) => {
+            if (panel === 'right') {
+                this.setState({ open: true });
+            }
+        });
+        DBFGL.on('panel.close', (panel) => {
+            if (panel === 'right') {
+                this.setState({ open: false });
+            }
+        });
     }
 
+    togglePanel = (mode) => {
+        if (mode) {
+            DBFGL.emit('panel.open', 'right');
+        } else {
+            DBFGL.emit('panel.close', 'right');
+        }
+    }
     render () {
-        const { open, togglePanel } = this.props;
-
         const ports = tmp.map((el, i) => <Port key = { i } port = { el } />);
 
         return (
             <Drawer
                 openSecondary
                 docked = { false }
-                open = { open }
-                onRequestChange = { (mode) => togglePanel(mode) }>
+                open = { this.state.open }
+                onRequestChange = { this.togglePanel }>
                 <AppBar
                     showMenuIconButton = { false }
                     title = 'Выбор порта'

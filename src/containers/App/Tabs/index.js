@@ -21,7 +21,9 @@ export default class TabsExampleSimple extends Component {
             slideIndex: value
         });
 
-        return this.props.toggleTab(value ? 'multiplayer' : 'singleplayer');
+        const val = value ? 'multiplayer' : 'singleplayer';
+
+        return DBFGL.emit('tab.change', val);
     };
 
     render () {

@@ -7,6 +7,14 @@ class GlobalClass extends EventEmitter {
         this.singleplayer = {
             selected: null // new Wad
         };
+        this.tab = 'singleplayer';
+
+        this.on('tab.change', (tab) => {
+            if (!(tab === 'singleplayer' || tab === 'multiplayer')) {
+                throw new TypeError('Нет такого таба!');
+            }
+            this.tab = tab;
+        });
     }
 
     // Uncomment for event debugging

@@ -37,37 +37,15 @@ window.DBFGL.on('game.start', () => {
 });
 
 export default class App extends Component {
-    state = {
-        tab: 'singleplayer'
-    };
-
-    /** Переключает табы
-     * @param  {string} tab - singleplayer/multiplayer
-     * @returns {void}
-     */
-    toggleTab = (tab) => {
-        console.log(`Toggle tab: ${tab}`);
-        if (tab === 'singleplayer' || tab === 'multiplayer') {
-            this.setState({
-                tab
-            });
-        } else {
-            throw new TypeError('Нет такого таба!');
-        }
-    }
-
     render () {
-        const { panel, rpanel } = this.state;
-
-
         return (
             <Provider muiTheme = { getMuiTheme(theme) }>
                 <div className = { Styles.app } style = { { background: theme.palette.canvasColor } }>
-                    <Panel open = { panel } togglePanel = { this.togglePanel } />
-                    <PortPanel open = { rpanel } togglePanel = { this.toggleRPanel } />
-                    <Bar togglePanel = { this.togglePanel } />
-                    <Tabs toggleTab = { this.toggleTab } />
-                    <StartButton onClick = { this.toggleRPanel } />
+                    <Panel />
+                    <PortPanel />
+                    <Bar />
+                    <Tabs />
+                    <StartButton />
                     <WindowTests />
                 </div>
             </Provider>
