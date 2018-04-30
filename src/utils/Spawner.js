@@ -25,7 +25,7 @@ class Spawner {
 
         this.processes.set(idname, process);
 
-        global.DBFGL.emit('game.start', idname, process.pid);
+        window.DBFGL.emit('game.start', idname, process.pid);
 
         return process.pid;
     }
@@ -47,7 +47,7 @@ class Spawner {
 
         this.processes.delete(idname);
 
-        global.DBFGL.emit('game.stop', idname, killed);
+        window.DBFGL.emit('game.stop', idname, killed);
 
         return killed;
     }
@@ -69,7 +69,7 @@ class Spawner {
 
         this.processes.delete(idname);
 
-        global.DBFGL.emit('game.stop', idname, killed);
+        window.DBFGL.emit('game.stop', idname, killed);
 
         return killed;
     }

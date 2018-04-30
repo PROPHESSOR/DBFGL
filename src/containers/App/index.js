@@ -23,14 +23,14 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Styles from './styles.scss';
 
-global.DBFGL.on('game.end', () => {
+window.DBFGL.on('game.end', () => {
     //TODO: Maximize
-    global.DBFGL.emit('window.maximize');
+    window.DBFGL.emit('window.maximize');
 });
 
-global.DBFGL.on('game.start', () => {
+window.DBFGL.on('game.start', () => {
     //TODO: Minimize
-    global.DBFGL.emit('window.minimize');
+    window.DBFGL.emit('window.minimize');
 });
 
 export default class App extends Component {
