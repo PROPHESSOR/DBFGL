@@ -1,4 +1,54 @@
 {
+    "wads": {
+        "folders": [
+            "{appdata}/wads"
+        ],
+        "finder": {
+            "urls": [
+                "http://static.allfearthesentinel.net/wads/",
+                "http://doomshack.org/wads/"
+            ],
+            "folder": "{appdata}/wads"
+        },
+        "aliases": {
+            "doom.wad": [
+                "freedomu.wad",
+                "freedoom1.wad"
+            ],
+            "doom2.wad": [
+                "freedoom.wad",
+                "freedoom2.wad"
+            ],
+            "plutonia.wad": [
+                "freedoom.wad",
+                "freedoom2.wad"
+            ],
+            "tnt.wad": [
+                "freedoom.wad",
+                "freedoom2.wad"
+            ]
+        }
+    },
+    "servers": {
+        "masterServers": {
+            "zandronum": "master.zandronum.com:15300"
+        },
+        "favorite": [
+            "127.0.0.1"
+        ]
+    },
+    "collections": [
+        {
+            "name": "Test",
+            "descriptions": "Description",
+            "iwad": "doom2.wad",
+            "wads": [
+                "brutalv21b.pk3"
+            ],
+            "customConfig": null,
+            "preview": "doom2"
+        }
+    ],
     "ports": {
         "gzdoom": {
             "supportPk3": true,
