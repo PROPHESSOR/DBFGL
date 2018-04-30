@@ -62,7 +62,7 @@ rules:
   dot-notation: 1
   eqeqeq: 1
   guard-for-in: 1
-  no-alert: 1
+  no-alert: 0
   no-caller: 1
   no-case-declarations: 1
   no-div-regex: 1
