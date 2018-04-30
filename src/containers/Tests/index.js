@@ -25,7 +25,7 @@ export default class DialogExampleScrollable extends React.Component {
         });
     }
 
-  handleClose = () => {
+  close = () => {
       DBFGL.emit('window.close', 'test');
   };
 
@@ -33,7 +33,7 @@ export default class DialogExampleScrollable extends React.Component {
       const actions = <FlatButton
           primary
           label = 'Закрыть'
-          onClick = { this.handleClose }
+          onClick = { this.close }
       />;
 
       return (
@@ -43,13 +43,19 @@ export default class DialogExampleScrollable extends React.Component {
               modal = { false }
               open = { this.state.open }
               title = 'Раздел тестирования'
-              onRequestClose = { this.handleClose }>
-              <RadioButtonGroup defaultSelected = 'not_light' name = 'shipSpeed'>
+              onRequestClose = { this.close }>
+              <FlatButton
+                  fullWidth
+                  primary
+                  label = 'Закрыть'
+                  onClick = { this.close }
+              />
+              {/* <RadioButtonGroup defaultSelected = 'not_light' name = 'shipSpeed'>
                   <RadioButton
                       label = 'Option'
                       value = 'value'
                   />
-              </RadioButtonGroup>
+              </RadioButtonGroup> */}
           </Dialog>
       );
   }

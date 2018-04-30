@@ -38,26 +38,8 @@ window.DBFGL.on('game.start', () => {
 
 export default class App extends Component {
     state = {
-        panel:  false,
-        rpanel: false,
-        tab:    'singleplayer'
-    }
-
-    /** Переключает панель
-     * @param  {bool} mode - true - показать; false - скрыть
-     * @returns {void}
-     */
-    togglePanel = (mode = !this.state.panel) => {
-        this.setState({ panel: Boolean(mode) });
-    }
-
-    /** Переключает правую панель
-     * @param  {bool} mode - true - показать; false - скрыть
-     * @returns {void}
-     */
-    toggleRPanel = (mode = !this.state.rpanel) => {
-        this.setState({ rpanel: Boolean(mode) });
-    }
+        tab: 'singleplayer'
+    };
 
     /** Переключает табы
      * @param  {string} tab - singleplayer/multiplayer

@@ -7,18 +7,20 @@ import { AppBar } from 'material-ui';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
 export default class Bar extends Component {
-    static propTypes = {
-        togglePanel: type.func.isRequired
+    togglePanel = (mode) => {
+        if (mode) {
+            DBFGL.emit('panel.open', 'left');
+        } else {
+            DBFGL.emit('panel.close', 'left');
+        }
     }
 
     render () {
-        const { togglePanel } = this.props;
-
         return (
             <AppBar
                 iconClassNameRight = { SettingsIcon }
                 title = 'DooM BFG Launcher'
-                onLeftIconButtonClick = { togglePanel }
+                onLeftIconButtonClick = { this.togglePanel }
             />
         );
     }
