@@ -1,0 +1,183 @@
+// dmaster: A web-based Doom server browser and REST API.
+// Copyright (C) 2013  Alex Mayfield
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+var Huffman = function (freq) {
+    if (!(this instanceof arguments.callee)) {
+        throw new Error("Constructor called as a function");
+    }
+
+    if (!Array.isArray(freq)) {
+        throw new TypeError('First argument must be an array.');
+    }
+
+    if (freq.length != 256) {
+        throw new TypeError('First argument must be a frequency array of length 256.');
+    }
+
+    this.freq = freq;
+    this.tree = [];
+    this.table = [];
+
+    var self = this;
+
+    // The original C++ code uses floats and Javascript uses doubles.  This
+    // epsilon is necessary in order to make sure our float comparisons work.
+    const epsilon = 0.0000001;
+
+    // Create starting leaves
+    for (var i = 0; i < 256; i++) {
+        this.tree[i] = {
+            frq: freq[i],
+            asc: i
+        };
+    }
+
+    // Pair leaves and branches based on frequency until there is a single root
+    for (var i = 0; i < 255; i++) {
+        var minat1 = -1;
+        var minat2 = -1;
+        var min1 = 1e30;
+        var min2 = 1e30;
+
+        // Find two lowest frequencies
+        for (var j = 0; j < 256; j++) {
+            if (!this.tree[j]) {
+                continue;
+            }
+            if (this.tree[j].frq < min1 - epsilon) {
+                minat2 = minat1;
+                min2 = min1;
+                minat1 = j;
+                min1 = this.tree[j].frq;
+            } else if (this.tree[j].frq < min2 - epsilon) {
+                minat2 = j;
+                min2 = this.tree[j].frq;
+            }
+        }
+
+        // Join the two together under a new branch
+        this.tree[minat1] = {
+            frq: min1 + min2,
+            0: this.tree[minat2],
+            1: this.tree[minat1],
+        }
+        this.tree[minat2] = undefined;
+    }
+
+    // Make the root the list
+    this.tree = this.tree[minat1];
+
+    // Create a lookup table from the binary tree
+    function treeWalker(branch, path) {
+        path = path || '';
+
+        // Go through a branch finding leaves while tracking the path taken
+        if ('0' in branch) {
+            treeWalker(branch[0], path + '0');
+            treeWalker(branch[1], path + '1');
+            return;
+        }
+
+        // Found a leaf, so save the binary path to the table.
+        self.table[branch.asc] = path;
+    }
+
+    treeWalker(this.tree);
+};
+Huffman.prototype.encode = function (data) {
+    if (!Buffer.isBuffer(data)) {
+        throw new TypeError('Argument must be a Buffer.');
+    }
+
+    // Huffman-encode data to a binary string
+    var binary_string = '';
+    for (var i = 0; i < data.length; i++) {
+        binary_string += this.table[data.readUInt8(i)];
+    }
+
+    // Split binary string into array of strings containing 8 bits
+    var sbs = binary_string.match(/.{1,8}/g);
+
+    // If huffman-encoding wouldn't save any space, simply return the original
+    // buffer with an 0xff signal in front to show the buffer is not compressed.
+    if (sbs.length >= data.length) {
+        var encoded = new Buffer(data.length + 1);
+        encoded.writeUInt8(0xff, 0);
+        data.copy(encoded, 1);
+        return encoded;
+    }
+
+    // Find value of every byte in binary string
+    var ords = [];
+    for (var i = 0; i < sbs.length; i++) {
+        ords.push(parseInt(sbs[i].split('').reverse().join(''), 2));
+    }
+
+    // Write out encoded buffer with padding bit count in front
+    var encoded = new Buffer(ords.length + 1);
+    encoded.writeUInt8(8 - sbs[sbs.length - 1].length, 0);
+    for (var i = 0; i < ords.length; i++) {
+        encoded.writeUInt8(ords[i], i + 1);
+    }
+
+    return encoded;
+};
+Huffman.prototype.decode = function (data) {
+    if (!Buffer.isBuffer(data)) {
+        throw new TypeError('Argument must be a Buffer.');
+    }
+
+    var padding = data.readUInt8(0);
+
+    // If the padding bit is set to 0xff, no decoding is necessary.
+    if (padding === 0xff) {
+        decoded = new Buffer(data.length - 1);
+        data.copy(decoded, 0, 1);
+        return decoded;
+    }
+
+    // Convert ascii string into binary string.
+    var bitString = '';
+    for (var i = 1; i < data.length; i++) {
+        var bin = data[i].toString(2).split('').reverse().join('');
+        if (bin.length !== 8) {
+            bin += new Array(9 - bin.length).join('0');
+        }
+        bitString += bin;
+    }
+
+    // Remove padding bits from the end.
+    var bitString = bitString.substring(0, bitString.length - padding);
+
+    // Repeatedly traverse the huffman tree turning the huffman code
+    // into the original byte.
+    var decoded = Buffer.alloc(0);
+    var node = this.tree;
+    for (var i = 0; i < bitString.length; i++) {
+        var bit = bitString.charAt(i);
+        if (bit in node) {
+            node = node[bit];
+        } else {
+            decoded = Buffer.concat([decoded, new Buffer([node.asc])]);
+            node = this.tree[bit];
+        }
+    }
+    decoded = Buffer.concat([decoded, new Buffer([node.asc])]);
+
+    return decoded;
+};
+
+exports.Huffman = Huffman;
