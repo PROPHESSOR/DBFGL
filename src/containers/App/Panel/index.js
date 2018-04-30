@@ -11,6 +11,10 @@ export default class Panel extends React.Component {
         togglePanel: type.func.isRequired
     }
 
+    openTestMenu = () => {
+        DBFGL.emit('window.open', 'test');
+    }
+
     render () {
         const { open, togglePanel } = this.props;
 
@@ -24,6 +28,7 @@ export default class Panel extends React.Component {
                 <MenuItem>Oblige</MenuItem>
                 <MenuItem>Настройки</MenuItem>
                 <MenuItem>О программе</MenuItem>
+                <MenuItem onClick = { this.openTestMenu }>Тестирование</MenuItem>
             </Drawer>
         );
     }

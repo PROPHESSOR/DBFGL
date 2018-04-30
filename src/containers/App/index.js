@@ -23,6 +23,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Styles from './styles.scss';
 
+// Windows
+import WindowTests from '../Tests';
+
 window.DBFGL.on('game.end', () => {
     //TODO: Maximize
     window.DBFGL.emit('window.maximize');
@@ -83,6 +86,7 @@ export default class App extends Component {
                     <Bar togglePanel = { this.togglePanel } />
                     <Tabs toggleTab = { this.toggleTab } />
                     <StartButton onClick = { this.toggleRPanel } />
+                    <WindowTests />
                 </div>
             </Provider>
         );
