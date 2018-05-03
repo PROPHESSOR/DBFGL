@@ -5,12 +5,12 @@ const path = DBFGL.isNative ? window.require('path') : null;
 
 
 if (DBFGL.isNative) {
-    nconf.argv()
+    nconf
+        .argv()
         .env()
-        .defaults(defaultConfig)
-        .file({ file: path.join(DBFGL.appData, 'config.json') });
+        .file({ file: path.join(DBFGL.appData, 'config.json') })
+        .defaults(defaultConfig);
 }
-
 
 export default {
     get (...args) {
@@ -33,6 +33,11 @@ export default {
         if (!DBFGL.isNative) {
             throw new Error('Я не могу работать с файлом конфигурации из браузера!');
         }
-        nconf.save();
+        nconf.save((err) => {
+            if (!err) {
+                return console.log('Конфиг успешно сохранен!');
+            }
+            throw new Error('При сохранении конфига произошла ошибка', err);
+        });
     }
 };
