@@ -32,6 +32,11 @@ export default class Panel extends React.Component {
         }
     }
 
+    openSettingsMenu = () => {
+        DBFGL.emit('panel.close', 'left');
+        DBFGL.emit('window.open', 'settings');
+    }
+
     openTestMenu = () => {
         DBFGL.emit('panel.close', 'left');
         DBFGL.emit('window.open', 'test');
@@ -47,7 +52,7 @@ export default class Panel extends React.Component {
                 onRequestChange = { this.togglePanel }>
                 <Bar />
                 <MenuItem>Oblige</MenuItem>
-                <MenuItem>Настройки</MenuItem>
+                <MenuItem onClick = { this.openSettingsMenu }>Настройки</MenuItem>
                 <MenuItem>О программе</MenuItem>
                 <MenuItem onClick = { this.openTestMenu }>Тестирование</MenuItem>
             </Drawer>
