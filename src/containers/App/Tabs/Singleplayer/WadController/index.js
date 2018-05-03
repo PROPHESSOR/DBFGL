@@ -5,11 +5,12 @@ import { List, makeSelectable } from 'material-ui/List';
 
 import Wad from './wad'; // Component
 import WadClass from './wad/wad'; // Class
+import getWads from './getWadsFromFs';
 
-const wads = [
+/* const wads = [
     new WadClass({ name: 'DOOM.WAD', picture: 'doom' }),
     new WadClass({ name: 'Doom2.wad', picture: 'doom2' })
-];
+]; */
 
 const SelectableList = makeSelectable(List);
 
@@ -19,7 +20,12 @@ export default class WadController extends Component {
     }
 
     state = {
-        selectedIndex: 0
+        selectedIndex: 0,
+        wads:          []
+    }
+
+    componentDidMount = () => {
+        this.setState({ wads: getWads().map((filename) => new WadClass({ name: filename })) });
     }
 
     onSelect = (event, index) => {
@@ -28,7 +34,7 @@ export default class WadController extends Component {
     }
 
     render () {
-        const jsxwads = wads.map((e, i) => (<Wad key = { i } name = { e.name } picture = { e.picture } value = { i } />));
+        const jsxwads = this.state.wads.map((e, i) => (<Wad key = { i } name = { e.name } picture = { e.picture } value = { i } />));
 
         return (
             <SelectableList
