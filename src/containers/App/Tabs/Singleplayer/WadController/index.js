@@ -19,13 +19,25 @@ export default class WadController extends Component {
         prop: type
     }
 
-    state = {
-        selectedIndex: 0,
-        wads:          []
+    constructor () {
+        super();
+        this.state = {
+            selectedIndex: 0,
+            wads:          []
+        };
+        DBFGL.on('singleplayer.wadlist.update', this.updateWads);
     }
 
+
     componentDidMount = () => {
-        this.setState({ wads: getWads().map((filename) => new WadClass({ name: filename })) });
+        this.updateWads();
+    }
+
+    updateWads = () => {
+        this.setState({
+            wads: getWads().map((name) => new WadClass({ name }))
+        });
+        console.log('Список вадов обновлен');
     }
 
     onSelect = (event, index) => {
@@ -34,7 +46,7 @@ export default class WadController extends Component {
     }
 
     render () {
-        const jsxwads = this.state.wads.map((e, i) => (<Wad key = { i } name = { e.name } picture = { e.picture } value = { i } />));
+        const jsxwads = this.state.wads.map((e, i) => (<Wad key = { i } value = { i } wad = { e } />));
 
         return (
             <SelectableList

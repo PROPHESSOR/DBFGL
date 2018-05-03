@@ -8,14 +8,15 @@ import Cover from '../../../../../../theme/assets/wadcovers';
 
 export default class Wad extends Component {
   static propTypes = {
-      name:    type.string.isRequired,
-      picture: type.string.isRequired,
-      value:   type.number.isRequired
+      wad:   type.object.isRequired,
+      value: type.number
   }
 
   render () {
+      const { wad } = this.props;
+
       return (
-          <ListItem leftAvatar = { <Avatar src = { Cover[this.props.picture] } /> } primaryText = { this.props.name } value = { this.props.value } />
+          <ListItem leftAvatar = { <Avatar src = { Cover[wad.picture] || Cover.doom2 } /> } primaryText = { wad.name } value = { wad.value } />
       );
   }
 }
