@@ -25,6 +25,7 @@ import Styles from './styles.scss';
 
 // Windows
 import WindowTests from '../Tests';
+import WindowSettings from '../Settings';
 
 window.DBFGL.on('game.end', () => {
     //TODO: Maximize
@@ -47,6 +48,7 @@ export default class App extends Component {
                     <Tabs />
                     <StartButton />
                     <WindowTests />
+                    <WindowSettings />
                 </div>
             </Provider>
         );
