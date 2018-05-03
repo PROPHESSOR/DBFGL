@@ -132,7 +132,7 @@ export default class DialogExampleScrollable extends React.Component {
                     fullWidth
                     primary
                     label = 'Сохранить конфиг'
-                    onClick = { this.setToConfig }
+                    onClick = { this.saveConfig }
                 />
                 <FlatButton
                     fullWidth
