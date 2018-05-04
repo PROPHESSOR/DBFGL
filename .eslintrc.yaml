@@ -24,7 +24,7 @@ globals:
 rules:
   no-cond-assign: 1
   no-console: 0
-  no-constant-condition: 1
+  no-constant-condition: 0
   no-control-regex: 1
   no-debugger: 1
   no-dupe-args: 1
