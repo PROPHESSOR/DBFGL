@@ -13,10 +13,10 @@ import {
 import ServerClass from './Server/Server';
 import pingServers from '../../../../../utils/Servers';
 
-const servers = [
+/* const servers = [
     new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),
     new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server 2', ip: [127, 0, 0, 2], mode: 'Cooperative' })
-];
+]; */
 
 export default class ServerList extends Component {
     constructor () {
@@ -28,25 +28,24 @@ export default class ServerList extends Component {
         DBFGL.on('tab.change', (tab) => {
             if (tab === 'multiplayer') {
                 console.info('Обновляю сервера...');
-                pingServers(this.newServerCallback.bind(this), this.doneCallback.bind(this));
+                pingServers()
+                    .then((servers) => {
+                        const serverList = servers.map((server) => new ServerClass({
+                            ping:    128,
+                            name:    'Unknown',
+                            players: ['PROPHESSOR'],
+                            ip:      `${server[0].join('.')}:${server[1]}`
+                        }));
+
+                        this.setState({
+                            servers: serverList
+                        }, () => console.info('Обновление серверов завершено!'));
+                    })
+                    .catch((error) => {
+                        console.error(`Возникла ошибка при получении списка серверов: `, error);
+                    });
             }
         });
-    }
-
-    newServerCallback (ip, port) {
-        this.setState((prevState) => ({
-            servers: prevState.servers.concat(
-                new ServerClass({
-                    ping:    128,
-                    name:    'Unknown',
-                    players: ['PROPHESSOR'],
-                    ip:      `${ip.join('.')}:${port}`
-                }))
-        }));
-    }
-
-    doneCallback () {
-        console.log('done');
     }
 
     render () {

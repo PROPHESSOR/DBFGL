@@ -7,108 +7,102 @@ import Config from '../utils/Config';
 const huff = new Huffman();
 
 const TIMEOUT = 10000;
-const [HOST, PORT] = Config.get('servers:master:zandronum').split(':');
+const [HOST, PORT] = DBFGL.isNative ? Config.get('servers:master:zandronum').split(':') : ['127.0.0.1', '10666'];
 
-/** Получает список серверов
- * @param  {function} newServerCb - Хрен пойми, для чего нужный коллбэк
- * @param  {function} doneCb - Ещё один какой-то коллбэк. Зачем?
- * @returns {undefined} Оригинально
- */
-export default (newServerCb, doneCb) => {
+export default () => new Promise((resolve, reject) => {
     if (!DBFGL.isNative) {
-        return console.warn('Не могу получить список серверов из браузера!');
+        return reject(new Error('Не могу получить список серверов из браузера!'));
     }
+    const socket = dgram.createSocket('udp4');
+    let done = false;
+    const rmessage = Buffer.from([0x7C, 0x5D, 0x56, 0x00, 0x02, 0x00]);
 
-    return new Promise((resolve, reject) => {
-        const socket = dgram.createSocket('udp4');
-        let done = false;
-        const rmessage = Buffer.from([0x7C, 0x5D, 0x56, 0x00, 0x02, 0x00]);
+    socket.on('message', (_msg) => {
+        const msg = huff.decode(_msg);
 
-        socket.on('message', (_msg) => {
-            const msg = huff.decode(_msg);
+        // console.log(msg);
 
-            // console.log(msg);
-
-            switch (msg.readUInt32LE(0)) {
-                case 3:
-                    console.error('Banned on master server');
+        switch (msg.readUInt32LE(0)) {
+            case 3:
+                console.error('Banned on master server');
+                done = true;
+                reject(new Error('Banned on master server'));
+                socket.close();
+                break;
+            case 4:
+                console.error('Too fast requests');
+                done = true;
+                reject(new Error('Too fast requests'));
+                socket.close();
+                break;
+            case 5:
+                console.error('Please update the launcher');
+                done = true;
+                reject(new Error('Please update the launcher'));
+                socket.close();
+                break;
+            case 6:
+            {
+                if (msg.readUInt32LE(5) !== 8) {
+                    console.error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`);
                     done = true;
-                    doneCb();
+                    reject(new Error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`));
                     socket.close();
-                    break;
-                case 4:
-                    console.error('Too fast requests');
-                    done = true;
-                    doneCb();
-                    socket.close();
-                    break;
-                case 5:
-                    console.error('Please update the launcher');
-                    done = true;
-                    doneCb();
-                    socket.close();
-                    break;
-                case 6:
-                {
-                    if (msg.readUInt32LE(5) !== 8) {
-                        console.error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`);
-                        done = true;
-                        doneCb();
-                        socket.close();
+
+                    return;
+                }
+                let offset = 6;
+
+                const serverList = [];
+
+                while (true) {
+                    if (msg.readUInt8(offset) === 0) {
+                        offset++;
+                        if (msg.readUInt8(offset) === 2) {
+                            resolve(serverList);
+                            socket.close();
+                        }
 
                         return;
                     }
-                    let offset = 6;
+                    const size = msg.readUInt8(offset++);
+                    const ip = [
+                        msg.readUInt8(offset++),
+                        msg.readUInt8(offset++),
+                        msg.readUInt8(offset++),
+                        msg.readUInt8(offset++)
+                    ];
 
-                    while (true) {
-                        if (msg.readUInt8(offset) === 0) {
-                            offset++;
-                            if (msg.readUInt8(offset) === 2) {
-                                doneCb();
-                                socket.close();
-                            }
+                    for (let i = 0; i < size; i++) {
+                        const port = msg.readUInt16LE(offset);
 
-                            return;
-                        }
-                        const size = msg.readUInt8(offset++);
-                        const ip = [
-                            msg.readUInt8(offset++),
-                            msg.readUInt8(offset++),
-                            msg.readUInt8(offset++),
-                            msg.readUInt8(offset++)
-                        ];
-
-                        for (let i = 0; i < size; i++) {
-                            const port = msg.readUInt16LE(offset);
-
-                            newServerCb(ip, port);
-                            offset += 2;
-                        }
+                        serverList.push([ip, port]);
+                        offset += 2;
                     }
                 }
-                default:
-                    console.error('Unknown error');
-                    done = true;
-                    doneCb();
-                    socket.close();
-                    break;
             }
-        });
-        const encoded = Buffer.from(huff.encode(rmessage));
-
-        // console.log(encoded);
-        socket.send(encoded, PORT, HOST, (err) => {
-            if (err) {
-                console.error(err);
+            default:
+                console.error('Unknown error');
                 done = true;
-                doneCb();
-            }
-        });
-        setTimeout(() => {
-            if (!done) {
+                reject(new Error('Unknown error'));
                 socket.close();
-                doneCb();
-            }
-        }, TIMEOUT);
+                break;
+        }
     });
-};
+    const encoded = Buffer.from(huff.encode(rmessage));
+
+    // console.log(encoded);
+    socket.send(encoded, PORT, HOST, (err) => {
+        if (err) {
+            console.error(err);
+            done = true;
+            reject(err);
+        }
+    });
+    setTimeout(() => {
+        if (!done) {
+            socket.close();
+            reject(new Error('Time is out'));
+        }
+    }, TIMEOUT);
+});
