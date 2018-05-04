@@ -30,7 +30,7 @@
         }
     },
     "servers": {
-        "masterServers": {
+        "master": {
             "zandronum": "master.zandronum.com:15300"
         },
         "favorite": [
