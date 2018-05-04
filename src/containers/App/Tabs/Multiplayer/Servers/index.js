@@ -19,17 +19,29 @@ const servers = [
 ];
 
 export default class ServerList extends Component {
-    state = {
-        servers: []
-    }
+    constructor () {
+        super();
+        this.state = {
+            servers: []
+        };
 
-    componentWillMount () {
-        pingServers(this.newServerCallback.bind(this), this.doneCallback.bind(this));
+        DBFGL.on('tab.change', (tab) => {
+            if (tab === 'multiplayer') {
+                console.info('Обновляю сервера...');
+                pingServers(this.newServerCallback.bind(this), this.doneCallback.bind(this));
+            }
+        });
     }
 
     newServerCallback (ip, port) {
         this.setState((prevState) => ({
-            servers: prevState.servers.concat(new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Unknown', ip: `${ip.join('.')}:${port}` }))
+            servers: prevState.servers.concat(
+                new ServerClass({
+                    ping:    128,
+                    name:    'Unknown',
+                    players: ['PROPHESSOR'],
+                    ip:      `${ip.join('.')}:${port}`
+                }))
         }));
     }
 
@@ -60,7 +72,6 @@ export default class ServerList extends Component {
                         <TableHeaderColumn>Флаг</TableHeaderColumn>
                         <TableHeaderColumn>Название</TableHeaderColumn>
                         <TableHeaderColumn>IP</TableHeaderColumn>
-                        <TableHeaderColumn>Порт</TableHeaderColumn>
                         <TableHeaderColumn>Вады</TableHeaderColumn>
                         <TableHeaderColumn>Режим</TableHeaderColumn>
                     </TableRow>
