@@ -43,7 +43,7 @@ export default () => new Promise((resolve, reject) => {
                 break;
             case 6:
             {
-                if (msg.readUInt32LE(5) !== 8) {
+                if (msg.readUInt8(5) !== 8) {
                     console.error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`);
                     done = true;
                     reject(new Error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`));
