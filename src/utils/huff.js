@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import Buffer from 'buffer';
+const Buffer = DBFGL.isNative ? window.require('buffer').Buffer : null;
 
 const huffmanFreqs = [
     0.14473691, 0.01147017, 0.00167522, 0.03831121, 0.00356579, 0.03811315, 0.00178254, 0.00199644,
@@ -62,6 +62,8 @@ export default class Huffman {
         if (freq.length !== 256) {
             throw new TypeError('First argument must be a frequency array of length 256.');
         }
+
+        const self = this; // eslint-disable-line
 
         this.freq = freq;
         this.tree = [];
@@ -186,7 +188,7 @@ export default class Huffman {
 
         // If the padding bit is set to 0xff, no decoding is necessary.
         if (padding === 0xff) {
-            const decoded = Buffer.from(data.length - 1);
+            const decoded = Buffer.alloc(data.length - 1);
 
             data.copy(decoded, 0, 1);
 

@@ -15,7 +15,7 @@ export default class Server {
         this.ping = 0;
         this.players = [];
         this.name = 'Name';
-        this.ip = [0, 0, 0, 0];
+        this.ip = '0.0.0.0';
         this.wads = [];
         this.mode = 'Cooperative';
         this.country = 'UA';
