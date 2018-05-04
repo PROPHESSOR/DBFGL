@@ -1,10 +1,16 @@
 import Config from '../../../../../utils/Config';
+
+import WadClass from './wad/wad';
+import Wad from './wad/wad';
 // import fs from 'fs';
 const fs = DBFGL.isNative ? window.require('fs') : null;
+const path = DBFGL.isNative ? window.require('path') : null;
 
 export default function () {
     if (!DBFGL.isNative) {
-        return console.warn('Получение списка вадов не работает в браузере!');
+        console.warn('Получение списка вадов не работает в браузере!');
+
+        return [];
     }
     const wadPathes = Config
         .get('wads:folders')
@@ -32,11 +38,13 @@ export default function () {
 
                     // Если это - .wad файл
                     if (filename[filename.length - 1].toLowerCase() === 'wad') {
-                        if (wadList.has(file)) {
+                        const wad = new WadClass({ name: file, path: path.join(folder, file) });
+
+                        if (wadList.has(wad)) {
                             console.warn(`Конфликт файлов! Файл ${file} берется из папки ${folder}`)
                             ;
                         }
-                        wadList.add(file);
+                        wadList.add(wad);
                     }
                 });
         } catch (e) {

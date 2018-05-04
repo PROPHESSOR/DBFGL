@@ -35,7 +35,7 @@ export default class WadController extends Component {
 
     updateWads = () => {
         this.setState({
-            wads: getWads().map((name) => new WadClass({ name }))
+            wads: getWads()//.map((name) => new WadClass({ name }))
         });
         console.log('Список вадов обновлен');
     }
