@@ -64,27 +64,22 @@ export default class ServerList extends Component {
 
 
         return (
-            <div
-                style = { {
-                    height: 'calc(100vh - 170px)'
-                } }>
-                <Table
-                    adjustForCheckbox = { false }>
-                    <TableHeader adjustForCheckbox = { false } displaySelectAll = { false }>
-                        <TableRow>
-                            <TableHeaderColumn>Состояние</TableHeaderColumn>
-                            <TableHeaderColumn>Флаг</TableHeaderColumn>
-                            <TableHeaderColumn>Название</TableHeaderColumn>
-                            <TableHeaderColumn>IP</TableHeaderColumn>
-                            <TableHeaderColumn>Вады</TableHeaderColumn>
-                            <TableHeaderColumn>Режим</TableHeaderColumn>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody displayRowCheckbox = { false }>
-                        {a}
-                    </TableBody>
-                </Table>
-            </div>
+            <Table
+                adjustForCheckbox = { false }>
+                <TableHeader adjustForCheckbox = { false } displaySelectAll = { false }>
+                    <TableRow>
+                        <TableHeaderColumn>Состояние</TableHeaderColumn>
+                        <TableHeaderColumn>Флаг</TableHeaderColumn>
+                        <TableHeaderColumn>Название</TableHeaderColumn>
+                        <TableHeaderColumn>IP</TableHeaderColumn>
+                        <TableHeaderColumn>Вады</TableHeaderColumn>
+                        <TableHeaderColumn>Режим</TableHeaderColumn>
+                    </TableRow>
+                </TableHeader>
+                <TableBody displayRowCheckbox = { false }>
+                    {a}
+                </TableBody>
+            </Table>
         );
     }
 }

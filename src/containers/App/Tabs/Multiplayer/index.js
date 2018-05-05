@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import Toolbar from './Toolbar';
 import Servers from './Servers';
@@ -6,10 +6,13 @@ import Servers from './Servers';
 export default class Multiplayer extends Component {
     render () {
         return (
-            <Fragment>
+            <div
+                style = { {
+                    height: 'calc(100vh - 110px)'
+                } }>
                 <Toolbar />
                 <Servers />
-            </Fragment>
+            </div>
         );
     }
 }
