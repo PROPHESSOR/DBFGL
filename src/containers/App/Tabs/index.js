@@ -35,8 +35,7 @@ export default class TabsExampleSimple extends Component {
                 <Tab label = 'Мультиплеер' value = { 1 } />
             </Tabs>
             <SwipeableViews
-                index = { this.state.slideIndex }
-                onChangeIndex = { this.handleChange }>
+                index = { this.state.slideIndex }>
                 <div>
                     <Singleplayer />
                 </div>
