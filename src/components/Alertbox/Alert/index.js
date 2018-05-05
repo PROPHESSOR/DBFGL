@@ -2,7 +2,7 @@ import React from 'react';
 import type from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
 
-// import palette from '../../../containers/App/';
+// import palette from '../../../containers/App/9';
 
 export default class SnackbarExampleSimple extends React.Component {
     static propTypes = {
