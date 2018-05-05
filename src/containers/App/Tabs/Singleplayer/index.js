@@ -14,7 +14,10 @@ export default class Singleplayer extends Component {
 
     render () {
         return (
-            <Fragment>
+            <div
+                style = { {
+                    height: 'calc(100vh - 170px)'
+                } }>
                 <Toolbar
                     showDrop = { this.state.showDrop }
                     sortDrop = { this.state.sortDrop }
@@ -22,7 +25,7 @@ export default class Singleplayer extends Component {
                     onChangeSort = { this.onChangeSort }
                 />
                 <WadController />
-            </Fragment>
+            </div>
         );
     }
 }
