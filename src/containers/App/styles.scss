@@ -1,8 +1,25 @@
 body {
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .app {
-	height: 100vh;
-	width: 100vw;
+    height: 100vh;
+    width: 100vw;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: rgb(54, 54, 54);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgb(54, 54, 54);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
 }
