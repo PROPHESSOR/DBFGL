@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Toolbar from './Toolbar';
 import WadController from './WadController';
+import SelectedWads from './SelectedWads';
 
 export default class Singleplayer extends Component {
     constructor () {
@@ -37,7 +38,7 @@ export default class Singleplayer extends Component {
                         float: 'left'
                     } }
                 />
-                <WadController
+                <SelectedWads
                     style = { {
                         marginLeft: '50%'
                     } }

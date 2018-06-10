@@ -5,7 +5,8 @@ class GlobalClass extends EventEmitter {
     constructor () {
         super();
         this.singleplayer = {
-            selected: null // new Wad
+            selected: [],
+            iwad:     null // new Wad
         };
         this.tab = 'singleplayer';
 

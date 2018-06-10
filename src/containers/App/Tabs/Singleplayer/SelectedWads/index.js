@@ -3,16 +3,10 @@ import type from 'prop-types';
 
 import { List } from 'material-ui/List';
 
-import Wad from './wad'; // Component
+import Wad from '../WadController/wad'; // Component
 // import WadClass from './wad/wad'; // Class
-import getWads from './getWadsFromFs';
 
-/* const wads = [
-    new WadClass({ name: 'DOOM.WAD', picture: 'doom' }),
-    new WadClass({ name: 'Doom2.wad', picture: 'doom2' })
-]; */
-
-export default class WadController extends Component {
+export default class SelectedWads extends Component {
     static propTypes = {
         folder: 'iwads',
         style:  type.object
@@ -24,7 +18,7 @@ export default class WadController extends Component {
             selectedIndex: 0,
             wads:          []
         };
-        DBFGL.on('singleplayer.wadlist.update', this.updateWads);
+        DBFGL.on('singleplayer.wadlist.selected.update', this.updateWads);
     }
 
 
@@ -34,23 +28,21 @@ export default class WadController extends Component {
 
     updateWads = () => {
         this.setState({
-            wads: getWads()//.map((name) => new WadClass({ name }))
+            wads: DBFGL.singleplayer.selected//.map((name) => new WadClass({ name }))
         });
         console.log('Список вадов обновлен');
     }
 
-    onSelect = (wad, index) => {
-        // console.log('onselect', wad, index);
-        DBFGL.singleplayer.selected.push(wad);
-        DBFGL.emit('singleplayer.wadlist.selected.update');
+    onSelect = (event, index) => {
+        console.log('onselect', index);
+        this.setState({ selectedIndex: index });
     }
 
     render () {
-        const jsxwads = this.state.wads.map((e, i) => (<Wad key = { i } value = { i } wad = { e } onClick = { this.onSelect } />));
+        const jsxwads = this.state.wads.map((e, i) => (<Wad key = { i } value = { i } wad = { e } />));
 
         return (
             <List
-                click = { this.onSelect }
                 style = { this.props.style }
                 value = { this.state.selectedIndex }
                 onChange = { this.onSelect }>
