@@ -56,7 +56,9 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": false,
+            "path": "gzdoom"
         },
         "zandronum": {
             "supportPk3": true,
@@ -64,7 +66,9 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": false,
+            "path": "zandronum"
         },
         "qzdoom": {
             "supportPk3": true,
@@ -72,7 +76,9 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": false,
+            "path": "qzdoom"
         },
         "prboom": {
             "supportPk3": false,
@@ -80,7 +86,9 @@
             "supportDecorate": false,
             "supportMultiplayer": true,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false,
+            "path": "prboom"
         },
         "chocolatedoom": {
             "supportPk3": false,
@@ -88,7 +96,9 @@
             "supportDecorate": false,
             "supportMultiplayer": true,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false,
+            "path": "chocolatedoom"
         },
         "doom": {
             "supportPk3": false,
@@ -96,7 +106,9 @@
             "supportDecorate": false,
             "supportMultiplayer": false,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false,
+            "path": "doom"
         },
         "doom2": {
             "supportPk3": false,
@@ -104,7 +116,9 @@
             "supportDecorate": false,
             "supportMultiplayer": false,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false,
+            "path": "doom2"
         }
     },
     "theme": {
