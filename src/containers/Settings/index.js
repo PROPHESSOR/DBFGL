@@ -1,5 +1,5 @@
 import React from 'react';
-import Config from '../../utils/Config';
+// import Config from '../../utils/Config';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -35,6 +35,7 @@ export default class Settings extends React.Component {
     };
 
     save = () => {
+        console.warn('Сохранение настроек через форму пока не реализовано!');
         // TODO:
     }
 
@@ -70,7 +71,7 @@ export default class Settings extends React.Component {
                 <Section
                     subtitle = ''
                     title = 'Настройка портов'>
-                    {SPorts}
+                    <SPorts />
                 </Section>
                 <Section
                     subtitle = 'Время ожидания сервера, задержки анимаций и прочее'
