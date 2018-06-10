@@ -12,9 +12,15 @@ export default class Port extends Component {
     run = () => {
         const { port } = this.props;
 
-        console.log(`Запускаю ${port.name}...`);
+        let args = port.path;
 
-        console.log(Spawner.spawn('game', port.path));
+        for (const wad of DBFGL.singleplayer.selected) {
+            args += ` -file "${wad.path}"`;
+        }
+
+        console.log(`Запускаю ${port.name}...`, args);
+
+        console.log(Spawner.spawn('game', args));
     }
 
     render () {
