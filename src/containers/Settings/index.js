@@ -6,7 +6,10 @@ import FlatButton from 'material-ui/FlatButton';
 
 import Section from './Section';
 
-export default class DialogExampleScrollable extends React.Component {
+// Sections
+import SPorts from './Sections/Ports';
+
+export default class Settings extends React.Component {
     constructor () {
         super();
 
@@ -62,6 +65,16 @@ export default class DialogExampleScrollable extends React.Component {
                 <Section
                     subtitle = 'Первая папка используется, так же, для скачивания новых вадов'
                     title = 'Папки для поиска wad файлов'>
+                TODO: Write me!
+                </Section>
+                <Section
+                    subtitle = ''
+                    title = 'Настройка портов'>
+                    {SPorts}
+                </Section>
+                <Section
+                    subtitle = 'Время ожидания сервера, задержки анимаций и прочее'
+                    title = 'Настройка констант'>
                 TODO: Write me!
                 </Section>
             </Dialog>
