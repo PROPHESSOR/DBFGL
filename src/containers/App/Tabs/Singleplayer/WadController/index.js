@@ -16,7 +16,8 @@ const SelectableList = makeSelectable(List);
 
 export default class WadController extends Component {
     static propTypes = {
-        prop: type
+        folder: 'iwads',
+        style:  type.object
     }
 
     constructor () {
@@ -50,6 +51,7 @@ export default class WadController extends Component {
 
         return (
             <SelectableList
+                style = { this.props.style }
                 value = { this.state.selectedIndex }
                 onChange = { this.onSelect }>
                 {jsxwads}

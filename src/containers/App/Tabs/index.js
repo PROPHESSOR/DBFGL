@@ -35,7 +35,10 @@ export default class TabsExampleSimple extends Component {
                 <Tab label = 'Мультиплеер' value = { 1 } />
             </Tabs>
             <SwipeableViews
-                index = { this.state.slideIndex }>
+                index = { this.state.slideIndex }
+                slideStyle = { {
+                    overflow: 'inherit'
+                } }>
                 <div>
                     <Singleplayer />
                 </div>
