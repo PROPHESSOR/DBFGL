@@ -4,6 +4,8 @@ import SwipeableViews from 'react-swipeable-views';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 
+import DBFGL from '@/Global';
+
 import Singleplayer from './Singleplayer';
 import Multiplayer from './Multiplayer';
 

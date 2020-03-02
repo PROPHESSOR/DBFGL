@@ -2,6 +2,7 @@ import Config from '../../../../../utils/Config';
 
 import WadClass from './wad/wad';
 import Wad from './wad/wad';
+import DBFGL from '@/Global';
 // import fs from 'fs';
 const fs = DBFGL.isNative ? window.require('fs') : null;
 const path = DBFGL.isNative ? window.require('path') : null;

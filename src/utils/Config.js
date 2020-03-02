@@ -1,4 +1,5 @@
 import defaultConfig from '../declarations/defaultconfig.json';
+import DBFGL from '@/Global';
 
 const nconf = DBFGL.isNative ? window.require('nconf') : null;
 const path = DBFGL.isNative ? window.require('path') : null;

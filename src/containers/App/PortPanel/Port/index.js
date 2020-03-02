@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import type from 'prop-types';
+
+import DBFGL from '@/Global';
 import Spawner from '../../../../utils/Spawner';
 
 import MenuItem from 'material-ui/MenuItem';

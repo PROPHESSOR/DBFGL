@@ -8,7 +8,7 @@
  */
 
 import React, { Component } from 'react';
-import ___ from './global'; // eslint-disable-line
+import DBFGL from '@/Global';
 
 // Components
 import Provider from 'material-ui/styles/MuiThemeProvider';
@@ -29,14 +29,14 @@ import WindowTests from '../Tests';
 import WindowSettings from '../Settings';
 import WindowAbout from '../About';
 
-window.DBFGL.on('game.end', () => {
+DBFGL.on('game.end', () => {
     //TODO: Maximize
-    window.DBFGL.emit('window.maximize');
+    DBFGL.emit('window.maximize');
 });
 
-window.DBFGL.on('game.start', () => {
+DBFGL.on('game.start', () => {
     //TODO: Minimize
-    window.DBFGL.emit('window.minimize');
+    DBFGL.emit('window.minimize');
 });
 
 export default class App extends Component {

@@ -1,4 +1,6 @@
-const { isNative } = window.DBFGL;
+import DBFGL from '@/Global';
+
+const { isNative } = DBFGL;
 
 const cp = isNative ? window.require('child_process') : null;
 

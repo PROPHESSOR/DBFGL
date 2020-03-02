@@ -9,6 +9,8 @@ import {
     TableRowColumn
 } from 'material-ui/Table';
 
+import DBFGL from '@/Global';
+
 // import Server from './Server'; //TODO:
 import ServerClass from './Server/Server';
 import pingServers from '../../../../../utils/Servers';

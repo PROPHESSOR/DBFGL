@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-const NW = window.require ? window.require('nw.gui') : null;
+// const NW = window.require ? window.require('nw.gui') : null;
 
 class GlobalClass extends EventEmitter {
     constructor () {
@@ -29,12 +29,17 @@ class GlobalClass extends EventEmitter {
     }
 
     get appData () {
-        if (!DBFGL.isNative) {
-            throw new Error('Не могу получить путь папки лаунчера в браузере!');
-        }
+        throw new Error('Global::appData not implemented yet!');
+        // if (!DBFGL.isNative) {
+        //     throw new Error('Не могу получить путь папки лаунчера в браузере!');
+        // }
 
-        return NW.App.getDataPath();
+        // return NW.App.getDataPath();
     }
 }
 
-window.DBFGL = new GlobalClass();
+const global = new GlobalClass();
+
+// window.DBFGL = global;
+
+export default global;

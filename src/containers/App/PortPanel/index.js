@@ -1,4 +1,5 @@
 import React from 'react';
+import DBFGL from '@/Global';
 
 import PortClass from './port';
 

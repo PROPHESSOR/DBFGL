@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import DBFGL from '@/Global';
+
 import Toolbar from './Toolbar';
 import WadController from './WadController';
 import SelectedWads from './SelectedWads';
