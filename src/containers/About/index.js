@@ -64,7 +64,7 @@ export default class About extends React.Component {
                 </ul>
                 Технологии:<br />
                 <ul>
-                    <li>NW.JS</li>
+                    <li>ElectronJS</li>
                     <li>ReactJS</li>
                     <li>MaterialUI</li>
                     <li>dmaster (Copyright (C) 2013  Alex Mayfield)</li>
