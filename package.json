@@ -5,11 +5,16 @@
   "author": "PROPHESSOR",
   "homepage": "http://github.com/PROPHESSOR/DBFGL",
   "private": true,
-  "main": "http://localhost:3000",
-  "node-remote": "http://localhost:3000",
-  "window": {
-    "width": 1024,
-    "height": 768
+  "main": "electron.js",
+  "scripts": {
+    "start-server": "node scripts/start.js",
+    "start": "node scripts/start.js",
+    "open": "./node_modules/.bin/electron .",
+    "test": "node scripts/test.js --env=jsdom",
+    "build": "node scripts/build.js",
+    "check": "run-s lint:eslint lint:scss-lint",
+    "lint:eslint": "eslint ./src",
+    "lint:scss-lint": "scss-lint"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -57,16 +62,6 @@
     "webpack-dev-server": "2.7.1",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
-  },
-  "scripts": {
-    "start-server": "node scripts/start.js",
-    "start": "node scripts/start.js",
-    "open": "jsmb .",
-    "test": "node scripts/test.js --env=jsdom",
-    "build": "node scripts/build.js",
-    "check": "run-s lint:eslint lint:scss-lint",
-    "lint:eslint": "eslint ./src",
-    "lint:scss-lint": "scss-lint"
   },
   "devDependencies": {
     "babel-preset-stage-0": "^6.24.1",
