@@ -7,6 +7,9 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, /* ToolbarSeparator, */ ToolbarTitle } from 'material-ui/Toolbar';
 import Wad from '../WadController/wad/wad';
+import { IconMenu, IconButton } from 'material-ui';
+
+import Styles from './styles.scss';
 
 export default class ToolbarSingleplayer extends React.Component {
     static propTypes = {
@@ -24,6 +27,8 @@ export default class ToolbarSingleplayer extends React.Component {
             onChangeShow, onChangeSort, onChangeIwad } = this.props;
 
         const iwads = Wad.knownIWADs.map(iwad => <MenuItem primaryText={iwad} value={iwad} />) // TODO: Только найденные
+
+        const iwadIcon = <img className={Styles['toolbar-iwad-dropdown-img']} src={Wad.getIWADcover(iwadDrop)} />;
 
         return (
             <Toolbar>
@@ -47,7 +52,8 @@ export default class ToolbarSingleplayer extends React.Component {
                 <ToolbarGroup>
                     <FontIcon className='muidocs-icon-custom-sort' />
                     <ToolbarTitle text='IWAD' />
-                    <DropDownMenu value={iwadDrop} onChange={onChangeIwad}>
+                    
+                    <DropDownMenu value={iwadDrop} iconButton={iwadIcon} labelStyle={{visibility: 'hidden', width: 0}} onChange={onChangeIwad}>
                         {iwads}
                     </DropDownMenu>
                 </ToolbarGroup>

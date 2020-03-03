@@ -1,0 +1,10 @@
+.toolbar-iwad-dropdown-img {
+    user-select: none;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    // FIXME: Костыли, чтобы попасть в highlight область
+    top: -10px;
+    left: -8px;
+}
