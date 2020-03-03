@@ -7,18 +7,20 @@ import PortClass from './port';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Port from './Port';
+import Config from '../../../utils/Config';
 
-const tmp = [
-    new PortClass({
-        'name':        'GZDoom',
-        'description': '(G)ZDoom',
-        'path':        'gzdoom',
-        'argformat':   'gzdoom'
-    })
-];
+
+
+const knownPorts = Object.values(Config.get('ports'))
+    .map(port => new PortClass({
+        name: port.name,
+        description: port.description,
+        path: port.path,
+        argformat: port.argformat,
+    }));
 
 export default class Panel extends React.Component {
-    constructor () {
+    constructor() {
         super();
 
         this.state = {
@@ -44,18 +46,18 @@ export default class Panel extends React.Component {
             DBFGL.emit('panel.close', 'right');
         }
     }
-    render () {
-        const ports = tmp.map((el, i) => <Port key = { i } port = { el } />);
+    render() {
+        const ports = knownPorts.map((el, i) => <Port key={i} port={el} />);
 
         return (
             <Drawer
                 openSecondary
-                docked = { false }
-                open = { this.state.open }
-                onRequestChange = { this.togglePanel }>
+                docked={false}
+                open={this.state.open}
+                onRequestChange={this.togglePanel}>
                 <AppBar
-                    showMenuIconButton = { false }
-                    title = 'Выбор порта'
+                    showMenuIconButton={false}
+                    title='Выбор порта'
                 />
 
                 {ports}
