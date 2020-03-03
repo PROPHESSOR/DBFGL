@@ -3,11 +3,14 @@ import Config from '../../../../../utils/Config';
 import WadClass from './wad/wad';
 import Wad from './wad/wad';
 import DBFGL from '@/Global';
-// import fs from 'fs';
+
 const fs = DBFGL.isNative ? require('fs') : null;
 const path = DBFGL.isNative ? require('path') : null;
 
-export default function () {
+/**
+ * @returns {Array<WadClass>}
+ */
+export function getWads() {
     if (!DBFGL.isNative) {
         console.warn('Получение списка вадов не работает в браузере!');
 
@@ -55,4 +58,24 @@ export default function () {
 
     return Array.from(wadList);
 
+};
+
+/**
+ * @returns {Array<WadClass>}
+ */
+export function getPWads() {
+    const iwads = new Set(Wad.knownIWADs);
+
+    return getWads().filter(wad => !iwads.has(wad.name));
 }
+
+/**
+ * @returns {Array<WadClass>}
+ */
+export function getIWads() {
+    const iwads = new Set(Wad.knownIWADs);
+
+    return getWads().filter(wad => iwads.has(wad.name));
+}
+
+export default getWads;
