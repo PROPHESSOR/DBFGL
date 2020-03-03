@@ -51,74 +51,100 @@
     ],
     "ports": {
         "gzdoom": {
+            "name": "GZDoom",
+            "description": "(G)ZDoom",
+            "path": "gzdoom",
+            "argformat": "zdoom",
             "supportPk3": true,
             "supportPk7": true,
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true,
-            "supportZandronumServers": false,
-            "path": "gzdoom"
+            "supportDeHacked": true
         },
         "zandronum": {
+            "name": "Zandronum",
+            "description": "Client-Server Source Port",
+            "path": "zandronum",
+            "argformat": "zdoom",
             "supportPk3": true,
             "supportPk7": true,
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true,
-            "supportZandronumServers": false,
-            "path": "zandronum"
+            "supportDeHacked": true
         },
         "qzdoom": {
+            "name": "QZDoom",
+            "description": "",
+            "path": "qzdoom",
+            "argformat": "zdoom",
             "supportPk3": true,
             "supportPk7": true,
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true,
-            "supportZandronumServers": false,
-            "path": "qzdoom"
+            "supportDeHacked": true
+        },
+        "lzdoom": {
+            "name": "LZDoom",
+            "description": "",
+            "path": "lzdoom",
+            "argformat": "zdoom",
+            "supportPk3": true,
+            "supportPk7": true,
+            "supportDecorate": true,
+            "supportMultiplayer": true,
+            "support3dFloors": true,
+            "supportDeHacked": true
         },
         "prboom": {
+            "name": "PRBoom +",
+            "description": "PRBoom-Plus",
+            "path": "prboom-plus",
+            "argformat": "boom",
             "supportPk3": false,
             "supportPk7": false,
             "supportDecorate": false,
             "supportMultiplayer": true,
             "support3dFloors": false,
-            "supportDeHacked": false,
-            "supportZandronumServers": false,
-            "path": "prboom"
+            "supportDeHacked": false
         },
         "chocolatedoom": {
+            "name": "Chocolate Doom",
+            "description": "Vanilla-Like Source port",
+            "path": "chocolate-doom",
+            "argformat": "vanilla",
             "supportPk3": false,
             "supportPk7": false,
             "supportDecorate": false,
             "supportMultiplayer": true,
             "support3dFloors": false,
-            "supportDeHacked": false,
-            "supportZandronumServers": false,
-            "path": "chocolatedoom"
+            "supportDeHacked": false
         },
         "doom": {
+            "name": "Doom (1993)",
+            "description": "Vanilla DooM",
+            "path": "doom",
+            "argformat": "vanilla",
             "supportPk3": false,
             "supportPk7": false,
             "supportDecorate": false,
             "supportMultiplayer": false,
             "support3dFloors": false,
-            "supportDeHacked": false,
-            "supportZandronumServers": false,
-            "path": "doom"
+            "supportDeHacked": false
         },
         "doom2": {
+            "name": "Doom 2 (1994)",
+            "description": "Doom II: Hell on Earth",
+            "path": "doom2",
+            "argformat": "vanilla",
             "supportPk3": false,
             "supportPk7": false,
             "supportDecorate": false,
             "supportMultiplayer": false,
             "support3dFloors": false,
-            "supportDeHacked": false,
-            "supportZandronumServers": false,
-            "path": "doom2"
+            "supportDeHacked": false
         }
     },
     "theme": {
