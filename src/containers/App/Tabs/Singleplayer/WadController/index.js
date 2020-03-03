@@ -7,7 +7,7 @@ import { List } from 'material-ui/List';
 
 import Wad from './wad'; // Component
 // import WadClass from './wad/wad'; // Class
-import getWads from './getWadsFromFs';
+import { getPWads } from './getWadsFromFs';
 
 /* const wads = [
     new WadClass({ name: 'DOOM.WAD', picture: 'doom' }),
@@ -36,7 +36,7 @@ export default class WadController extends Component {
 
     updateWads = () => {
         this.setState({
-            wads: getWads()//.map((name) => new WadClass({ name }))
+            wads: getPWads()//.map((name) => new WadClass({ name }))
         });
         console.log('Список вадов обновлен');
     }
