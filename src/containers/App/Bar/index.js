@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DBFGL from '@/Global';
 
 // Components
 import { AppBar } from 'material-ui';

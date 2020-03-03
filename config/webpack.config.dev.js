@@ -24,6 +24,7 @@ const env = getClientEnvironment(publicUrl);
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
+    target: 'electron-renderer',
     // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
     devtool: 'cheap-module-source-map',
@@ -41,7 +42,7 @@ module.exports = {
         // the line below with these two lines if you prefer the stock client:
         // require.resolve('webpack-dev-server/client') + '?/',
         // require.resolve('webpack/hot/dev-server'),
-        require.resolve('react-dev-utils/webpackHotDevClient'),
+        // require.resolve('react-dev-utils/webpackHotDevClient'),
         // We ship a few polyfills by default:
         require.resolve('./polyfills'),
         // Errors should be considered fatal in development
@@ -95,7 +96,8 @@ module.exports = {
         alias: {
             // Support React Native Web
             // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-            'react-native': 'react-native-web'
+            'react-native': 'react-native-web',
+            '@': path.resolve('src')
         },
         plugins: [
             // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -270,15 +272,18 @@ module.exports = {
         // solution that requires the user to opt into importing specific locales.
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         // You can remove this if you don't use Moment.js:
-        // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     ],
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
     node: {
-        dgram: 'empty',
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty'
+        dgram:          'empty',
+        fs:             'empty',
+        net:            'empty',
+        tls:            'empty',
+        os:             'empty',
+        electron:       'empty',
+        child_process:  'empty',
     },
     // Turn off performance hints during development because we don't do any
     // splitting or minification in interest of speed. These warnings become

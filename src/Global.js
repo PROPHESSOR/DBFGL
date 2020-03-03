@@ -1,5 +1,10 @@
-import { EventEmitter } from 'events';
-const NW = window.require ? window.require('nw.gui') : null;
+// import { EventEmitter } from 'events';
+
+const { EventEmitter } = require('events');
+
+const isNative = !!(window && window.process && window.process.type);
+
+const electron = isNative ? require('electron') : null;
 
 class GlobalClass extends EventEmitter {
     constructor () {
@@ -25,7 +30,7 @@ class GlobalClass extends EventEmitter {
     }
 
     get isNative () {
-        return typeof window.require === 'function';
+        return isNative;
     }
 
     get appData () {
@@ -33,8 +38,12 @@ class GlobalClass extends EventEmitter {
             throw new Error('Не могу получить путь папки лаунчера в браузере!');
         }
 
-        return NW.App.getDataPath();
+        return electron.remote.app.getPath('appData');;
     }
 }
 
-window.DBFGL = new GlobalClass();
+const global = new GlobalClass();
+
+window.DBFGL = global;
+
+export default global;

@@ -4,6 +4,8 @@ import SwipeableViews from 'react-swipeable-views';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 
+import DBFGL from '@/Global';
+
 import Singleplayer from './Singleplayer';
 import Multiplayer from './Multiplayer';
 
@@ -37,7 +39,7 @@ export default class TabsExampleSimple extends Component {
             <SwipeableViews
                 index = { this.state.slideIndex }
                 slideStyle = { {
-                    overflow: 'inherit'
+                    overflow: 'auto'
                 } }>
                 <div>
                     <Singleplayer />

@@ -48,6 +48,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
 module.exports = {
+    target: 'electron-renderer',
     // Don't attempt to continue if there are any errors.
     bail:    true,
     // We generate sourcemaps in production. This is slow but gives good results.
@@ -98,7 +99,8 @@ module.exports = {
         alias: {
             // Support React Native Web
             // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-            'react-native': 'react-native-web'
+            'react-native': 'react-native-web',
+            '@': path.resolve('src')
         },
         plugins: [
             // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -338,9 +340,12 @@ module.exports = {
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
     node: {
-        dgram: 'empty',
-        fs:    'empty',
-        net:   'empty',
-        tls:   'empty'
+        dgram:          'empty',
+        fs:             'empty',
+        net:            'empty',
+        tls:            'empty',
+        os:             'empty',
+        electron:       'empty',
+        child_process:  'empty',
     }
 };

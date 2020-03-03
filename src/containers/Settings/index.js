@@ -1,5 +1,6 @@
 import React from 'react';
 // import Config from '../../utils/Config';
+import DBFGL from '@/Global';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';

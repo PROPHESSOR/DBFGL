@@ -1,4 +1,5 @@
 import React from 'react';
+import DBFGL from '@/Global';
 
 import PortClass from './port';
 
@@ -11,7 +12,7 @@ const tmp = [
     new PortClass({
         'name':        'GZDoom',
         'description': '(G)ZDoom',
-        'path':        'gzdoom3',
+        'path':        'gzdoom',
         'argformat':   'gzdoom'
     })
 ];

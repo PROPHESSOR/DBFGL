@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
+import DBFGL from '@/Global';
+
 import Alert from './Alert';
 
 export default class AlertBox extends Component {

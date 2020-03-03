@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import type from 'prop-types';
+import DBFGL from '@/Global';
 
 import { List } from 'material-ui/List';
 

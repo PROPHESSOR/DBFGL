@@ -1,6 +1,8 @@
 import React from 'react';
 import Config from '../../utils/Config';
 
+import DBFGL from '@/Global';
+
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -62,7 +64,7 @@ export default class About extends React.Component {
                 </ul>
                 Технологии:<br />
                 <ul>
-                    <li>NW.JS</li>
+                    <li>ElectronJS</li>
                     <li>ReactJS</li>
                     <li>MaterialUI</li>
                     <li>dmaster (Copyright (C) 2013  Alex Mayfield)</li>

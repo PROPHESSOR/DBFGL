@@ -19,7 +19,6 @@ env:
 
 globals:
     global: false
-    DBFGL: false
 
 rules:
   no-cond-assign: 1

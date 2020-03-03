@@ -2,9 +2,10 @@ import Config from '../../../../../utils/Config';
 
 import WadClass from './wad/wad';
 import Wad from './wad/wad';
+import DBFGL from '@/Global';
 // import fs from 'fs';
-const fs = DBFGL.isNative ? window.require('fs') : null;
-const path = DBFGL.isNative ? window.require('path') : null;
+const fs = DBFGL.isNative ? require('fs') : null;
+const path = DBFGL.isNative ? require('path') : null;
 
 export default function () {
     if (!DBFGL.isNative) {
