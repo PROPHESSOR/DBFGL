@@ -1,4 +1,6 @@
-import { EventEmitter } from 'events';
+// import { EventEmitter } from 'events';
+
+const { EventEmitter } = require('events');
 
 const isNative = !!(window && window.process && window.process.type);
 
@@ -35,8 +37,6 @@ class GlobalClass extends EventEmitter {
         if (!DBFGL.isNative) {
             throw new Error('Не могу получить путь папки лаунчера в браузере!');
         }
-
-        debugger;
 
         return electron.remote.app.getPath('appData');;
     }
