@@ -61,14 +61,6 @@ export default class Panel extends React.Component {
                 />
 
                 {ports}
-                {/*<MenuItem onClick = { this.run }>GZDoom</MenuItem>
-                <MenuItem onClick = { this.run }>Zandronum</MenuItem>
-                <MenuItem onClick = { this.run }>QZDoom</MenuItem>
-                <MenuItem onClick = { this.run }>PrBoomPlus</MenuItem>
-                <MenuItem onClick = { this.run }>Retro Doom</MenuItem>
-                <MenuItem onClick = { this.run }>Chocolate Doom</MenuItem>
-                <MenuItem onClick = { this.run }>Doom</MenuItem>
-                <MenuItem onClick = { this.run }>Doom 2</MenuItem> */}
             </Drawer>
         );
     }
