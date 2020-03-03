@@ -39,7 +39,7 @@ export default class TabsExampleSimple extends Component {
             <SwipeableViews
                 index = { this.state.slideIndex }
                 slideStyle = { {
-                    overflow: 'inherit'
+                    overflow: 'auto'
                 } }>
                 <div>
                     <Singleplayer />
