@@ -1,4 +1,5 @@
 import knownIWADs from '@/declarations/knownIwads.json';
+import covers from '../../../../../../theme/assets/wadcovers';
 
 export default class Wad {
 
@@ -17,7 +18,7 @@ export default class Wad {
         this.path = '';
         this.type = 'WAD';
 
-        this.picture = Wad.getIWADcover(options.name);
+        this.picture = Wad.getIWADcoverName(options.name);
 
         Object.assign(this, options);
     }
@@ -26,7 +27,7 @@ export default class Wad {
      * 
      * @param {string} iwad 
      */
-    static getIWADcover(iwad) {
+    static getIWADcoverName(iwad) {
         const wadname = iwad.toLowerCase();
 
         switch (wadname) {
@@ -50,6 +51,14 @@ export default class Wad {
             default:
                 return 'doom';
         }
+    }
+
+    /**
+     * 
+     * @param {string} iwad 
+     */
+    static getIWADcover(iwad) {
+        return covers[Wad.getIWADcoverName(iwad)];
     }
 
     static get knownIWADs() {
