@@ -60,7 +60,8 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": false
         },
         "zandronum": {
             "name": "Zandronum",
@@ -72,7 +73,8 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": true
         },
         "qzdoom": {
             "name": "QZDoom",
@@ -84,7 +86,8 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": false
         },
         "lzdoom": {
             "name": "LZDoom",
@@ -96,7 +99,8 @@
             "supportDecorate": true,
             "supportMultiplayer": true,
             "support3dFloors": true,
-            "supportDeHacked": true
+            "supportDeHacked": true,
+            "supportZandronumServers": false
         },
         "prboom": {
             "name": "PRBoom +",
@@ -108,7 +112,8 @@
             "supportDecorate": false,
             "supportMultiplayer": true,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false
         },
         "chocolatedoom": {
             "name": "Chocolate Doom",
@@ -120,7 +125,8 @@
             "supportDecorate": false,
             "supportMultiplayer": true,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false
         },
         "doom": {
             "name": "Doom (1993)",
@@ -132,7 +138,8 @@
             "supportDecorate": false,
             "supportMultiplayer": false,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false
         },
         "doom2": {
             "name": "Doom 2 (1994)",
@@ -144,7 +151,8 @@
             "supportDecorate": false,
             "supportMultiplayer": false,
             "support3dFloors": false,
-            "supportDeHacked": false
+            "supportDeHacked": false,
+            "supportZandronumServers": false
         }
     },
     "theme": {

@@ -4,14 +4,14 @@ import Config from '../../../../utils/Config';
 import Section from '../../Section';
 import FlatButton from 'material-ui/FlatButton';
 
-export default class DialogExampleScrollable extends Component {
+export default class SettingsPorts extends Component {
     state = {
-        ports: {}
+        ports: []
     }
 
     componentDidMount = () => {
         this.setState({
-            ports: Config.get('ports')
+            ports: Object.values(Config.get('ports')),
         });
     }
 
@@ -23,19 +23,14 @@ export default class DialogExampleScrollable extends Component {
         const { ports } = this.state;
         const jsxPorts = [];
 
-        for (const i in ports) {
-            if (!ports.hasOwnProperty(i)) {
-                continue;
-            }
-            const port = ports[i];
-
+        for (const port of ports) {
             jsxPorts.push(
                 <Section
-                    key = { i }
-                    subtitle = { `Настройка порта ${i}` }
-                    title = { i }>
+                    key = { port.name + port.path }
+                    subtitle = { `Настройка порта ${port.name}` }
+                    title = { port.name }>
                     <ul>
-                        <li>Путь к порту: {port.path.toString()}</li>
+                        <li>Путь к порту: {port.path}</li>
                         <li>Поддержка pk3: {port.supportPk3.toString()}</li>
                         <li>Поддержка pk7: {port.supportPk7.toString()}</li>
                         <li>Поддержка Decorate: {port.supportDecorate.toString()}</li>
