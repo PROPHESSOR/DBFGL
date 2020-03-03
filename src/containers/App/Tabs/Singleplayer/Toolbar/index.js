@@ -46,7 +46,7 @@ export default class ToolbarSingleplayer extends React.Component {
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <ToolbarTitle text='IWAD' />
+                    <ToolbarTitle text='IWAD' style={{paddingRight: 0}} />
                     
                     <DropDownMenu value={iwadDrop} iconButton={iwadIcon} labelStyle={{visibility: 'hidden', width: 0}} onChange={onChangeIwad}>
                         {iwads}
