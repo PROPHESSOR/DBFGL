@@ -1,13 +1,11 @@
 import React from 'react';
 import type from 'prop-types';
 
-import FontIcon from 'material-ui/FontIcon';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Toolbar, ToolbarGroup, /* ToolbarSeparator, */ ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import Wad from '../WadController/wad/wad';
-import { IconMenu, IconButton } from 'material-ui';
 
 import Styles from './styles.scss';
 
@@ -40,8 +38,6 @@ export default class ToolbarSingleplayer extends React.Component {
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <FontIcon className='muidocs-icon-custom-sort' />
-                    {/* <ToolbarSeparator /> */}
                     <RaisedButton primary label='Создать коллекцию' />
                     <ToolbarTitle text='Сортировка' />
                     <DropDownMenu value={sortDrop} onChange={onChangeSort}>
@@ -50,7 +46,6 @@ export default class ToolbarSingleplayer extends React.Component {
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <FontIcon className='muidocs-icon-custom-sort' />
                     <ToolbarTitle text='IWAD' />
                     
                     <DropDownMenu value={iwadDrop} iconButton={iwadIcon} labelStyle={{visibility: 'hidden', width: 0}} onChange={onChangeIwad}>
