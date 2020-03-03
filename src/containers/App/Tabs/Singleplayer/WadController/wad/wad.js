@@ -17,6 +17,7 @@ export default class Wad {
         }
         this.path = '';
         this.type = 'WAD';
+        this.name = options.name;
 
         this.picture = Wad.getIWADcoverName(options.name);
 
