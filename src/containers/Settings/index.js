@@ -9,6 +9,8 @@ import Section from './Section';
 
 // Sections
 import SPorts from './Sections/Ports';
+import Config from '../../utils/Config';
+import { TextField } from 'material-ui';
 
 export default class Settings extends React.Component {
     constructor () {
@@ -56,6 +58,10 @@ export default class Settings extends React.Component {
             />
         ];
 
+        const wadFolders = Config.get('wads:folders')
+            .map(folder => folder.replace('{appdata}', DBFGL.appData))
+            .map(folder => <TextField readOnly disabled value={folder} inputStyle={{color: 'white'}} />); // FIXME: Use theme colors
+
         return (
             <Dialog
                 autoScrollBodyContent
@@ -67,7 +73,9 @@ export default class Settings extends React.Component {
                 <Section
                     subtitle = 'Первая папка используется, так же, для скачивания новых вадов'
                     title = 'Папки для поиска wad файлов'>
-                TODO: Write me!
+                        <div>
+                            {wadFolders}
+                        </div>
                 </Section>
                 <Section
                     subtitle = ''
