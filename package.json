@@ -3,7 +3,7 @@
   "description": "It's a DooM Launcher!",
   "version": "0.0.1",
   "author": "PROPHESSOR",
-  "homepage": "http://github.com/PROPHESSOR/DBFGL",
+  "homepage": "./",
   "private": true,
   "main": "app.js",
   "node-remote": "http://localhost:3000",
