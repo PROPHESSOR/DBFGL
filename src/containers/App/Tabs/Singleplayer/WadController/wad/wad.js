@@ -15,7 +15,19 @@ export default class Wad {
         this.path = '';
         this.type = 'WAD';
 
-        switch (options.name.toLowerCase()) {
+        this.picture = Wad.getIWADcover(options.name);
+
+        Object.assign(this, options);
+    }
+
+    /**
+     * 
+     * @param {string} iwad 
+     */
+    static getIWADcover(iwad) {
+        const wadname = iwad.toLowerCase();
+
+        switch (wadname) {
             case 'doom.wad':
             case 'doom2.wad':
             case 'plutonia.wad':
@@ -27,20 +39,31 @@ export default class Wad {
             case 'heretic.wad':
             case 'hexen.wad':
             case 'strife.wad':
-                this.picture = options.name.toLowerCase().split('.')[0];
-                break;
+                return wadname.split('.')[0];
             case 'freedoom.wad':
             case 'freedoom2.wad':
-                this.picture = 'freedoom2';
-                break;
+                return 'freedoom2';
             case 'freedoom1.wad':
-                this.picture = 'freedoom';
-                break;
+                return 'freedoom';
             default:
-                this.picture = 'doom';
-                break;
+                return 'doom';
         }
-
-        Object.assign(this, options);
     }
+
+    static knownIWADs = [
+        'doom.wad',
+        'doom2.wad',
+        'plutonia.wad',
+        'tnt.wad',
+        'chex.wad',
+        'chex2.wad',
+        'doom64.wad',
+        'hacx.wad',
+        'heretic.wad',
+        'hexen.wad',
+        'strife.wad',
+        'freedoom.wad',
+        'freedoom2.wad',
+        'freedoom1.wad',
+    ];
 }
