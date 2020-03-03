@@ -1,5 +1,5 @@
-const dgram = DBFGL.isNative ? window.require('dgram') : null;
-const Buffer = DBFGL.isNative ? window.require('buffer').Buffer : null;
+const dgram = DBFGL.isNative ? require('dgram') : null;
+const Buffer = DBFGL.isNative ? require('buffer').Buffer : null;
 
 import DBFGL from '@/Global';
 import Huffman from './huff';

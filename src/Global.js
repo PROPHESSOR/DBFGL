@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
-// const NW = window.require ? window.require('nw.gui') : null;
+
+const isNative = !!require('fs');
 
 class GlobalClass extends EventEmitter {
     constructor () {
@@ -25,7 +26,8 @@ class GlobalClass extends EventEmitter {
     }
 
     get isNative () {
-        return typeof window.require === 'function';
+        return false; // FIXME: Пока что, исправлены не все NW-зависимые места
+        return isNative;
     }
 
     get appData () {

@@ -1,17 +1,17 @@
 import defaultConfig from '../declarations/defaultconfig.json';
 import DBFGL from '@/Global';
 
-const nconf = DBFGL.isNative ? window.require('nconf') : null;
-const path = DBFGL.isNative ? window.require('path') : null;
+const nconf = DBFGL.isNative ? require('nconf') : null;
+const path = DBFGL.isNative ? require('path') : null;
 
-
-if (DBFGL.isNative) {
-    nconf
-        .argv()
-        .env()
-        .file({ file: path.join(DBFGL.appData, 'config.json') })
-        .defaults(defaultConfig);
-}
+// FIXME:
+// if (DBFGL.isNative) {
+//     nconf
+//         .argv()
+//         .env()
+//         .file({ file: path.join(DBFGL.appData, 'config.json') })
+//         .defaults(defaultConfig);
+// }
 
 export default {
     get (...args) {

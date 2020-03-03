@@ -2,7 +2,7 @@ import DBFGL from '@/Global';
 
 const { isNative } = DBFGL;
 
-const cp = isNative ? window.require('child_process') : null;
+const cp = isNative ? require('child_process') : null;
 
 class Spawner {
     constructor () {
