@@ -11,7 +11,8 @@ export default class Singleplayer extends Component {
         super();
         this.state = {
             showDrop: 1,
-            sortDrop: 0
+            sortDrop: 0,
+            iwadDrop: 'doom2.wad',
 
             // Split
         };
@@ -22,18 +23,21 @@ export default class Singleplayer extends Component {
 
     onChangeShow = (event, index, value) => this.setState({ showDrop: value });
     onChangeSort = (event, index, value) => this.setState({ sortDrop: value });
+    onChangeIwad = (event, index, value) => this.setState({ iwadDrop: value });
 
     render () {
         return (
             <div
                 style = { {
-                    height: 'calc(100vh - 110px)'
+                    height: 'calc(100vh - 110px)' // FIXME: Это что за хрень?
                 } }>
                 <Toolbar
                     showDrop = { this.state.showDrop }
                     sortDrop = { this.state.sortDrop }
+                    iwadDrop = {this.state.iwadDrop}
                     onChangeShow = { this.onChangeShow }
                     onChangeSort = { this.onChangeSort }
+                    onChangeIwad = { this.onChangeIwad }
                 />
                 <WadController
                     style = { {
