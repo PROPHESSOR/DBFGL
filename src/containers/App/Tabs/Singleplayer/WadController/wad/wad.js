@@ -1,3 +1,5 @@
+import knownIWADs from '@/declarations/knownIwads.json';
+
 export default class Wad {
 
     /**
@@ -50,20 +52,7 @@ export default class Wad {
         }
     }
 
-    static knownIWADs = [
-        'doom.wad',
-        'doom2.wad',
-        'plutonia.wad',
-        'tnt.wad',
-        'chex.wad',
-        'chex2.wad',
-        'doom64.wad',
-        'hacx.wad',
-        'heretic.wad',
-        'hexen.wad',
-        'strife.wad',
-        'freedoom.wad',
-        'freedoom2.wad',
-        'freedoom1.wad',
-    ];
+    static get knownIWADs() {
+        return knownIWADs;
+    }
 }
