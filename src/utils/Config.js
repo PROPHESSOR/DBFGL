@@ -4,14 +4,13 @@ import DBFGL from '@/Global';
 const nconf = DBFGL.isNative ? require('nconf') : null;
 const path = DBFGL.isNative ? require('path') : null;
 
-// FIXME:
-// if (DBFGL.isNative) {
-//     nconf
-//         .argv()
-//         .env()
-//         .file({ file: path.join(DBFGL.appData, 'config.json') })
-//         .defaults(defaultConfig);
-// }
+if (DBFGL.isNative) {
+    nconf
+        .argv()
+        .env()
+        .file({ file: path.join(DBFGL.appData, 'config.json') })
+        .defaults(defaultConfig);
+}
 
 export default {
     get (...args) {
