@@ -26,6 +26,7 @@ export default class Wad {
     /**
      * 
      * @param {string} iwad 
+     * @returns {string} like "doom2"
      */
     static getIWADcoverName(iwad) {
         const wadname = iwad.toLowerCase();
@@ -56,11 +57,15 @@ export default class Wad {
     /**
      * 
      * @param {string} iwad 
+     * @returns {string} "like public/assets/.../doom2.jpg"
      */
     static getIWADcover(iwad) {
         return covers[Wad.getIWADcoverName(iwad)];
     }
 
+    /**
+     * @returns {Array<string>}
+     */
     static get knownIWADs() {
         return knownIWADs;
     }
