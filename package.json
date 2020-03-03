@@ -5,7 +5,7 @@
   "author": "PROPHESSOR",
   "homepage": "http://github.com/PROPHESSOR/DBFGL",
   "private": true,
-  "main": "electron.js",
+  "main": "app.js",
   "node-remote": "http://localhost:3000",
   "scripts": {
     "start-server": "node scripts/start.js",
