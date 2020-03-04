@@ -24,6 +24,8 @@ export function getWads() {
 
     // Создаём папки, если их нет
     for (const folder of wadPathes) {
+        if (fs.existsSync(folder)) continue;
+
         try {
             fs.mkdirSync(folder);
         } catch (e) {
