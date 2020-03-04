@@ -1,3 +1,5 @@
+import Wad from './containers/App/Tabs/Singleplayer/WadController/wad/wad';
+
 // import { EventEmitter } from 'events';
 
 const { EventEmitter } = require('events');
@@ -6,12 +8,13 @@ const isNative = !!(window && window.process && window.process.type);
 
 const electron = isNative ? require('electron') : null;
 
+// Когда хочешь использовать IntelliSense, но лень переходить на TypeScript =D
 /**
  * @typedef {
             "tab.change"|
             "window.minimize"|"window.restore"|"window.close"|"window.open"|
             "panel.open"|"panel.close"|
-            "singleplayer.wadlist.selected.update"|
+            "singleplayer.wadlist.selected.update"|"singleplayer.wadlist.iwad.update"|
             "game.start"|"game.stop"|"game.kill"
         } GlobalEvents
  */
@@ -21,7 +24,11 @@ class GlobalClass extends EventEmitter {
         super();
         this.singleplayer = {
             selected: [],
-            iwad: null // new Wad
+            /**
+             * path to iwad // TODO: Make it <Wad>
+             * @type {string}
+             */
+            iwad: null,
         };
         /**
          * @type {"singleplayer"|"multiplayer"}
@@ -50,7 +57,6 @@ class GlobalClass extends EventEmitter {
             else
                 electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
         });
-        // this.emit('')
     }
     
     /**

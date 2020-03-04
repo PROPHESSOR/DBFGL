@@ -10,12 +10,30 @@ import { getIWads } from './WadController/getWadsFromFs';
 export default class Singleplayer extends Component {
     constructor () {
         super();
+
+        const iwads = getIWads();
+
         this.state = {
+            iwads,
             showDrop: 1,
             sortDrop: 0,
             iwadDrop: 'doom2.wad',
-            iwads: getIWads(),
         };
+
+        let defaultiwad = iwads.filter(iwad => iwad.name === 'doom2.wad')[0];
+
+        if (!defaultiwad) defaultiwad = iwads[0];
+
+        if (!defaultiwad) throw new Error('No IWADs found!');
+
+        if (!DBFGL.singleplayer.iwad) {
+            DBFGL.singleplayer.iwad = defaultiwad.path;
+            DBFGL.emit('singleplayer.wadlist.iwad.update');
+        }
+
+        this.setState({
+            iwadDrop: defaultiwad.name,
+        });
     }
 
     onChangeShow = (event, index, value) => this.setState({ showDrop: value });

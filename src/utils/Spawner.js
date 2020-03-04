@@ -15,10 +15,11 @@ class Spawner {
 
     /** Спавнит процесс в
      * @param  {string} idname - Ключевое слово, для дальшейних действий с процессом
-     * @param  {string} command - Команда, которую нужно выполнить
+     * @param  {string} exec - Путь к исполняемому файлу
+     * @param  {Array<string>} args - Аргументы
      * @returns {number} ID процесса
      */
-    spawn = (idname, command) => {
+    spawn = (idname, exec, args=[]) => {
         if (!isNative) {
             throw new Error('Не могу запустить процесс из браузера!');
         }
@@ -29,7 +30,7 @@ class Spawner {
 
         DBFGL.emit('window.minimize');
 
-        const process = cp.spawn(command);
+        const process = cp.spawn(exec, args);
 
         this.processes.set(idname, process);
 
