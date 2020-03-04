@@ -33,6 +33,11 @@ class Spawner {
 
         this.processes.set(idname, process);
 
+        process.on('exit', () => {
+            this.kill(idname)
+            DBFGL.emit('window.restore');
+        });
+
         // window.DBFGL.emit('game.start', idname, process.pid);
 
         return process.pid;

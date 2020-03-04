@@ -29,7 +29,7 @@ class GlobalClass extends EventEmitter {
 
         this.on('window.restore', () => {
             if (!isNative) return;
-            electron.remote.BrowserWindow.getFocusedWindow().restore();
+            electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
         });
     }
 
