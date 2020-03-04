@@ -4,9 +4,20 @@ import DBFGL from '@/Global';
 
 import { List } from 'material-ui/List';
 
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 import Wad from '../WadController/wad'; // Component
 // eslint-disable-next-line no-unused-vars
 import WadClass from '@/classes/wad'; // Class
+
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+
+    result.splice(endIndex, 0, removed);
+
+    return result;
+};
 
 export default class SelectedWads extends Component {
     static propTypes = {
@@ -42,14 +53,44 @@ export default class SelectedWads extends Component {
         DBFGL.emit('singleplayer.wadlist.selected.update');
     }
 
+    onDragEnd = result => {
+        if (!result.destination) return;
+
+        const wads = reorder(
+            DBFGL.singleplayer.selected,
+            result.source.index,
+            result.destination.index
+        );
+
+        DBFGL.singleplayer.selected = wads;
+        DBFGL.emit('singleplayer.wadlist.selected.update');
+    }
+
     render() {
-        const jsxwads = this.state.wads.map((e, i) => (<Wad key={i} value={i} wad={e} onClick={this.remove} />));
+        const jsxwads = this.state.wads.map((wad, i) => (<Draggable key={wad.name} index={i} draggableId={wad.name}>
+            {provided => (<div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}>
+                <Wad value={i} wad={wad} onClick={this.remove} />
+            </div>)}
+        </Draggable>));
 
         return (
-            <List
-                style={this.props.style}>
-                {jsxwads}
-            </List>
+            <DragDropContext onDragEnd={this.onDragEnd}>
+                <List style={this.props.style}>
+                    <Droppable droppableId='1'>
+                        {provided => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}>
+                                {jsxwads}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </List>
+            </DragDropContext >
         );
     }
 }
