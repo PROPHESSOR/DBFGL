@@ -12,6 +12,7 @@ import { getIWads } from '../WadController/getWadsFromFs';
 
 export default class ToolbarSingleplayer extends React.Component {
     static propTypes = {
+        iwads:    type.array.isRequired,
         showDrop: type.number.isRequired,
         sortDrop: type.number.isRequired,
         iwadDrop: type.string.isRequired,
@@ -22,10 +23,11 @@ export default class ToolbarSingleplayer extends React.Component {
 
     render() {
         const {
+            iwads,
             showDrop, sortDrop, iwadDrop,
             onChangeShow, onChangeSort, onChangeIwad } = this.props;
 
-        const iwads = getIWads().map(iwad => <MenuItem primaryText={iwad.name} value={iwad.name} />) // TODO: Только найденные
+        const iwadsJsx = iwads.map(iwad => <MenuItem primaryText={iwad.name} value={iwad.name} />);
 
         const iwadIcon = <img className={Styles['toolbar-iwad-dropdown-img']} src={Wad.getIWADcover(iwadDrop)} />;
 
@@ -50,7 +52,7 @@ export default class ToolbarSingleplayer extends React.Component {
                     <ToolbarTitle text='IWAD' style={{paddingRight: 0}} />
                     
                     <DropDownMenu value={iwadDrop} iconButton={iwadIcon} labelStyle={{visibility: 'hidden', width: 0}} onChange={onChangeIwad}>
-                        {iwads}
+                        {iwadsJsx}
                     </DropDownMenu>
                 </ToolbarGroup>
             </Toolbar>
