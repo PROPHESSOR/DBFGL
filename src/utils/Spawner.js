@@ -27,6 +27,8 @@ class Spawner {
             throw new Error('Данный процесс уже запущен!');
         }
 
+        DBFGL.emit('window.minimize');
+
         const process = cp.spawn(command);
 
         this.processes.set(idname, process);

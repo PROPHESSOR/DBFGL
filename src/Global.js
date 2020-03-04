@@ -21,6 +21,16 @@ class GlobalClass extends EventEmitter {
             }
             this.tab = tab;
         });
+
+        this.on('window.minimize', () => {
+            if (!isNative) return;
+            electron.remote.BrowserWindow.getFocusedWindow().minimize();
+        });
+
+        this.on('window.restore', () => {
+            if (!isNative) return;
+            electron.remote.BrowserWindow.getFocusedWindow().restore();
+        });
     }
 
     // Uncomment for event debugging
