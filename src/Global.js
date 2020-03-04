@@ -75,7 +75,9 @@ class GlobalClass extends EventEmitter {
             throw new Error('Не могу получить путь папки лаунчера в браузере!');
         }
 
-        return electron.remote.app.getPath('appData');;
+        const path = require('path');
+
+        return path.join(electron.remote.app.getPath('appData'), 'doom-bfg-launcher');
     }
 }
 
