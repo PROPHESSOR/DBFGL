@@ -38,6 +38,8 @@ export default class About extends React.Component {
             />,
         ];
 
+        const version = DBFGL.isNative ? ` v${require('../../../package.json').version}` : '';
+
         return (
             <Dialog
                 autoScrollBodyContent
@@ -46,7 +48,7 @@ export default class About extends React.Component {
                 open={this.state.open}
                 title='О программе'
                 onRequestClose={this.close}>
-                <h3>DooM BFG Launcher [DBFGL]: <i>It is a DooM Launcher!</i></h3><br /><br />
+                <h3>DooM BFG Launcher{version}: <i>DBFGL is a DooM Launcher!</i></h3><br /><br />
                 <b>DBFGL</b> - графический лаунчер для организации и запуска различных портов DOOM.<br />
                 Написан на JavaScript с использованием ReactJS.<br />
                 Поддерживает множество стандартных (*ZDoom, Zandronum, PrBoom+, Chocolate Doom, Doom Retro, e.t.c.) и пользовательских портов, включая несколько версий одного порта.<br />
