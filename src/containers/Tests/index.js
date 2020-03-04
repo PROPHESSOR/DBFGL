@@ -28,19 +28,21 @@ export default class DialogExampleScrollable extends React.Component {
         DBFGL.emit('window.close', 'test');
     };
 
-    getFromConfig = () => {
-        const res = prompt('Что вы хотите получить?');
+    getFromConfig = async() => {
+        this.close();
+        const res = await DBFGL.prompt({ title: 'Что вы хотите получить?' });
 
         if (res) alert(Config.get(res));
 
     }
 
-    setToConfig = () => {
-        const to = prompt('Куда сохранить');
+    setToConfig = async() => {
+        this.close();
+        const to = await DBFGL.prompt({ title: 'Куда сохранить' });
 
         if (!to) return;
 
-        const what = prompt(`Что сохранить? Сейчас там: ${Config.get(to)}`);
+        const what = await DBFGL.prompt({ title: `Что сохранить? Сейчас там: ${Config.get(to)}` });
 
         if (!what) return;
 
@@ -49,41 +51,46 @@ export default class DialogExampleScrollable extends React.Component {
     saveConfig = () => {
         Config.save();
     }
-    openWindow = () => {
-        const name = prompt('Какое окно открыть? (test)');
+    openWindow = async() => {
+        this.close();
+        const name = await await DBFGL.prompt({ title: 'Какое окно открыть? (test)' });
 
         if (!name) return;
 
         DBFGL.emit('window.open', name);
     }
-    openPanel = () => {
-        const name = prompt('Какую панель открыть? (left/right)');
+    openPanel = async() => {
+        this.close();
+        const name = await DBFGL.prompt({ title: 'Какую панель открыть? (left/right)' });
 
         if (!name) return;
 
         DBFGL.emit('panel.open', name);
     }
-    startProcess = () => {
-        const name = prompt('Введите id процесса (строка):');
+    startProcess = async() => {
+        this.close();
+        const name = await DBFGL.prompt({ title: 'Введите id процесса (строка):' });
 
         if (!name) return;
 
-        const command = prompt('Введите команду для запуска (путь к игре):');
+        const command = await DBFGL.prompt({ title: 'Введите команду для запуска (путь к игре):' });
 
         if (!command) return;
 
         DBFGL.emit('game.start', name, command);
     }
-    stopProcess = () => {
-        const name = prompt('Введите id процесса (строка):');
+    stopProcess = async() => {
+        this.close();
+        const name = await DBFGL.prompt({ title: 'Введите id процесса (строка):' });
 
         if (!name) return;
 
 
         DBFGL.emit('game.stop', name);
     }
-    killProcess = () => {
-        const name = prompt('Введите id процесса (строка):');
+    killProcess = async() => {
+        this.close();
+        const name = await DBFGL.prompt({ title: 'Введите id процесса (строка):' });
 
         if (!name) return;
 
