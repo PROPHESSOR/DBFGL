@@ -1,5 +1,6 @@
+/* global process module */
+
 const path = require('path');
-const url = require('url');
 
 const { app, BrowserWindow } = require('electron');
 
@@ -17,9 +18,9 @@ app.on('ready', () => {
         width:           1024,
         height:          768,
         autoHideMenuBar: true,
-        webPreferences: {
+        webPreferences:  {
             nodeIntegration: true,
-        }
+        },
     });
 
     if (oldlivereload) window.loadURL('http://localhost:3000');

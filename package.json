@@ -17,7 +17,7 @@
     "lint:eslint": "eslint ./src",
     "lint:scss-lint": "scss-lint",
     "ebuild": "./afterbuild.sh; ./node_modules/.bin/electron-builder",
-    "release": "yarn build; yarn pack"
+    "release": "yarn build; yarn ebuild"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",
