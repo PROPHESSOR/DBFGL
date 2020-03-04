@@ -1,0 +1,7 @@
+{
+    "name": "doom-bfg-launcher",
+    "description": "[DBFGL] Doom BFG Launcher",
+    "author": "PROPHESSOR",
+    "version": "0.0.1",
+    "main": "app.js"
+  }

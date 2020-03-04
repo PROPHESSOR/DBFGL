@@ -1,0 +1,31 @@
+appId: com.prophessor.dbfgl
+copyright: PROPHESSOR
+productName: Doom BFG Launcher
+publish:
+  - provider: github
+    owner: prophessor
+    repo: DBFGL
+directories:
+  output: dist/
+  buildResources: build/
+  app: build/
+mac:
+  category: public.app-category.game
+  target:
+    - zip
+    - dmg
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+    - target: portable
+      arch:
+        - x64
+        - ia32
+linux:
+  category: Games
+  target:
+    # - deb
+    - AppImage

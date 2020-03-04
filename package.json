@@ -1,6 +1,6 @@
 {
   "name": "doom-bfg-launcher",
-  "description": "It's a DooM Launcher!",
+  "description": "[DBFGL] Doom BFG Launcher — It's a DooM Launcher!",
   "version": "0.0.1",
   "author": "PROPHESSOR",
   "homepage": "./",
@@ -15,7 +15,9 @@
     "build": "node scripts/build.js",
     "check": "run-s lint:eslint lint:scss-lint",
     "lint:eslint": "eslint ./src",
-    "lint:scss-lint": "scss-lint"
+    "lint:scss-lint": "scss-lint",
+    "ebuild": "./afterbuild.sh; ./node_modules/.bin/electron-builder",
+    "release": "yarn build; yarn pack"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",
