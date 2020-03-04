@@ -10,7 +10,7 @@ export default class Wad extends Component {
   static propTypes = {
       wad:     type.object.isRequired,
       value:   type.number,
-      onClick: type.func
+      onClick: type.func.isRequired,
   }
 
   render () {
