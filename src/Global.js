@@ -6,12 +6,22 @@ const isNative = !!(window && window.process && window.process.type);
 
 const electron = isNative ? require('electron') : null;
 
+/**
+ * @typedef {
+            "tab.change"|
+            "window.minimize"|"window.restore"|"window.close"|"window.open"|
+            "panel.open"|"panel.close"|
+            "singleplayer.wadlist.selected.update"|
+            "game.start"|"game.stop"|"game.kill"
+        } GlobalEvents
+ */
+
 class GlobalClass extends EventEmitter {
-    constructor () {
+    constructor() {
         super();
         this.singleplayer = {
             selected: [],
-            iwad:     null // new Wad
+            iwad: null // new Wad
         };
         /**
          * @type {"singleplayer"|"multiplayer"}
@@ -40,15 +50,30 @@ class GlobalClass extends EventEmitter {
             else
                 electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
         });
+        // this.emit('')
+    }
+    
+    /**
+     * Subscribe to Global Event
+     * @param {GlobalEvents} event 
+     * @param {(...args: any[]) => void} listener 
+     * @returns {this}
+     */
+    on(event, listener) {
+        super.on(event, listener)
+        return this;
     }
 
-    // Uncomment for event debugging
-    emit (...e) {
-        console.log('Emit', e);
-        super.emit(...e);
+    /**
+     * Fire Global Event
+     * @param  {GlobalEvents} event
+     */
+    emit(event, ...payload) {
+        console.log('Emit', event, payload); // Uncomment for event debugging
+        super.emit(event, ...payload);
     }
 
-    get isNative () {
+    get isNative() {
         return isNative;
     }
 
@@ -73,7 +98,7 @@ class GlobalClass extends EventEmitter {
         }
     }
 
-    get appData () {
+    get appData() {
         if (!DBFGL.isNative) {
             throw new Error('Не могу получить путь папки лаунчера в браузере!');
         }
