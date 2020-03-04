@@ -49,14 +49,14 @@ rules:
   no-unsafe-finally: 1
   no-unsafe-negation: 1
   use-isnan: 1
-  valid-jsdoc: 1
+  valid-jsdoc: 0 # У нас JsDoc используются лишь для обозначения типов для IntelliSense
   valid-typeof: 1
   accessor-pairs: 1
   array-callback-return: 1
   block-scoped-var: 1
   complexity: 1
   consistent-return: 0
-  curly: 1
+  curly: [1, "multi-or-nest", "consistent"]
   default-case: 1
   dot-notation: 1
   eqeqeq: 1
@@ -136,7 +136,7 @@ rules:
   brace-style: 1
   camelcase: 1
   capitalized-comments: 0
-  comma-dangle: 1
+  comma-dangle: [1, "always-multiline"] # Используется, чтобы при добавлении элемента в массив Git не захватывал предыдущую строку
   comma-spacing: 1
   comma-style: 1
   computed-property-spacing: 1
@@ -170,7 +170,7 @@ rules:
   no-mixed-operators: 1
   no-mixed-spaces-and-tabs: 1
   no-multiple-empty-lines: [1, { "max": 2, "maxEOF": 0 }]
-  nj-negated-condition: 0
+  no-negated-condition: 0
   no-nested-ternary: 0
   no-new-object: 1
   no-plusplus: 0
@@ -179,6 +179,7 @@ rules:
   no-trailing-spaces: 1
   no-unneeded-ternary: 1
   no-whitespace-before-property: 1
+  nonblock-statement-body-position: [1, "beside"]
   object-curly-spacing: [1, "always", { "arraysInObjects": false, "objectsInObjects": false }]
   object-property-newline: [1, { "allowMultiplePropertiesPerLine": true }]
   one-var: [1, "never"]
@@ -187,13 +188,13 @@ rules:
   semi-spacing: 1
   semi: 1
   space-before-blocks: 1
-  space-before-function-paren: 1
+  space-before-function-paren: [1, "never"]
   space-in-parens: 1
   space-unary-ops: 1
   spaced-comment: [0, "always"]
   wrap-regex: 1
   arrow-body-style: [1, "as-needed", { "requireReturnForObjectLiteral": false }]
-  arrow-parens: [1, "always"]
+  arrow-parens: [1, "as-needed"]
   arrow-spacing: 1
   constructor-super: 1
   generator-star-spacing: ["error", {"before": false, "after": true}]
@@ -218,7 +219,7 @@ rules:
   symbol-description: 1
   template-curly-spacing: 1
   yield-star-spacing: [1, "both"]
-  react/forbid-component-props: [1, { "forbid": ["style"] }]
+  react/forbid-component-props: [1, { "forbid": [] }]
   react/forbid-prop-types: 0
   react/no-array-index-key: 0
   react/no-children-prop: 1
@@ -276,16 +277,17 @@ rules:
                             ]
                           }
                    }]
-  react/sort-prop-types: [1, {
+  react/sort-prop-types: [0, {
                                "callbacksLast": true,
                                "ignoreCase": true,
                                "requiredFirst": true,
+                              #  "noSortAlphabetically": true, # Почему-то роняет ESLint... Пока отключу это свойство
                              }]
   react/style-prop-object: 1
   react/jsx-boolean-value: 1
   react/jsx-closing-bracket-location: [1, {"selfClosing": "line-aligned", nonEmpty: "after-props"}]
-  react/jsx-curly-spacing: [1, "always"]
-  react/jsx-equals-spacing: [1, "always"]
+  react/jsx-curly-spacing: [1, "never"]
+  react/jsx-equals-spacing: [1, "never"]
   react/jsx-filename-extension: [1, { "extensions": [".js"] }]
   react/jsx-first-prop-new-line: [1, "multiline"]
   react/jsx-handler-names: 0
@@ -303,7 +305,8 @@ rules:
   react/jsx-sort-props: [1, {
                               "callbacksLast": true,
                               "shorthandFirst": true,
-                              "ignoreCase": true
+                              "ignoreCase": true,
+                              "noSortAlphabetically": true
                             }]
   react/jsx-tag-spacing: [1, {
                                "closingSlash": "never",
