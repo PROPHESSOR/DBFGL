@@ -64,9 +64,9 @@ export default class Prompt extends React.Component {
         return (
             <div>
                 <Dialog
+                    modal
                     title={title}
                     actions={actions}
-                    modal={false}
                     open={open}
                     onRequestClose={this.onCancel}>
                     <TextField
