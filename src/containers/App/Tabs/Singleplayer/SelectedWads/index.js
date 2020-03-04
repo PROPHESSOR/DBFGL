@@ -5,7 +5,8 @@ import DBFGL from '@/Global';
 import { List } from 'material-ui/List';
 
 import Wad from '../WadController/wad'; // Component
-// import WadClass from './wad/wad'; // Class
+// eslint-disable-next-line no-unused-vars
+import WadClass from '@/classes/wad'; // Class
 
 export default class SelectedWads extends Component {
     static propTypes = {
@@ -32,7 +33,11 @@ export default class SelectedWads extends Component {
         console.log('Список вадов обновлен');
     }
 
+    /**
+     * @param {WadClass} wad
+     */
     remove = wad => {
+        wad.selected = false;
         DBFGL.singleplayer.selected = DBFGL.singleplayer.selected.filter(selwad => selwad !== wad);
         DBFGL.emit('singleplayer.wadlist.selected.update');
     }

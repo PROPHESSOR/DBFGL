@@ -6,13 +6,9 @@ import DBFGL from '@/Global';
 import { List } from 'material-ui/List';
 
 import Wad from './wad'; // Component
-// import WadClass from './wad/wad'; // Class
+// eslint-disable-next-line no-unused-vars
+import WadClass from '@/classes/wad'; // Class
 import { getPWads } from '@/utils/getWadsFromFs';
-
-/* const wads = [
-    new WadClass({ name: 'DOOM.WAD', picture: 'doom' }),
-    new WadClass({ name: 'Doom2.wad', picture: 'doom2' })
-]; */
 
 export default class WadController extends Component {
     static propTypes = {
@@ -24,9 +20,14 @@ export default class WadController extends Component {
         super();
         this.state = {
             selectedIndex: 0,
-            wads:          [],
+
+            /**
+             * @type {Array<WadClass>}
+             */
+            wads: [],
         };
         DBFGL.on('singleplayer.wadlist.update', this.updateWads);
+        DBFGL.on('singleplayer.wadlist.selected.update', () => this.forceUpdate()); // FIXME: Используется для отлавливания изменений в WadClass.selected
     }
 
 
@@ -41,14 +42,20 @@ export default class WadController extends Component {
         console.log('Список вадов обновлен');
     }
 
+    /**
+     * @param {WadClass} wad
+     */
     onSelect = wad => { // (wad, index)
         // console.log('onselect', wad, index);
+        wad.selected = true;
         DBFGL.singleplayer.selected.push(wad);
         DBFGL.emit('singleplayer.wadlist.selected.update');
     }
 
     render() {
-        const jsxwads = this.state.wads.map((e, i) => (<Wad key={i} value={i} wad={e} onClick={this.onSelect} />));
+        const jsxwads = this.state.wads
+            .filter(wad => !wad.selected)
+            .map((wad, i) => (<Wad key={wad.name} value={i} wad={wad} onClick={this.onSelect} />));
 
         return (
             <List

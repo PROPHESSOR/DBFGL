@@ -5,11 +5,12 @@ export default class Wad {
 
     /**
      * @constructor
-     * @param  {object} options - Опции
-     * @param  {string} options.path - Путь к wad файлу
-     * @param  {string} options.name - Имя wad файла
-     * @param  {string} options.type - Тип файла (WAD/PK3/PK7)
-     * @param  {string} options.picture - (doom/doom2)
+     * @param  {object}  options - Опции
+     * @param  {string}  options.path - Путь к wad файлу
+     * @param  {string}  options.name - Имя wad файла
+     * @param  {string}  options.type - Тип файла (WAD/PK3/PK7)
+     * @param  {string}  options.picture - (doom/doom2)
+     * @param  {boolean} options.selected - Выбрал ли вад (скрывает из списка вадов)
      */
     constructor(options) {
         if (!options.name) options.name = 'Unknown wad';
@@ -19,6 +20,8 @@ export default class Wad {
         this.name = options.name;
 
         this.picture = Wad.getIWADcoverName(options.name);
+
+        this.selected = options.selected;
 
         Object.assign(this, options);
     }
