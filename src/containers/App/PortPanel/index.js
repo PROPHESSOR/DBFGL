@@ -1,9 +1,6 @@
 import React from 'react';
 import DBFGL from '@/Global';
 
-import PortClass from '@/classes/port';
-
-// import Bar from './Bar';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Port from './Port';

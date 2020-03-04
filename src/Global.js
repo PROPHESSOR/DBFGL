@@ -1,5 +1,3 @@
-import Wad from './classes/wad';
-
 // import { EventEmitter } from 'events';
 
 const { EventEmitter } = require('events');

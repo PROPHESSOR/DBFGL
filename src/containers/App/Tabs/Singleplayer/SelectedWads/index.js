@@ -33,7 +33,7 @@ export default class SelectedWads extends Component {
     }
 
     remove = wad => {
-        DBFGL.singleplayer.selected = DBFGL.singleplayer.selected.filter(wad => wad !== wad);
+        DBFGL.singleplayer.selected = DBFGL.singleplayer.selected.filter(selwad => selwad !== wad);
         DBFGL.emit('singleplayer.wadlist.selected.update');
     }
 

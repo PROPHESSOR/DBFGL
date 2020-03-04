@@ -58,7 +58,7 @@ export default class Settings extends React.Component {
 
         const wadFolders = Config.get('wads:folders')
             .map(folder => folder.replace('{appdata}', DBFGL.appData))
-            .map(folder => <TextField readOnly disabled value={folder} inputStyle={{ color: 'white' }} />); // FIXME: Use theme colors
+            .map(folder => <TextField readOnly disabled value={folder} key={folder} inputStyle={{ color: 'white' }} />); // FIXME: Use theme colors
 
         return (
             <Dialog

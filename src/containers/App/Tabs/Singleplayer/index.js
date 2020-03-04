@@ -43,10 +43,10 @@ export default class Singleplayer extends Component {
     onChangeIwad = (event, index, value) => {
         this.setState({ iwadDrop: value });
         const { iwads } = this.state;
-        const [iwad] = iwads.filter(iwad => iwad.name === value);
+        const [wad] = iwads.filter(iwad => iwad.name === value);
 
-        DBFGL.singleplayer.iwad = iwad.path;
-        DBFGL.emit('singleplayer.wadlist.iwad.update', iwad.path);
+        DBFGL.singleplayer.iwad = wad.path;
+        DBFGL.emit('singleplayer.wadlist.iwad.update', wad.path);
     };
 
     render() {

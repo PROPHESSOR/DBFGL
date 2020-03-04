@@ -41,7 +41,7 @@ export default class WadController extends Component {
         console.log('Список вадов обновлен');
     }
 
-    onSelect = (wad, index) => {
+    onSelect = wad => { // (wad, index)
         // console.log('onselect', wad, index);
         DBFGL.singleplayer.selected.push(wad);
         DBFGL.emit('singleplayer.wadlist.selected.update');
