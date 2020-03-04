@@ -4,8 +4,6 @@ import DBFGL from '@/Global';
 // Components
 import { AppBar } from 'material-ui';
 
-import SettingsIcon from 'material-ui/svg-icons/action/settings';
-
 export default class Bar extends Component {
     togglePanel = mode => {
         if (mode) DBFGL.emit('panel.open', 'left');
@@ -16,7 +14,6 @@ export default class Bar extends Component {
     render() {
         return (
             <AppBar
-                iconClassNameRight={SettingsIcon}
                 title='DooM BFG Launcher'
                 onLeftIconButtonClick={this.togglePanel}
             />

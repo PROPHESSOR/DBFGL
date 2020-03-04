@@ -22,7 +22,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 export default class Port extends Component {
     static propTypes = {
-        port: type.func.isRequired,
+        port: type.object.isRequired,
     }
 
     run = () => {

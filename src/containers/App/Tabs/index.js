@@ -9,9 +9,9 @@ import DBFGL from '@/Global';
 import Singleplayer from './Singleplayer';
 import Multiplayer from './Multiplayer';
 
-export default class TabsExampleSimple extends Component {
+export default class DBFGLTabs extends Component {
     static propTypes = {
-        toggleTab: type.func.isRequired,
+        toggleTab: type.func,
     }
 
     state = {

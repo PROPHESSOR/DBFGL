@@ -12,8 +12,7 @@ import { getPWads } from '@/utils/getWadsFromFs';
 
 export default class WadController extends Component {
     static propTypes = {
-        folder: 'iwads',
-        style:  type.object,
+        style: type.object,
     }
 
     constructor() {
@@ -59,7 +58,6 @@ export default class WadController extends Component {
 
         return (
             <List
-                click={this.onSelect}
                 style={this.props.style}
                 value={this.state.selectedIndex}
                 onChange={this.onSelect}>

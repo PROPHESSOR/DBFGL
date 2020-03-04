@@ -83,7 +83,7 @@ export default class Settings extends React.Component {
                 <Section
                     subtitle='Время ожидания сервера, задержки анимаций и прочее'
                     title='Настройка констант'>
-                TODO: Write me!
+                    <span>TODO: Write me!</span>
                 </Section>
             </Dialog>
         );

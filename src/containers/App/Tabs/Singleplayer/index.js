@@ -13,13 +13,6 @@ export default class Singleplayer extends Component {
 
         const iwads = getIWads();
 
-        this.state = {
-            iwads,
-            showDrop: 1,
-            sortDrop: 0,
-            iwadDrop: 'doom2.wad',
-        };
-
         let defaultiwad = iwads.filter(iwad => iwad.name === 'doom2.wad')[0];
 
         if (!defaultiwad) defaultiwad = iwads[0];
@@ -33,9 +26,12 @@ export default class Singleplayer extends Component {
             DBFGL.emit('singleplayer.wadlist.iwad.update');
         }
 
-        this.setState({
+        this.state = {
+            iwads,
+            showDrop: 1,
+            sortDrop: 0,
             iwadDrop: defaultiwad.name,
-        });
+        };
     }
 
     onChangeShow = (event, index, value) => this.setState({ showDrop: value });
