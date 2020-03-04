@@ -13,6 +13,9 @@ class GlobalClass extends EventEmitter {
             selected: [],
             iwad:     null // new Wad
         };
+        /**
+         * @type {"singleplayer"|"multiplayer"}
+         */
         this.tab = 'singleplayer';
 
         this.on('tab.change', (tab) => {

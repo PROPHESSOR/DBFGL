@@ -9,15 +9,7 @@ import AppBar from 'material-ui/AppBar';
 import Port from './Port';
 import Config from '../../../utils/Config';
 
-
-
-const knownPorts = Object.values(Config.get('ports'))
-    .map(port => new PortClass({
-        name: port.name,
-        description: port.description,
-        path: port.path,
-        argformat: port.argformat,
-    }));
+const knownPorts = Object.values(Config.get('ports'));
 
 export default class Panel extends React.Component {
     constructor() {
@@ -47,7 +39,11 @@ export default class Panel extends React.Component {
         }
     }
     render() {
-        const ports = knownPorts.map((el, i) => <Port key={i} port={el} />);
+        const availablePorts = DBFGL.tab === 'singleplayer'
+            ? knownPorts
+            : knownPorts.filter(port => port.supportZandronumServers);
+
+        const ports = availablePorts.map((el, i) => <Port key={i} port={el} />)
 
         return (
             <Drawer
