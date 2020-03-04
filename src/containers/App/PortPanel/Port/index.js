@@ -26,6 +26,8 @@ export default class Port extends Component {
     }
 
     run = () => {
+        DBFGL.emit('panel.close', 'right');
+
         const { port } = this.props;
 
         const args = [];
