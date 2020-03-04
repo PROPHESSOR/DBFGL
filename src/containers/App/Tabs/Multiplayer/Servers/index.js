@@ -12,8 +12,8 @@ import {
 import DBFGL from '@/Global';
 
 // import Server from './Server'; //TODO:
-import ServerClass from './Server/Server';
-import pingServers from '../../../../../utils/Servers';
+import ServerClass from '@/classes/Server';
+import pingServers from '@/utils/Servers';
 
 /* const servers = [
     new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),

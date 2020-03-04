@@ -1,14 +1,13 @@
-import Config from '../../../../../utils/Config';
+import Config from '@/utils/Config';
 
-import WadClass from './wad/wad';
-import Wad from './wad/wad';
+import Wad from '@/classes/wad';
 import DBFGL from '@/Global';
 
 const fs = DBFGL.isNative ? require('fs') : null;
 const path = DBFGL.isNative ? require('path') : null;
 
 /**
- * @returns {Array<WadClass>}
+ * @returns {Array<Wad>}
  */
 export function getWads() {
     if (!DBFGL.isNative) {
@@ -44,7 +43,7 @@ export function getWads() {
 
                     // Если это - .wad файл
                     if (filename[filename.length - 1].toLowerCase() === 'wad') {
-                        const wad = new WadClass({ name: file, path: path.join(folder, file) });
+                        const wad = new Wad({ name: file, path: path.join(folder, file) });
 
                         if (wadList.has(wad)) {
                             console.warn(`Конфликт файлов! Файл ${file} берется из папки ${folder}`)
@@ -63,7 +62,7 @@ export function getWads() {
 };
 
 /**
- * @returns {Array<WadClass>}
+ * @returns {Array<Wad>}
  */
 export function getPWads() {
     const iwads = new Set(Wad.knownIWADs);
@@ -72,7 +71,7 @@ export function getPWads() {
 }
 
 /**
- * @returns {Array<WadClass>}
+ * @returns {Array<Wad>}
  */
 export function getIWads() {
     const iwads = new Set(Wad.knownIWADs);

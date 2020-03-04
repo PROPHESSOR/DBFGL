@@ -7,7 +7,7 @@ import { List } from 'material-ui/List';
 
 import Wad from './wad'; // Component
 // import WadClass from './wad/wad'; // Class
-import { getPWads } from './getWadsFromFs';
+import { getPWads } from '@/utils/getWadsFromFs';
 
 /* const wads = [
     new WadClass({ name: 'DOOM.WAD', picture: 'doom' }),

@@ -1,4 +1,4 @@
-import argformats from '../../../declarations/argformat.json';
+import argformats from '@/declarations/argformat.json';
 
 class PortClass {
     constructor ({ name = 'Unknown port', description = '', path = null, argformat = 'gzdoom' }) {

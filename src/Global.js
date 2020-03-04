@@ -1,4 +1,4 @@
-import Wad from './containers/App/Tabs/Singleplayer/WadController/wad/wad';
+import Wad from './classes/wad';
 
 // import { EventEmitter } from 'events';
 

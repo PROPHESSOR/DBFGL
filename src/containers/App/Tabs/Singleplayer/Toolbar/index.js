@@ -5,10 +5,10 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
-import Wad from '../WadController/wad/wad';
+import Wad from '@/classes/wad';
 
 import Styles from './styles.scss';
-import { getIWads } from '../WadController/getWadsFromFs';
+import { getIWads } from '@/utils/getWadsFromFs';
 
 export default class ToolbarSingleplayer extends React.Component {
     static propTypes = {

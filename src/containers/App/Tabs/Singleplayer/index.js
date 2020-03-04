@@ -5,7 +5,7 @@ import DBFGL from '@/Global';
 import Toolbar from './Toolbar';
 import WadController from './WadController';
 import SelectedWads from './SelectedWads';
-import { getIWads } from './WadController/getWadsFromFs';
+import { getIWads } from '@/utils/getWadsFromFs';
 
 export default class Singleplayer extends Component {
     constructor () {

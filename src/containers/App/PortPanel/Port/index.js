@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import type from 'prop-types';
 
-import PortClass from '../port';
+import PortClass from '@/classes/port';
 
 import DBFGL from '@/Global';
-import Spawner from '../../../../utils/Spawner';
+import Spawner from '@/utils/Spawner';
 
 import MenuItem from 'material-ui/MenuItem';
 
