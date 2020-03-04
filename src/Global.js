@@ -13,7 +13,8 @@ const electron = isNative ? require('electron') : null;
             "window.minimize"|"window.restore"|"window.close"|"window.open"|
             "panel.open"|"panel.close"|
             "singleplayer.wadlist.selected.update"|"singleplayer.wadlist.iwad.update"|"singleplayer.wadlist.update"|
-            "game.start"|"game.stop"|"game.kill"
+            "game.start"|"game.stop"|"game.kill"|
+            "notification.alert"|"notification.prompt"|"notification.confirm"
         } GlobalEvents
  */
 
@@ -54,6 +55,30 @@ class GlobalClass extends EventEmitter {
             if (this.os === 'Linux') electron.remote.BrowserWindow.getAllWindows().forEach(win => win.show());
             else electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
 
+        });
+    }
+
+    /**
+     * Usage: const result: (string|null) = await DBFGL.prompt({title?, placeholder?, defaultValue?});
+     * @returns {string|null}
+     */
+    prompt({ title='Ввод текста', placeholder='Писать сюда', defaultValue='' }) {
+        return new Promise(res => {
+            this.emit('notification.prompt', { title, placeholder, defaultValue });
+
+            this.once('notification.prompt.ok', value => {
+                this.removeAllListeners('notification.prompt.ok');
+                this.removeAllListeners('notification.prompt.cancel');
+
+                return res(value);
+            });
+
+            this.once('notification.prompt.cancel', () => {
+                this.removeAllListeners('notification.prompt.ok');
+                this.removeAllListeners('notification.prompt.cancel');
+
+                return res(null);
+            });
         });
     }
 
