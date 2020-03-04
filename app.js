@@ -17,6 +17,9 @@ app.on('ready', () => {
         width:           1024,
         height:          768,
         autoHideMenuBar: true,
+        webPreferences: {
+            nodeIntegration: true,
+        }
     });
 
     if (oldlivereload) window.loadURL('http://localhost:3000');
