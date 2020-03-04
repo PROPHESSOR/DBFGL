@@ -4,7 +4,7 @@ import Wad from './classes/wad';
 
 const { EventEmitter } = require('events');
 
-const isNative = !!(window && window.process && window.process.type);
+const isNative = Boolean(window && window.process && window.process.type);
 
 const electron = isNative ? require('electron') : null;
 
@@ -24,41 +24,41 @@ class GlobalClass extends EventEmitter {
         super();
         this.singleplayer = {
             selected: [],
+
             /**
              * path to iwad // TODO: Make it <Wad>
              * @type {string}
              */
             iwad: null,
         };
+
         /**
          * @type {"singleplayer"|"multiplayer"}
          */
         this.tab = 'singleplayer';
 
-        this.on('tab.change', (tab) => {
-            if (!(tab === 'singleplayer' || tab === 'multiplayer')) {
-                throw new TypeError('Нет такого таба!');
-            }
+        this.on('tab.change', tab => {
+            if (!(tab === 'singleplayer' || tab === 'multiplayer')) throw new TypeError('Нет такого таба!');
+
             this.tab = tab;
         });
 
         this.on('window.minimize', () => {
             if (!isNative) return;
-            if (this.os === 'Linux')
-                electron.remote.BrowserWindow.getFocusedWindow().hide();
-            else
-                electron.remote.BrowserWindow.getFocusedWindow().minimize();
+            if (this.os === 'Linux') electron.remote.BrowserWindow.getFocusedWindow().hide();
+            else electron.remote.BrowserWindow.getFocusedWindow().minimize();
+
         });
 
         this.on('window.restore', () => {
             if (!isNative) return;
-            if (this.os === 'Linux')
-                electron.remote.BrowserWindow.getAllWindows().forEach(win => win.show());
-            else
-                electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
+
+            if (this.os === 'Linux') electron.remote.BrowserWindow.getAllWindows().forEach(win => win.show());
+            else electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
+
         });
     }
-    
+
     /**
      * Subscribe to Global Event
      * @param {GlobalEvents} event 
@@ -66,7 +66,8 @@ class GlobalClass extends EventEmitter {
      * @returns {this}
      */
     on(event, listener) {
-        super.on(event, listener)
+        super.on(event, listener);
+
         return this;
     }
 
@@ -89,6 +90,7 @@ class GlobalClass extends EventEmitter {
     get os() {
         if (!isNative) return 'Browser';
 
+
         const os = require('os').type();
 
         switch (os) {
@@ -100,14 +102,14 @@ class GlobalClass extends EventEmitter {
                 return 'Windows';
             default:
                 console.warn(`[Global::os] Unknown platform ${os}!`);
+
                 return 'Unknown';
         }
     }
 
     get appData() {
-        if (!DBFGL.isNative) {
-            throw new Error('Не могу получить путь папки лаунчера в браузере!');
-        }
+        if (!isNative) throw new Error('Не могу получить путь папки лаунчера в браузере!');
+
 
         const path = require('path');
 

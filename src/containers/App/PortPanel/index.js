@@ -16,34 +16,30 @@ export default class Panel extends React.Component {
         super();
 
         this.state = {
-            open: false
+            open: false,
         };
 
-        DBFGL.on('panel.open', (panel) => {
-            if (panel === 'right') {
-                this.setState({ open: true });
-            }
+        DBFGL.on('panel.open', panel => {
+            if (panel === 'right') this.setState({ open: true });
+
         });
-        DBFGL.on('panel.close', (panel) => {
-            if (panel === 'right') {
-                this.setState({ open: false });
-            }
+        DBFGL.on('panel.close', panel => {
+            if (panel === 'right') this.setState({ open: false });
+
         });
     }
 
-    togglePanel = (mode) => {
-        if (mode) {
-            DBFGL.emit('panel.open', 'right');
-        } else {
-            DBFGL.emit('panel.close', 'right');
-        }
+    togglePanel = mode => {
+        if (mode) DBFGL.emit('panel.open', 'right');
+        else DBFGL.emit('panel.close', 'right');
+
     }
     render() {
         const availablePorts = DBFGL.tab === 'singleplayer'
             ? knownPorts
             : knownPorts.filter(port => port.supportZandronumServers);
 
-        const ports = availablePorts.map((el, i) => <Port key={i} port={el} />)
+        const ports = availablePorts.map((el, i) => <Port key={i} port={el} />);
 
         return (
             <Drawer

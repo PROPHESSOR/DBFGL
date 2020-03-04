@@ -50,20 +50,18 @@ const huffmanFreqs = [
     0.00170547, 0.00104431, 0.00091395, 0.00095789, 0.00134681, 0.00095213, 0.00105944, 0.00094132,
     0.00141883, 0.00102127, 0.00101911, 0.00082105, 0.00158448, 0.00102631, 0.00087938, 0.00139290,
     0.00114658, 0.00095501, 0.00161329, 0.00126542, 0.00113218, 0.00123661, 0.00101695, 0.00112930,
-    0.00317976, 0.00085346, 0.00101190, 0.00189849, 0.00105728, 0.00186824, 0.00092908, 0.00160896
+    0.00317976, 0.00085346, 0.00101190, 0.00189849, 0.00105728, 0.00186824, 0.00092908, 0.00160896,
 ];
 
 
 export default class Huffman {
-    constructor (freq) {
+    constructor(freq) {
 
-        if (!Array.isArray(freq)) {
-            freq = huffmanFreqs;
-        }
+        if (!Array.isArray(freq)) freq = huffmanFreqs;
 
-        if (freq.length !== 256) {
-            throw new TypeError('First argument must be a frequency array of length 256.');
-        }
+
+        if (freq.length !== 256) throw new TypeError('First argument must be a frequency array of length 256.');
+
 
         const self = this; // eslint-disable-line
 
@@ -79,7 +77,7 @@ export default class Huffman {
         for (let i = 0; i < 256; i++) {
             this.tree[i] = {
                 frq: freq[i],
-                asc: i
+                asc: i,
             };
         }
 
@@ -94,9 +92,8 @@ export default class Huffman {
 
             // Find two lowest frequencies
             for (let j = 0; j < 256; j++) {
-                if (!this.tree[j]) {
-                    continue;
-                }
+                if (!this.tree[j]) continue;
+
                 if (this.tree[j].frq < min1 - epsilon) {
                     minat2 = minat1;
                     min2 = min1;
@@ -112,7 +109,7 @@ export default class Huffman {
             this.tree[minat1] = {
                 frq: min1 + min2,
                 0:   this.tree[minat2],
-                1:   this.tree[minat1]
+                1:   this.tree[minat1],
             };
             this.tree[minat2] = undefined;
         }
@@ -137,17 +134,15 @@ export default class Huffman {
         treeWalker(this.tree);
     }
 
-    encode (data) {
-        if (!Buffer.isBuffer(data)) {
-            throw new TypeError('Argument must be a Buffer.');
-        }
+    encode(data) {
+        if (!Buffer.isBuffer(data)) throw new TypeError('Argument must be a Buffer.');
+
 
         // Huffman-encode data to a binary string
         let binaryString = '';
 
-        for (let i = 0; i < data.length; i++) {
-            binaryString += this.table[data.readUInt8(i)];
-        }
+        for (let i = 0; i < data.length; i++) binaryString += this.table[data.readUInt8(i)];
+
 
         // Split binary string into array of strings containing 8 bits
         const sbs = binaryString.match(/.{1,8}/g);
@@ -166,25 +161,22 @@ export default class Huffman {
         // Find value of every byte in binary string
         const ords = [];
 
-        for (let i = 0; i < sbs.length; i++) {
-            ords.push(parseInt(sbs[i].split('').reverse().join(''), 2));
-        }
+        for (let i = 0; i < sbs.length; i++) ords.push(parseInt(sbs[i].split('').reverse().join(''), 2));
+
 
         // Write out encoded buffer with padding bit count in front
         const encoded = new Buffer(ords.length + 1);
 
         encoded.writeUInt8(8 - sbs[sbs.length - 1].length, 0);
-        for (let i = 0; i < ords.length; i++) {
-            encoded.writeUInt8(ords[i], i + 1);
-        }
+        for (let i = 0; i < ords.length; i++) encoded.writeUInt8(ords[i], i + 1);
+
 
         return encoded;
     }
 
-    decode = function (data) {
-        if (!Buffer.isBuffer(data)) {
-            throw new TypeError('Argument must be a Buffer.');
-        }
+    decode = function(data) {
+        if (!Buffer.isBuffer(data)) throw new TypeError('Argument must be a Buffer.');
+
 
         const padding = data.readUInt8(0);
 
@@ -203,9 +195,8 @@ export default class Huffman {
         for (let i = 1; i < data.length; i++) {
             let bin = data[i].toString(2).split('').reverse().join('');
 
-            if (bin.length !== 8) {
-                bin += new Array(9 - bin.length).join('0');
-            }
+            if (bin.length !== 8) bin += new Array(9 - bin.length).join('0');
+
             bitString += bin;
         }
 

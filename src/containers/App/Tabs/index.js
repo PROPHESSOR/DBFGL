@@ -11,16 +11,16 @@ import Multiplayer from './Multiplayer';
 
 export default class TabsExampleSimple extends Component {
     static propTypes = {
-        toggleTab: type.func.isRequired
+        toggleTab: type.func.isRequired,
     }
 
     state = {
-        slideIndex: 0
+        slideIndex: 0,
     }
 
-    handleChange = (value) => {
+    handleChange = value => {
         this.setState({
-            slideIndex: value
+            slideIndex: value,
         });
 
         const val = value ? 'multiplayer' : 'singleplayer';
@@ -28,19 +28,19 @@ export default class TabsExampleSimple extends Component {
         return DBFGL.emit('tab.change', val);
     };
 
-    render () {
+    render() {
         return (<div>
             <Tabs
-                value = { this.state.slideIndex }
-                onChange = { this.handleChange }>
-                <Tab label = 'Одиночная игра' value = { 0 } />
-                <Tab label = 'Мультиплеер' value = { 1 } />
+                value={this.state.slideIndex}
+                onChange={this.handleChange}>
+                <Tab label='Одиночная игра' value={0} />
+                <Tab label='Мультиплеер' value={1} />
             </Tabs>
             <SwipeableViews
-                index = { this.state.slideIndex }
-                slideStyle = { {
-                    overflow: 'auto'
-                } }>
+                index={this.state.slideIndex}
+                slideStyle={{
+                    overflow: 'auto',
+                }}>
                 <div>
                     <Singleplayer />
                 </div>

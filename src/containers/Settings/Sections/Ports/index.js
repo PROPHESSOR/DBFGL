@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 export default class SettingsPorts extends Component {
     state = {
-        ports: []
+        ports: [],
     }
 
     componentDidMount = () => {
@@ -15,20 +15,20 @@ export default class SettingsPorts extends Component {
         });
     }
 
-    addPort () {
+    addPort() {
         console.log('addPort');
     }
 
-    render () {
+    render() {
         const { ports } = this.state;
         const jsxPorts = [];
 
         for (const port of ports) {
             jsxPorts.push(
                 <Section
-                    key = { port.name + port.path }
-                    subtitle = { `Настройка порта ${port.name}` }
-                    title = { port.name }>
+                    key={port.name + port.path}
+                    subtitle={`Настройка порта ${port.name}`}
+                    title={port.name}>
                     <ul>
                         <li>Путь к порту: {port.path}</li>
                         <li>Поддержка pk3: {port.supportPk3.toString()}</li>
@@ -48,8 +48,8 @@ export default class SettingsPorts extends Component {
                 {jsxPorts}
                 <FlatButton
                     primary
-                    label = 'Добавить порт'
-                    onClick = { this.addPort }
+                    label='Добавить порт'
+                    onClick={this.addPort}
                 />
             </Fragment>
         );

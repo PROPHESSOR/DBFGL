@@ -7,23 +7,21 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 export default class About extends React.Component {
-    constructor () {
+    constructor() {
         super();
 
         this.state = {
-            open: false
+            open: false,
         };
 
-        DBFGL.on('window.open', (name) => {
-            if (name === 'about') {
-                this.setState({ open: true });
-            }
+        DBFGL.on('window.open', name => {
+            if (name === 'about') this.setState({ open: true });
+
         });
 
-        DBFGL.on('window.close', (name) => {
-            if (name === 'about') {
-                this.setState({ open: false });
-            }
+        DBFGL.on('window.close', name => {
+            if (name === 'about') this.setState({ open: false });
+
         });
     }
 
@@ -31,24 +29,24 @@ export default class About extends React.Component {
         DBFGL.emit('window.close', 'about');
     };
 
-    render () {
+    render() {
         const actions = [
             <FlatButton
                 primary
-                key = '0'
-                label = 'Закрыть'
-                onClick = { this.close }
-            />
+                key='0'
+                label='Закрыть'
+                onClick={this.close}
+            />,
         ];
 
         return (
             <Dialog
                 autoScrollBodyContent
-                actions = { actions }
-                modal = { false }
-                open = { this.state.open }
-                title = 'О программе'
-                onRequestClose = { this.close }>
+                actions={actions}
+                modal={false}
+                open={this.state.open}
+                title='О программе'
+                onRequestClose={this.close}>
                 <h3>DooM BFG Launcher [DBFGL]: <i>It is a DooM Launcher!</i></h3><br /><br />
                 <b>DBFGL</b> - графический лаунчер для организации и запуска различных портов DOOM.<br />
                 Написан на JavaScript с использованием ReactJS.<br />

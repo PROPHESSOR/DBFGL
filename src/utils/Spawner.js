@@ -5,7 +5,7 @@ const { isNative } = DBFGL;
 const cp = isNative ? require('child_process') : null;
 
 class Spawner {
-    constructor () {
+    constructor() {
         this.processes = new Map();
 
         DBFGL.on('game.start', this.spawn);
@@ -20,13 +20,11 @@ class Spawner {
      * @returns {number} ID процесса
      */
     spawn = (idname, exec, args=[]) => {
-        if (!isNative) {
-            throw new Error('Не могу запустить процесс из браузера!');
-        }
+        if (!isNative) throw new Error('Не могу запустить процесс из браузера!');
 
-        if (this.processes.has(idname)) {
-            throw new Error('Данный процесс уже запущен!');
-        }
+
+        if (this.processes.has(idname)) throw new Error('Данный процесс уже запущен!');
+
 
         DBFGL.emit('window.minimize');
 
@@ -35,7 +33,7 @@ class Spawner {
         this.processes.set(idname, process);
 
         process.on('exit', () => {
-            this.kill(idname)
+            this.kill(idname);
             DBFGL.emit('window.restore');
         });
 
@@ -48,14 +46,12 @@ class Spawner {
      * @param  {string} idname - Ключевое слово
      * @returns {bool} Процесс остановлен?
      */
-    stop = (idname) => {
-        if (!isNative) {
-            throw new Error('Не могу остановить процесс из браузера!');
-        }
+    stop = idname => {
+        if (!isNative) throw new Error('Не могу остановить процесс из браузера!');
 
-        if (!this.processes.has(idname)) {
-            throw new Error('Нет такого процесса!');
-        }
+
+        if (!this.processes.has(idname)) throw new Error('Нет такого процесса!');
+
 
         const killed = this.processes.get(idname).kill();
 
@@ -70,14 +66,12 @@ class Spawner {
      * @param  {string} idname - Ключевое слово
      * @returns {bool} Процесс остановлен?
      */
-    kill = (idname) => {
-        if (!isNative) {
-            throw new Error('Не могу убить процесс из браузера!');
-        }
+    kill = idname => {
+        if (!isNative) throw new Error('Не могу убить процесс из браузера!');
 
-        if (!this.processes.has(idname)) {
-            throw new Error('Нет такого процесса!');
-        }
+
+        if (!this.processes.has(idname)) throw new Error('Нет такого процесса!');
+
 
         const killed = this.processes.get(idname).kill('SIGKILL');
 

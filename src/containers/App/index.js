@@ -40,10 +40,10 @@ DBFGL.on('game.start', () => {
 });
 
 export default class App extends Component {
-    render () {
+    render() {
         return (
-            <Provider muiTheme = { getMuiTheme(theme) }>
-                <div className = { Styles.app } style = { { background: theme.palette.canvasColor } }>
+            <Provider muiTheme={getMuiTheme(theme)}>
+                <div className={Styles.app} style={{ background: theme.palette.canvasColor }}>
                     <Panel />
                     <PortPanel />
                     <Bar />

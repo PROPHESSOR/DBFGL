@@ -8,7 +8,7 @@ import SelectedWads from './SelectedWads';
 import { getIWads } from '@/utils/getWadsFromFs';
 
 export default class Singleplayer extends Component {
-    constructor () {
+    constructor() {
         super();
 
         const iwads = getIWads();
@@ -24,7 +24,9 @@ export default class Singleplayer extends Component {
 
         if (!defaultiwad) defaultiwad = iwads[0];
 
+
         if (!defaultiwad) throw new Error('No IWADs found!');
+
 
         if (!DBFGL.singleplayer.iwad) {
             DBFGL.singleplayer.iwad = defaultiwad.path;
@@ -41,36 +43,36 @@ export default class Singleplayer extends Component {
     onChangeIwad = (event, index, value) => {
         this.setState({ iwadDrop: value });
         const { iwads } = this.state;
-        const [ iwad ] = iwads.filter(iwad => iwad.name === value);
+        const [iwad] = iwads.filter(iwad => iwad.name === value);
 
         DBFGL.singleplayer.iwad = iwad.path;
         DBFGL.emit('singleplayer.wadlist.iwad.update', iwad.path);
     };
 
-    render () {
+    render() {
         return (
             <div
-                style = { {
-                    height: 'calc(100vh - 110px)' // FIXME: Это что за хрень?
-                } }>
+                style={{
+                    height: 'calc(100vh - 110px)', // FIXME: Это что за хрень?
+                }}>
                 <Toolbar
-                    iwads = { this.state.iwads }
-                    showDrop = { this.state.showDrop }
-                    sortDrop = { this.state.sortDrop }
-                    iwadDrop = { this.state.iwadDrop }
-                    onChangeShow = { this.onChangeShow }
-                    onChangeSort = { this.onChangeSort }
-                    onChangeIwad = { this.onChangeIwad }
+                    iwads={this.state.iwads}
+                    showDrop={this.state.showDrop}
+                    sortDrop={this.state.sortDrop}
+                    iwadDrop={this.state.iwadDrop}
+                    onChangeShow={this.onChangeShow}
+                    onChangeSort={this.onChangeSort}
+                    onChangeIwad={this.onChangeIwad}
                 />
                 <WadController
-                    style = { {
-                        float: 'left'
-                    } }
+                    style={{
+                        float: 'left',
+                    }}
                 />
                 <SelectedWads
-                    style = { {
-                        marginLeft: '50%'
-                    } }
+                    style={{
+                        marginLeft: '50%',
+                    }}
                 />
             </div>
         );

@@ -13,12 +13,12 @@ export default class Wad extends Component {
       onClick: type.func.isRequired,
   }
 
-  render () {
+  render() {
       const { wad, value, onClick } = this.props;
       const click = () => onClick(wad, value);
 
       return (
-          <ListItem leftAvatar = { <Avatar src = { Cover[wad.picture] || Cover.doom2 } /> } primaryText = { wad.name } value = { wad.value } onClick = { click } />
+          <ListItem leftAvatar={<Avatar src={Cover[wad.picture] || Cover.doom2} />} primaryText={wad.name} value={wad.value} onClick={click} />
       );
   }
 }

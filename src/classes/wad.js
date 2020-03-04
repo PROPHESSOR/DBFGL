@@ -11,10 +11,9 @@ export default class Wad {
      * @param  {string} options.type - Тип файла (WAD/PK3/PK7)
      * @param  {string} options.picture - (doom/doom2)
      */
-    constructor (options) {
-        if (!options.name) {
-            options.name = 'Unknown wad';
-        }
+    constructor(options) {
+        if (!options.name) options.name = 'Unknown wad';
+
         this.path = '';
         this.type = 'WAD';
         this.name = options.name;

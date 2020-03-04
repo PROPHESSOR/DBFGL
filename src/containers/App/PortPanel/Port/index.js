@@ -22,7 +22,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 export default class Port extends Component {
     static propTypes = {
-        port: type.func.isRequired
+        port: type.func.isRequired,
     }
 
     run = () => {
@@ -39,22 +39,22 @@ export default class Port extends Component {
 
         if (!DBFGL.singleplayer.iwad) throw new Error('No IWAD selected!');
 
-        args.push(argformat.iwad, DBFGL.singleplayer.iwad)
 
-        for (const wad of DBFGL.singleplayer.selected) {
-            args.push(argformat.wads, wad.path);
-        }
+        args.push(argformat.iwad, DBFGL.singleplayer.iwad);
+
+        for (const wad of DBFGL.singleplayer.selected) args.push(argformat.wads, wad.path);
+
 
         console.log(`Запускаю ${port.name}...`, args);
 
         console.log(Spawner.spawn('game', port.path, args));
     }
 
-    render () {
+    render() {
         const { port } = this.props;
 
         return (
-            <MenuItem onClick = { this.run }>{port.name}</MenuItem>
+            <MenuItem onClick={this.run}>{port.name}</MenuItem>
         );
     }
 }

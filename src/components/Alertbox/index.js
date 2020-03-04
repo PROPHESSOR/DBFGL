@@ -5,21 +5,21 @@ import DBFGL from '@/Global';
 import Alert from './Alert';
 
 export default class AlertBox extends Component {
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            alerts: []
+            alerts: [],
         };
 
-        DBFGL.on('notification.alert', (message) => {
+        DBFGL.on('notification.alert', message => {
             this.setState({
-                alerts: [...this.state.alerts, message]
+                alerts: [...this.state.alerts, message],
             });
         });
     }
 
-    render () {
-        const alerts = this.state.alerts.map((message, i) => <Alert key = { i } message = { message } />);
+    render() {
+        const alerts = this.state.alerts.map((message, i) => <Alert key={i} message={message} />);
 
         return (
             <Fragment>

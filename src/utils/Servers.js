@@ -11,14 +11,13 @@ const TIMEOUT = 10000;
 const [HOST, PORT] = DBFGL.isNative ? Config.get('servers:master:zandronum').split(':') : ['127.0.0.1', '10666'];
 
 export default () => new Promise((resolve, reject) => {
-    if (!DBFGL.isNative) {
-        return reject(new Error('Не могу получить список серверов из браузера!'));
-    }
+    if (!DBFGL.isNative) return reject(new Error('Не могу получить список серверов из браузера!'));
+
     const socket = dgram.createSocket('udp4');
     let done = false;
     const rmessage = Buffer.from([0x7C, 0x5D, 0x56, 0x00, 0x02, 0x00]);
 
-    socket.on('message', (_msg) => {
+    socket.on('message', _msg => {
         const msg = huff.decode(_msg);
 
         // console.log(msg);
@@ -71,7 +70,7 @@ export default () => new Promise((resolve, reject) => {
                         msg.readUInt8(offset++),
                         msg.readUInt8(offset++),
                         msg.readUInt8(offset++),
-                        msg.readUInt8(offset++)
+                        msg.readUInt8(offset++),
                     ];
 
                     for (let i = 0; i < size; i++) {
@@ -93,7 +92,7 @@ export default () => new Promise((resolve, reject) => {
     const encoded = Buffer.from(huff.encode(rmessage));
 
     // console.log(encoded);
-    socket.send(encoded, PORT, HOST, (err) => {
+    socket.send(encoded, PORT, HOST, err => {
         if (err) {
             console.error(err);
             done = true;

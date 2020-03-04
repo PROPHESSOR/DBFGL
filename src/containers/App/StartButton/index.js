@@ -10,11 +10,11 @@ export default class StartButton extends Component {
         DBFGL.emit('panel.open', 'right');
     }
 
-    render () {
+    render() {
         return (
             <FloatingActionButton
-                className = { Styles.startbutton }
-                onClick = { this.onClick }>
+                className={Styles.startbutton}
+                onClick={this.onClick}>
                 <span>&#9658;</span>
             </FloatingActionButton>);
     }

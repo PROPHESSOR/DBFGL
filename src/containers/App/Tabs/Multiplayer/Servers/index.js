@@ -6,7 +6,7 @@ import {
     TableHeader,
     TableHeaderColumn,
     TableRow,
-    TableRowColumn
+    TableRowColumn,
 } from 'material-ui/Table';
 
 import DBFGL from '@/Global';
@@ -21,39 +21,39 @@ import pingServers from '@/utils/Servers';
 ]; */
 
 export default class ServerList extends Component {
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            servers: []
+            servers: [],
         };
 
-        DBFGL.on('tab.change', (tab) => {
+        DBFGL.on('tab.change', tab => {
             if (tab === 'multiplayer') {
                 console.info('Обновляю сервера...');
                 pingServers()
-                    .then((servers) => {
-                        const serverList = servers.map((server) => new ServerClass({
+                    .then(servers => {
+                        const serverList = servers.map(server => new ServerClass({
                             ping:    128,
                             name:    'Unknown',
                             players: ['PROPHESSOR'],
-                            ip:      `${server[0].join('.')}:${server[1]}`
+                            ip:      `${server[0].join('.')}:${server[1]}`,
                         }));
 
                         this.setState({
-                            servers: serverList
+                            servers: serverList,
                         }, () => console.info('Обновление серверов завершено!'));
                     })
-                    .catch((error) => {
+                    .catch(error => {
                         console.error(`Возникла ошибка при получении списка серверов: `, error);
                     });
             }
         });
     }
 
-    render () {
+    render() {
         const a = this.state.servers.map((e, i) =>
             (
-                <TableRow key = { i }>
+                <TableRow key={i}>
                     <TableRowColumn>{e.ping}|{e.players.length}</TableRowColumn>
                     <TableRowColumn>{e.country}</TableRowColumn>
                     <TableRowColumn>{e.name}</TableRowColumn>
@@ -67,8 +67,8 @@ export default class ServerList extends Component {
 
         return (
             <Table
-                adjustForCheckbox = { false }>
-                <TableHeader adjustForCheckbox = { false } displaySelectAll = { false }>
+                adjustForCheckbox={false}>
+                <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                     <TableRow>
                         <TableHeaderColumn>Состояние</TableHeaderColumn>
                         <TableHeaderColumn>Флаг</TableHeaderColumn>
@@ -78,7 +78,7 @@ export default class ServerList extends Component {
                         <TableHeaderColumn>Режим</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody displayRowCheckbox = { false }>
+                <TableBody displayRowCheckbox={false}>
                     {a}
                 </TableBody>
             </Table>

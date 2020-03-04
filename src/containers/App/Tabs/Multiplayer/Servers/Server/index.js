@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import {
     TableRow,
-    TableRowColumn
+    TableRowColumn,
 } from 'material-ui/Table';
 
 export default class Servers extends Component {
-    render () {
+    render() {
         return (
             <TableRow>
                 <TableRowColumn>2</TableRowColumn>

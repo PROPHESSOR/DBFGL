@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import { AppBar } from 'material-ui';
 
 export default class Bar extends Component {
-    render () {
+    render() {
         return (
             <AppBar
-                showMenuIconButton = { false }
-                title = 'Дополнительно'
+                showMenuIconButton={false}
+                title='Дополнительно'
             />
         );
     }

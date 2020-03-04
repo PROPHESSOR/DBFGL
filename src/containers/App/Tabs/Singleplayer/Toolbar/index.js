@@ -12,10 +12,10 @@ import { getIWads } from '@/utils/getWadsFromFs';
 
 export default class ToolbarSingleplayer extends React.Component {
     static propTypes = {
-        iwads:    type.array.isRequired,
-        showDrop: type.number.isRequired,
-        sortDrop: type.number.isRequired,
-        iwadDrop: type.string.isRequired,
+        iwads:        type.array.isRequired,
+        showDrop:     type.number.isRequired,
+        sortDrop:     type.number.isRequired,
+        iwadDrop:     type.string.isRequired,
         onChangeShow: type.func.isRequired,
         onChangeSort: type.func.isRequired,
         onChangeIwad: type.func.isRequired,
@@ -49,9 +49,9 @@ export default class ToolbarSingleplayer extends React.Component {
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <ToolbarTitle text='IWAD' style={{paddingRight: 0}} />
-                    
-                    <DropDownMenu value={iwadDrop} iconButton={iwadIcon} labelStyle={{visibility: 'hidden', width: 0}} onChange={onChangeIwad}>
+                    <ToolbarTitle text='IWAD' style={{ paddingRight: 0 }} />
+
+                    <DropDownMenu value={iwadDrop} iconButton={iwadIcon} labelStyle={{ visibility: 'hidden', width: 0 }} onChange={onChangeIwad}>
                         {iwadsJsx}
                     </DropDownMenu>
                 </ToolbarGroup>

@@ -9,13 +9,13 @@ import Wad from '../WadController/wad'; // Component
 
 export default class SelectedWads extends Component {
     static propTypes = {
-        style:  type.object,
+        style: type.object,
     }
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
-            wads: []
+            wads: [],
         };
         DBFGL.on('singleplayer.wadlist.selected.update', this.updateWads);
     }
@@ -27,22 +27,22 @@ export default class SelectedWads extends Component {
 
     updateWads = () => {
         this.setState({
-            wads: DBFGL.singleplayer.selected//.map((name) => new WadClass({ name }))
+            wads: DBFGL.singleplayer.selected, //.map((name) => new WadClass({ name }))
         });
         console.log('Список вадов обновлен');
     }
 
-    remove = (wad) => {
+    remove = wad => {
         DBFGL.singleplayer.selected = DBFGL.singleplayer.selected.filter(wad => wad !== wad);
         DBFGL.emit('singleplayer.wadlist.selected.update');
     }
 
-    render () {
-        const jsxwads = this.state.wads.map((e, i) => (<Wad key = { i } value = { i } wad = { e } onClick = { this.remove } />));
+    render() {
+        const jsxwads = this.state.wads.map((e, i) => (<Wad key={i} value={i} wad={e} onClick={this.remove} />));
 
         return (
             <List
-                style = { this.props.style }>
+                style={this.props.style}>
                 {jsxwads}
             </List>
         );

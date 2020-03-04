@@ -17,13 +17,14 @@ export function getWads() {
     }
     const wadPathes = Config
         .get('wads:folders')
-        .map((folder) => folder
+        .map(folder => folder
             .replace('{appdata}', DBFGL.appData)
         );
 
     // Создаём папки, если их нет
     for (const folder of wadPathes) {
         if (fs.existsSync(folder)) continue;
+
 
         try {
             fs.mkdirSync(folder);
@@ -38,7 +39,7 @@ export function getWads() {
     for (const folder of wadPathes) {
         try {
             fs.readdirSync(folder)
-                .forEach((file) => {
+                .forEach(file => {
                     const filename = file.split('.');
 
                     // Если это - .wad файл
@@ -59,7 +60,7 @@ export function getWads() {
 
     return Array.from(wadList);
 
-};
+}
 
 /**
  * @returns {Array<Wad>}

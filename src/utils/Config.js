@@ -13,31 +13,27 @@ if (DBFGL.isNative) {
 }
 
 export default {
-    get (...args) {
+    get(...args) {
 
-        if (!DBFGL.isNative) {
-            throw new Error('Я не могу работать с файлом конфигурации из браузера!');
-        }
+        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+
 
         return nconf.get(...args);
     },
-    set (...args) {
+    set(...args) {
 
-        if (!DBFGL.isNative) {
-            throw new Error('Я не могу работать с файлом конфигурации из браузера!');
-        }
+        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+
         nconf.set(...args);
     },
-    save () {
+    save() {
 
-        if (!DBFGL.isNative) {
-            throw new Error('Я не могу работать с файлом конфигурации из браузера!');
-        }
-        nconf.save((err) => {
-            if (!err) {
-                return console.log('Конфиг успешно сохранен!');
-            }
+        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+
+        nconf.save(err => {
+            if (!err) return console.log('Конфиг успешно сохранен!');
+
             throw new Error('При сохранении конфига произошла ошибка', err);
         });
-    }
+    },
 };

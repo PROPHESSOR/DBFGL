@@ -11,7 +11,7 @@ export default class Server {
      * @param  {string} mode - Режим игры
      * @param  {string} country - Страна
     */
-    constructor (options = {}) {
+    constructor(options = {}) {
         this.ping = 0;
         this.players = [];
         this.name = 'Name';
