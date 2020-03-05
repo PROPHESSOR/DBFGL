@@ -45,14 +45,12 @@ export default class Prompt extends React.Component {
         const actions = [
             <FlatButton
                 primary
-                keyboardFocused
                 label='Ок'
                 key={1}
                 onClick={this.onOk}
             />,
             <FlatButton
                 secondary
-                keyboardFocused
                 label='Отмена'
                 key={2}
                 onClick={this.onCancel}
@@ -71,6 +69,7 @@ export default class Prompt extends React.Component {
                     onRequestClose={this.onCancel}>
                     <TextField
                         fullWidth
+                        autoFocus
                         name='promptinput'
                         value={value}
                         placeholder={placeholder}
