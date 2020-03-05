@@ -4,6 +4,7 @@ import { ListItem } from 'material-ui/List';
 import DBFGL from '@/Global';
 
 import { List } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 export default class CollectionList extends Component {
     static propTypes = {
@@ -38,6 +39,7 @@ export default class CollectionList extends Component {
         return (
             <List
                 style={{ ...this.props.style, height: '-webkit-fill-available' }}>
+                <Subheader>Коллекции:</Subheader>
                 {collectinos}
             </List>
         );

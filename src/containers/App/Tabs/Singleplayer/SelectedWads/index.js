@@ -3,6 +3,7 @@ import type from 'prop-types';
 import DBFGL from '@/Global';
 
 import { List } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -83,6 +84,7 @@ export default class SelectedWads extends Component {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <List style={this.props.style}>
+                    <Subheader>Выбранные WAD&apos;ы:</Subheader>
                     <Droppable droppableId='1'>
                         {provided => (
                             <div

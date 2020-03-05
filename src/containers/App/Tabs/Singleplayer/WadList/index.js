@@ -4,6 +4,7 @@ import type from 'prop-types';
 import DBFGL from '@/Global';
 
 import { List } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 import Wad from './wad'; // Component
 // eslint-disable-next-line no-unused-vars
@@ -67,6 +68,7 @@ export default class WadList extends Component {
                 style={{ ...this.props.style, height: '-webkit-fill-available' }}
                 value={this.state.selectedIndex} // FIXME: Зачем?
                 onChange={this.onSelect}>
+                <Subheader>Все WAD&apos;ы:</Subheader>
                 {jsxwads}
             </List>
         );
