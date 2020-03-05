@@ -58,7 +58,7 @@ export default class WadController extends Component {
 
         return (
             <List
-                style={this.props.style}
+                style={{ ...this.props.style, height: '-webkit-fill-available' }}
                 value={this.state.selectedIndex}
                 onChange={this.onSelect}>
                 {jsxwads}
