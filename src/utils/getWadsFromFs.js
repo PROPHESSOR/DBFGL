@@ -7,9 +7,10 @@ const fs = DBFGL.isNative ? require('fs') : null;
 const path = DBFGL.isNative ? require('path') : null;
 
 /**
+ * @param {Array<string>} types - Типы файлов ['wad', 'pk3']
  * @returns {Array<DoomFile>}
  */
-export function getWads() {
+export function getFiles(types) {
     if (!DBFGL.isNative) {
         console.warn('Получение списка вадов не работает в браузере!');
 
@@ -43,7 +44,7 @@ export function getWads() {
                     const filename = file.split('.');
 
                     // Если это - .wad файл
-                    if (filename[filename.length - 1].toLowerCase() === 'wad') {
+                    if (types.includes(filename[filename.length - 1].toLowerCase())) {
                         const wad = new DoomFile({ name: file, path: path.join(folder, file) });
 
                         if (wadList.has(wad)) {
@@ -60,6 +61,17 @@ export function getWads() {
 
     return Array.from(wadList);
 
+}
+
+/**
+ * @returns {Array<DoomFile>} .wad, .pk3 and .pk7 files
+ */
+export function getZDoomLaunchFiles() {
+    return getFiles(['wad', 'pk3', 'pk7']);
+}
+
+export function getWads() {
+    return getFiles(['wad']);
 }
 
 /**
