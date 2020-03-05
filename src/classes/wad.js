@@ -1,4 +1,4 @@
-import knownIWADs from '@/declarations/knownIwads.json';
+import knownIWADs from '../declarations/knownIwads.json';
 import covers from '../theme/assets/wadcovers';
 
 export default class Wad {
