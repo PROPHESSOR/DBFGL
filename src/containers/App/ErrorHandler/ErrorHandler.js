@@ -2,8 +2,28 @@ import React from 'react';
 import types from 'prop-types';
 
 import DBFGL from '@/Global';
+import Config from '@/utils/Config';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+
+/**
+ *
+ * @param {Error} error
+ * @returns {{title: string, text: string}}
+ */
+function errorInterpreter(error) {
+    const output = {
+        title: 'Ошибка!',
+        text:  'Что-то пошло не так (x_x)',
+    };
+
+    if (error.message === 'No IWADs found!') {
+        output.title = 'Не найдено ни одного IWAD файла!';
+        output.text = `Поместите IWAD файлы (например, doom2.wad или freedoom.wad) в папку ${Config.get('wads:folders')[0].replace('{appdata}', DBFGL.appData)}!`;
+    }
+
+    return output;
+}
 
 export default class ErrorHandler extends React.Component {
     static propTypes = {
@@ -13,7 +33,7 @@ export default class ErrorHandler extends React.Component {
     static getDerivedStateFromError(error) {
         console.error('[ErrorHandler]', error);
 
-        return { error: error.message };
+        return { error };
     }
 
     state = {
@@ -22,12 +42,10 @@ export default class ErrorHandler extends React.Component {
          * @type {string|null}
          */
         error: null,
-        title: 'Ошибка',
-        text:  'Что-то пошло не так (x_x)',
     }
 
     componentDidCatch(error, info) {
-        console.info('[ErrorHandler]', error, info);
+        console.info('[ErrorHandler] message, info, error', [error.message, info, error]);
     }
 
     restart() {
@@ -37,7 +55,11 @@ export default class ErrorHandler extends React.Component {
     render() {
         if (!this.state.error) return this.props.children;
 
-        const { error, title, text } = this.state;
+        const { error } = this.state;
+
+        const { title, text } = errorInterpreter(error);
+
+        const version = DBFGL.isNative ? ` v${require('../../../../package.json').version}` : '';
 
         return (<Dialog
             open
@@ -54,6 +76,7 @@ export default class ErrorHandler extends React.Component {
             ]}
             onRequestClose={this.onCancel}>
             {text}
+            <small style={{ position: 'absolute', left: 0, bottom: 0, color: 'rgba(128, 128, 128, .2)' }}>DBFGL{version}</small>
         </Dialog>);
     }
 }
