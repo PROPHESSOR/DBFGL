@@ -1,10 +1,15 @@
 import React, { Fragment } from 'react';
 import SelectedWads from '../SelectedWads';
+import CollectionList from '../CollectionList';
 
 export default class TabCollections extends React.Component {
     render() {
         return (<Fragment>
-            <big style={{ color: 'white' }}>Здесь будут коллекции</big>
+            <CollectionList
+                style={{
+                    float: 'left',
+                }}
+            />
             <SelectedWads
                 style={{
                     marginLeft: '50%',

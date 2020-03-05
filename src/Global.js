@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-unused-vars
+import DoomFile from './classes/DoomFile';
+
 // import { EventEmitter } from 'events';
 
 const { EventEmitter } = require('events');
@@ -22,10 +25,19 @@ class GlobalClass extends EventEmitter {
     constructor() {
         super();
         this.singleplayer = {
+
+            /**
+             * @type {Array<DoomFile>}
+             */
             selected: [],
 
             /**
-             * path to iwad // TODO: Make it <Wad>
+             * @type {Array<{name: string, wads: Array<DoomFile>}>}
+             */
+            collections: [], // [{name: string, wads: [DoomFile]}]
+
+            /**
+             * path to iwad // TODO: Make it <DoomFile>
              * @type {string}
              */
             iwad: null,

@@ -35,7 +35,7 @@ export default class WadList extends Component {
     }
 
     updateWads = () => {
-        this.setState({
+        this.setState({ // FIXME: Мне кажется, или здесь дикий перерасход ресурсов? :/
             wads: getZDoomLaunchFilesWithoutIWads(), //.map((name) => new WadClass({ name }))
         });
         console.log('Список вадов обновлен');
@@ -59,7 +59,7 @@ export default class WadList extends Component {
         return (
             <List
                 style={{ ...this.props.style, height: '-webkit-fill-available' }}
-                value={this.state.selectedIndex}
+                value={this.state.selectedIndex} // FIXME: Зачем?
                 onChange={this.onSelect}>
                 {jsxwads}
             </List>
