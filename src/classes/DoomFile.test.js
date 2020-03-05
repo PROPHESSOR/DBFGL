@@ -1,9 +1,7 @@
 import DoomFile from './DoomFile';
 
 const wad = new DoomFile({
-    path:     '/home/prophessor/doom/wads/doom2.wad',
-    name:     'doom2.wad',
-    selected: false,
+    path: '/home/prophessor/doom/wads/doom2.wad',
 });
 
 describe('doom2.wad with linux path', () => {
@@ -23,8 +21,16 @@ describe('doom2.wad with linux path', () => {
         expect(wad.isPk).toBe(false);
     });
 
+    test('should have a name "doom2.wad"', () => {
+        expect(wad.name).toBe('doom2.wad');
+    });
+
     test('should be an iwad', () => {
         expect(wad.isIWad).toBe(true);
+    });
+
+    test('should be unselected', () => {
+        expect(wad.selected).toBe(false);
     });
 
     test('should return a "wad" extension', () => {

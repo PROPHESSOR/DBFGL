@@ -7,30 +7,27 @@ export default class DoomFile {
      * @constructor
      * @param  {object}  options - Опции
      * @param  {string}  options.path - Путь к wad файлу
-     * @param  {string}  options.name - Имя wad файла
-     * @param  {string}  options.picture - (doom/doom2)
      * @param  {boolean} options.selected - Выбрал ли вад (скрывает из списка вадов)
      */
     constructor(options) {
-        if (!options.name) options.name = 'Unknown wad';
+        this.path = options.path;
 
-        this.path = '';
-        this.name = options.name;
+        const filename = this.path.split(/[\\/]/g).pop();
 
-        this.picture = DoomFile.getIWADcoverName(options.name);
+        this.name = filename;
 
-        this.selected = options.selected;
+        this.picture = DoomFile.getIWADcoverName(this.name);
 
-        Object.assign(this, options);
+        this.selected = options.selected || false;
+
+        Object.assign(this, options); // FIXME: Remove
     }
 
     /**
      * @returns {string} File extension like "wad"
      */
     get extension() {
-        const pathTokens = this.path.split(/[\\/]/g);
-
-        const filename = pathTokens[pathTokens.length - 1];
+        const filename = this.path.split(/[\\/]/g).pop();
 
         const [, extension] = filename.split('.');
 
