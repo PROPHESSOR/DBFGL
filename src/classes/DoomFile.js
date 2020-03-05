@@ -5,22 +5,16 @@ export default class DoomFile {
 
     /**
      * @constructor
-     * @param  {object}  options - Опции
-     * @param  {string}  options.path - Путь к wad файлу
-     * @param  {boolean} options.selected - Выбрал ли вад (скрывает из списка вадов)
+     * @param  {string}  path - Путь к wad файлу
      */
-    constructor(options) {
-        this.path = options.path;
+    constructor(path) {
+        this.path = path;
 
         const filename = this.path.split(/[\\/]/g).pop();
 
         this.name = filename;
-
         this.picture = DoomFile.getIWADcoverName(this.name);
-
-        this.selected = options.selected || false;
-
-        Object.assign(this, options); // FIXME: Remove
+        this.selected = false;
     }
 
     /**

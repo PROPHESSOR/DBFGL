@@ -45,7 +45,7 @@ export function getFiles(types) {
 
                     // Если это - .wad файл
                     if (types.includes(filename[filename.length - 1].toLowerCase())) {
-                        const wad = new DoomFile({ name: file, path: path.join(folder, file) });
+                        const wad = new DoomFile(path.join(folder, file));
 
                         if (wadList.has(wad)) {
                             console.warn(`Конфликт файлов! Файл ${file} берется из папки ${folder}`)

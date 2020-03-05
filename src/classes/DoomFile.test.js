@@ -1,8 +1,6 @@
 import DoomFile from './DoomFile';
 
-const wad = new DoomFile({
-    path: '/home/prophessor/doom/wads/doom2.wad',
-});
+const wad = new DoomFile('/home/prophessor/doom/wads/doom2.wad');
 
 describe('doom2.wad with linux path', () => {
     test('should be a wad', () => {
