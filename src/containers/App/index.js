@@ -22,6 +22,7 @@ import theme from './theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Toasts from '../../components/Toasts';
 import Alert from '@/components/Alert';
+import Confirm from '@/components/Confirm';
 import Prompt from '@/components/Prompt';
 
 import Styles from './styles.scss';
@@ -53,6 +54,7 @@ export default class App extends Component {
                     <StartButton />
                     <Toasts />
                     <Alert />
+                    <Confirm />
                     <Prompt />
                     <WindowTests />
                     <WindowSettings />

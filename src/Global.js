@@ -59,11 +59,11 @@ class GlobalClass extends EventEmitter {
     }
 
     /**
-     * Usage: const result: (string|null) = await DBFGL.prompt({title?, placeholder?, defaultValue?});
+     * Usage: await DBFGL.alert({title?, text?});
      * @param {object} options
      * @param {string} [options.title] - Заголовок
      * @param {string} [options.text] - Текст
-     * @returns {string|null}
+     * @returns {undefined}
      */
     alert({ title='Сообщение', text='Нажмите Ок, чтобы продолжить' }) {
         return new Promise(res => {
@@ -73,6 +73,34 @@ class GlobalClass extends EventEmitter {
                 this.removeAllListeners('notification.alert.closed');
 
                 return res();
+            });
+        });
+    }
+
+    /**
+     * Usage: const result: boolean = await DBFGL.confirm({title?, text?});
+     * @param {object} options
+     * @param {string} [options.title] - Заголовок
+     * @param {string} [options.title] - Заголовок
+     * @param {string} [options.text] - Текст
+     * @returns {boolean}
+     */
+    confirm({ title='Ввод текста', text='Подтвердите действие' }) {
+        return new Promise(res => {
+            this.emit('notification.confirm', { title, text });
+
+            this.once('notification.confirm.ok', () => {
+                this.removeAllListeners('notification.confirm.ok');
+                this.removeAllListeners('notification.confirm.cancel');
+
+                return res(true);
+            });
+
+            this.once('notification.confirm.cancel', () => {
+                this.removeAllListeners('notification.confirm.ok');
+                this.removeAllListeners('notification.confirm.cancel');
+
+                return res(false);
             });
         });
     }
