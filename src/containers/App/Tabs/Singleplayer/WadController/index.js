@@ -8,7 +8,7 @@ import { List } from 'material-ui/List';
 import Wad from './wad'; // Component
 // eslint-disable-next-line no-unused-vars
 import DoomFile from '@/classes/DoomFile'; // Class
-import { getPWads } from '@/utils/getWadsFromFs';
+import { getZDoomLaunchFilesWithoutIWads } from '@/utils/getWadsFromFs';
 
 export default class WadController extends Component {
     static propTypes = {
@@ -36,7 +36,7 @@ export default class WadController extends Component {
 
     updateWads = () => {
         this.setState({
-            wads: getPWads(), //.map((name) => new WadClass({ name }))
+            wads: getZDoomLaunchFilesWithoutIWads(), //.map((name) => new WadClass({ name }))
         });
         console.log('Список вадов обновлен');
     }
