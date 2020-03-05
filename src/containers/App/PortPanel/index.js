@@ -8,7 +8,7 @@ import Config from '../../../utils/Config';
 
 const knownPorts = Object.values(Config.get('ports'));
 
-export default class Panel extends React.Component {
+export default class PortPanel extends React.Component {
     constructor() {
         super();
 
@@ -16,14 +16,21 @@ export default class Panel extends React.Component {
             open: false,
         };
 
-        DBFGL.on('panel.open', panel => {
-            if (panel === 'right') this.setState({ open: true });
+        DBFGL.on('panel.open', this.listenOpen);
+        DBFGL.on('panel.close', this.listenClose);
+    }
 
-        });
-        DBFGL.on('panel.close', panel => {
-            if (panel === 'right') this.setState({ open: false });
+    componentWillUnmount() {
+        DBFGL.removeListener('panel.open', this.listenOpen);
+        DBFGL.removeListener('panel.close', this.listenClose);
+    }
 
-        });
+    listenOpen = panel => {
+        if (panel === 'right') this.setState({ open: true });
+    }
+
+    listenClose = panel => {
+        if (panel === 'right') this.setState({ open: false });
     }
 
     togglePanel = mode => {

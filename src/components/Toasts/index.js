@@ -11,10 +11,16 @@ export default class Toasts extends Component {
             toasts: [],
         };
 
-        DBFGL.on('notification.toast', message => {
-            this.setState({
-                toasts: [...this.state.toasts, message],
-            });
+        DBFGL.on('notification.toast', this.addToast);
+    }
+
+    componentWillUnmount() {
+        DBFGL.removeListener('notification.toast', this.addToast);
+    }
+
+    addToast = message => {
+        this.setState({
+            toasts: [...this.state.toasts, message],
         });
     }
 

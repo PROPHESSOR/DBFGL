@@ -13,14 +13,21 @@ export default class Panel extends React.Component {
             open: false,
         };
 
-        DBFGL.on('panel.open', panel => {
-            if (panel === 'left') this.setState({ open: true });
+        DBFGL.on('panel.open', this.listenOpen);
+        DBFGL.on('panel.close', this.listenClose);
+    }
 
-        });
-        DBFGL.on('panel.close', panel => {
-            if (panel === 'left') this.setState({ open: false });
+    componentWillUnmount() {
+        DBFGL.removeListener('panel.open', this.listenOpen);
+        DBFGL.removeListener('panel.close', this.listenClose);
+    }
 
-        });
+    listenOpen = panel => {
+        if (panel === 'left') this.setState({ open: true });
+    }
+
+    listenClose = panel => {
+        if (panel === 'left') this.setState({ open: false });
     }
 
     togglePanel = mode => {

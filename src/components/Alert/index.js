@@ -16,6 +16,10 @@ export default class Alert extends React.Component {
         DBFGL.on('notification.alert', this.onAlertRecieved);
     }
 
+    componentWillUnmount() {
+        DBFGL.removeListener('notification.alert', this.onAlertRecieved);
+    }
+
     onAlertRecieved = ({ title, text }) => {
         this.setState({
             title,

@@ -18,6 +18,10 @@ export default class Prompt extends React.Component {
         DBFGL.on('notification.prompt', this.onPromptRecieved);
     }
 
+    componentWillUnmount() {
+        DBFGL.removeListener('notification.prompt', this.onPromptRecieved);
+    }
+
     onPromptRecieved = ({ title, placeholder, defaultValue }) => {
         this.setState({
             title,

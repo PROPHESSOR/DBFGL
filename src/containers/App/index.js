@@ -33,16 +33,6 @@ import WindowSettings from '../Settings';
 import WindowAbout from '../About';
 import ErrorHandler from './ErrorHandler/ErrorHandler';
 
-DBFGL.on('game.end', () => {
-    //TODO: Maximize
-    DBFGL.emit('window.maximize');
-});
-
-DBFGL.on('game.start', () => {
-    //TODO: Minimize
-    DBFGL.emit('window.minimize');
-});
-
 export default class App extends Component {
     render() {
         return (

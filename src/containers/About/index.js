@@ -13,15 +13,21 @@ export default class About extends React.Component {
             open: false,
         };
 
-        DBFGL.on('window.open', name => {
-            if (name === 'about') this.setState({ open: true });
+        DBFGL.on('window.open', this.listenOpen);
+        DBFGL.on('window.close', this.listenClose);
+    }
 
-        });
+    componentWillUnmount() {
+        DBFGL.removeListener('window.open', this.listenOpen);
+        DBFGL.removeListener('window.close', this.listenClose);
+    }
 
-        DBFGL.on('window.close', name => {
-            if (name === 'about') this.setState({ open: false });
+    listenOpen = name => {
+        if (name === 'about') this.setState({ open: true });
+    }
 
-        });
+    listenClose = name => {
+        if (name === 'about') this.setState({ open: false });
     }
 
     close = () => {

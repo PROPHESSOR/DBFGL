@@ -16,6 +16,10 @@ export default class Confirm extends React.Component {
         DBFGL.on('notification.confirm', this.onConfirmRecieved);
     }
 
+    componentWillUnmount() {
+        DBFGL.removeListener('notification.confirm', this.onConfirmRecieved);
+    }
+
     onConfirmRecieved = ({ title, text }) => {
         this.setState({
             title,
