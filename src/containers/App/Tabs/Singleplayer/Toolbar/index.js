@@ -36,7 +36,7 @@ export default class ToolbarSingleplayer extends React.Component {
                     <DropDownMenu value={showDrop} onChange={onChangeShow}>
                         <MenuItem primaryText='Мои коллекции' value={0} />
                         <MenuItem primaryText='Все вады' value={1} />
-                        <MenuItem primaryText='История' value={2} />
+                        {/* <MenuItem primaryText='История' value={2} /> */}
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
