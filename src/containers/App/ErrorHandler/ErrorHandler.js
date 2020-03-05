@@ -6,6 +6,11 @@ import Config from '@/utils/Config';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+
+function getVersion() {
+    return DBFGL.isNative ? ` v${require('../../../../package.json').version}` : '';
+}
+
 /**
  *
  * @param {Error} error
@@ -25,6 +30,30 @@ function errorInterpreter(error) {
     return output;
 }
 
+/**
+ *
+ * @param {Error} error
+ * @param {{componentStack: string}} info
+ * @returns {string}
+ */
+function getErrorTracebackToCopy(error, info) {
+    const lines = [];
+
+    const { isNative } = DBFGL;
+
+    lines.push('## DBFGL Error Traceback ##');
+    lines.push(`generated on ${Date.now()}`);
+    lines.push(`DBFGL.isNative: ${isNative}`);
+    lines.push(`DBFGL.os: ${DBFGL.os}`);
+    if (isNative) lines.push(`version${getVersion()}`);
+    lines.push(`Error message: «${error.message}»`);
+    lines.push(`Error stack: «${error.stack}»`);
+    lines.push(`Components stack: «${info.componentStack}»`);
+    lines.push('## EOET ##');
+
+    return lines.join('\n');
+}
+
 export default class ErrorHandler extends React.Component {
     static propTypes = {
         children: types.element.isRequired,
@@ -42,10 +71,14 @@ export default class ErrorHandler extends React.Component {
          * @type {string|null}
          */
         error: null,
+        info:  null,
     }
 
     componentDidCatch(error, info) {
         console.info('[ErrorHandler] message, info, error', [error.message, info, error]);
+        this.setState({
+            info,
+        });
     }
 
     restart() {
@@ -56,6 +89,15 @@ export default class ErrorHandler extends React.Component {
         require('electron').remote.getCurrentWebContents().openDevTools({ mode: 'bottom' });
     }
 
+    copyTraceback = () => {
+        // isNative
+        const { error, info } = this.state;
+
+        const text = getErrorTracebackToCopy(error, info);
+
+        require('electron').remote.clipboard.writeText(text);
+    }
+
     render() {
         if (!this.state.error) return this.props.children;
 
@@ -63,24 +105,32 @@ export default class ErrorHandler extends React.Component {
 
         const { title, text } = errorInterpreter(error);
 
-        const version = DBFGL.isNative ? ` v${require('../../../../package.json').version}` : '';
+        const actions = [
+            <FlatButton
+                secondary
+                key={1}
+                label='Перезагрузить'
+                onClick={this.restart}
+            />,
+        ];
+
+        if (DBFGL.isNative) {
+            actions.push(<FlatButton
+                primary
+                key={2}
+                label='Скопировать детали ошибки'
+                onClick={this.copyTraceback}
+            />);
+        }
 
         return (<Dialog
             open
             modal
             title={title}
-            actions={[
-                <FlatButton
-                    primary
-                    // keyboardFocused
-                    key={1}
-                    label='Перезагрузить'
-                    onClick={this.restart}
-                />,
-            ]}
+            actions={actions}
             onRequestClose={this.onCancel}>
             {text}
-            <small style={{ position: 'absolute', left: 0, bottom: 0, color: 'rgba(128, 128, 128, .2)' }} onContextMenu={this.openDevtools}>DBFGL{version}</small>
+            <small style={{ position: 'absolute', left: 0, bottom: 0, color: 'rgba(128, 128, 128, .2)' }} onContextMenu={this.openDevtools}>DBFGL{getVersion()}</small>
         </Dialog>);
     }
 }
