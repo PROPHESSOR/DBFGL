@@ -56,6 +56,8 @@ class GlobalClass extends EventEmitter {
             else electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
 
         });
+
+        this._notifblock = false;
     }
 
     /**
@@ -66,11 +68,15 @@ class GlobalClass extends EventEmitter {
      * @returns {undefined}
      */
     alert({ title='Сообщение', text='Нажмите Ок, чтобы продолжить' }) {
+        if (this._notifblock) throw new Error('На экране уже присутствует модальное окно!');
+
         return new Promise(res => {
             this.emit('notification.alert', { title, text });
+            this._notifblock = true;
 
             this.once('notification.alert.closed', () => {
                 this.removeAllListeners('notification.alert.closed');
+                this._notifblock = false;
 
                 return res();
             });
@@ -86,12 +92,16 @@ class GlobalClass extends EventEmitter {
      * @returns {boolean}
      */
     confirm({ title='Ввод текста', text='Подтвердите действие' }) {
+        if (this._notifblock) throw new Error('На экране уже присутствует модальное окно!');
+
         return new Promise(res => {
             this.emit('notification.confirm', { title, text });
+            this._notifblock = true;
 
             this.once('notification.confirm.ok', () => {
                 this.removeAllListeners('notification.confirm.ok');
                 this.removeAllListeners('notification.confirm.cancel');
+                this._notifblock = false;
 
                 return res(true);
             });
@@ -99,6 +109,7 @@ class GlobalClass extends EventEmitter {
             this.once('notification.confirm.cancel', () => {
                 this.removeAllListeners('notification.confirm.ok');
                 this.removeAllListeners('notification.confirm.cancel');
+                this._notifblock = false;
 
                 return res(false);
             });
@@ -114,12 +125,16 @@ class GlobalClass extends EventEmitter {
      * @returns {string|null}
      */
     prompt({ title='Ввод текста', placeholder='Писать сюда', defaultValue='' }) {
+        if (this._notifblock) throw new Error('На экране уже присутствует модальное окно!');
+
         return new Promise(res => {
             this.emit('notification.prompt', { title, placeholder, defaultValue });
+            this._notifblock = true;
 
             this.once('notification.prompt.ok', value => {
                 this.removeAllListeners('notification.prompt.ok');
                 this.removeAllListeners('notification.prompt.cancel');
+                this._notifblock = false;
 
                 return res(value);
             });
@@ -127,6 +142,7 @@ class GlobalClass extends EventEmitter {
             this.once('notification.prompt.cancel', () => {
                 this.removeAllListeners('notification.prompt.ok');
                 this.removeAllListeners('notification.prompt.cancel');
+                this._notifblock = false;
 
                 return res(null);
             });
@@ -135,8 +151,8 @@ class GlobalClass extends EventEmitter {
 
     /**
      * Subscribe to Global Event
-     * @param {GlobalEvents} event 
-     * @param {(...args: any[]) => void} listener 
+     * @param {GlobalEvents} event
+     * @param {(...args: any[]) => void} listener
      * @returns {this}
      */
     on(event, listener) {
