@@ -8,7 +8,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Wad from '../WadController/wad'; // Component
 // eslint-disable-next-line no-unused-vars
-import WadClass from '@/classes/wad'; // Class
+import DoomFile from '@/classes/DoomFile'; // Class
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -45,7 +45,7 @@ export default class SelectedWads extends Component {
     }
 
     /**
-     * @param {WadClass} wad
+     * @param {DoomFile} wad
      */
     remove = wad => {
         wad.selected = false;

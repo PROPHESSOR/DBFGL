@@ -1,14 +1,13 @@
 import knownIWADs from '../declarations/knownIwads.json';
 import covers from '../theme/assets/wadcovers';
 
-export default class Wad {
+export default class DoomFile {
 
     /**
      * @constructor
      * @param  {object}  options - Опции
      * @param  {string}  options.path - Путь к wad файлу
      * @param  {string}  options.name - Имя wad файла
-     * @param  {string}  options.type - Тип файла (WAD/PK3/PK7)
      * @param  {string}  options.picture - (doom/doom2)
      * @param  {boolean} options.selected - Выбрал ли вад (скрывает из списка вадов)
      */
@@ -16,10 +15,9 @@ export default class Wad {
         if (!options.name) options.name = 'Unknown wad';
 
         this.path = '';
-        this.type = 'WAD';
         this.name = options.name;
 
-        this.picture = Wad.getIWADcoverName(options.name);
+        this.picture = DoomFile.getIWADcoverName(options.name);
 
         this.selected = options.selected;
 
@@ -123,7 +121,7 @@ export default class Wad {
      * @returns {string} "like public/assets/.../doom2.jpg"
      */
     static getIWADcover(iwad) {
-        return covers[Wad.getIWADcoverName(iwad)];
+        return covers[DoomFile.getIWADcoverName(iwad)];
     }
 
     /**

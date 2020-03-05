@@ -1,13 +1,13 @@
 import Config from '@/utils/Config';
 
-import Wad from '@/classes/wad';
+import DoomFile from '@/classes/DoomFile';
 import DBFGL from '@/Global';
 
 const fs = DBFGL.isNative ? require('fs') : null;
 const path = DBFGL.isNative ? require('path') : null;
 
 /**
- * @returns {Array<Wad>}
+ * @returns {Array<DoomFile>}
  */
 export function getWads() {
     if (!DBFGL.isNative) {
@@ -44,7 +44,7 @@ export function getWads() {
 
                     // Если это - .wad файл
                     if (filename[filename.length - 1].toLowerCase() === 'wad') {
-                        const wad = new Wad({ name: file, path: path.join(folder, file) });
+                        const wad = new DoomFile({ name: file, path: path.join(folder, file) });
 
                         if (wadList.has(wad)) {
                             console.warn(`Конфликт файлов! Файл ${file} берется из папки ${folder}`)
@@ -63,19 +63,19 @@ export function getWads() {
 }
 
 /**
- * @returns {Array<Wad>}
+ * @returns {Array<DoomFile>}
  */
 export function getPWads() {
-    const iwads = new Set(Wad.knownIWADs);
+    const iwads = new Set(DoomFile.knownIWADs);
 
     return getWads().filter(wad => !iwads.has(wad.name));
 }
 
 /**
- * @returns {Array<Wad>}
+ * @returns {Array<DoomFile>}
  */
 export function getIWads() {
-    const iwads = new Set(Wad.knownIWADs);
+    const iwads = new Set(DoomFile.knownIWADs);
 
     return getWads().filter(wad => iwads.has(wad.name));
 }

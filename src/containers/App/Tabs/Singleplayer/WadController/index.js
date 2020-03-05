@@ -7,7 +7,7 @@ import { List } from 'material-ui/List';
 
 import Wad from './wad'; // Component
 // eslint-disable-next-line no-unused-vars
-import WadClass from '@/classes/wad'; // Class
+import DoomFile from '@/classes/DoomFile'; // Class
 import { getPWads } from '@/utils/getWadsFromFs';
 
 export default class WadController extends Component {
@@ -21,7 +21,7 @@ export default class WadController extends Component {
             selectedIndex: 0,
 
             /**
-             * @type {Array<WadClass>}
+             * @type {Array<DoomFile>}
              */
             wads: [],
         };
@@ -42,7 +42,7 @@ export default class WadController extends Component {
     }
 
     /**
-     * @param {WadClass} wad
+     * @param {DoomFile} wad
      */
     onSelect = wad => { // (wad, index)
         // console.log('onselect', wad, index);

@@ -1,6 +1,6 @@
-import Wad from './wad';
+import DoomFile from './DoomFile';
 
-const wad = new Wad({
+const wad = new DoomFile({
     path:     '/home/prophessor/doom/wads/doom2.wad',
     name:     'doom2.wad',
     selected: false,
@@ -36,6 +36,6 @@ describe('doom2.wad with linux path', () => {
     });
 
     test('should return "doom2" cover image name', () => {
-        expect(Wad.getIWADcoverName(wad.name)).toBe('doom2');
+        expect(DoomFile.getIWADcoverName(wad.name)).toBe('doom2');
     });
 });

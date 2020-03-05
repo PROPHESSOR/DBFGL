@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
-import Wad from '@/classes/wad';
+import DoomFile from '@/classes/DoomFile';
 
 import Styles from './styles.scss';
 
@@ -28,7 +28,7 @@ export default class ToolbarSingleplayer extends React.Component {
 
         const iwadsJsx = iwads.map(iwad => <MenuItem primaryText={iwad.name} value={iwad.name} key={iwad.path} />);
 
-        const iwadIcon = <img className={Styles['toolbar-iwad-dropdown-img']} src={Wad.getIWADcover(iwadDrop)} />;
+        const iwadIcon = <img className={Styles['toolbar-iwad-dropdown-img']} src={DoomFile.getIWADcover(iwadDrop)} />;
 
         return (
             <Toolbar>
