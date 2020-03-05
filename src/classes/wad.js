@@ -79,7 +79,10 @@ export default class Wad {
      * @returns {boolean} Is it a IWAD, IPK3 or IPK7
      */
     get isIWad() {
-        throw new Error('Wad::isIWad not implemented yet!');
+        if (this.extension === 'ipk3' || this.extension === 'pk7') return true;
+        if (knownIWADs.includes(this.name)) return true; // TODO: Проверять заголовок IWAD'а
+
+        return false;
     }
 
 

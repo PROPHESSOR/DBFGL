@@ -23,7 +23,7 @@ describe('doom2.wad with linux path', () => {
         expect(wad.isPk).toBe(false);
     });
 
-    test.skip('should be an iwad', () => {
+    test('should be an iwad', () => {
         expect(wad.isIWad).toBe(true);
     });
 
