@@ -31,6 +31,7 @@ import Styles from './styles.scss';
 import WindowTests from '../Tests';
 import WindowSettings from '../Settings';
 import WindowAbout from '../About';
+import ErrorHandler from './ErrorHandler/ErrorHandler';
 
 DBFGL.on('game.end', () => {
     //TODO: Maximize
@@ -46,20 +47,22 @@ export default class App extends Component {
     render() {
         return (
             <Provider muiTheme={getMuiTheme(theme)}>
-                <div className={Styles.app} style={{ background: theme.palette.canvasColor }}>
-                    <Panel />
-                    <PortPanel />
-                    <Bar />
-                    <Tabs />
-                    <StartButton />
-                    <Toasts />
-                    <Alert />
-                    <Confirm />
-                    <Prompt />
-                    <WindowTests />
-                    <WindowSettings />
-                    <WindowAbout />
-                </div>
+                <ErrorHandler>
+                    <div className={Styles.app} style={{ background: theme.palette.canvasColor }}>
+                        <Panel />
+                        <PortPanel />
+                        <Bar />
+                        <Tabs />
+                        <StartButton />
+                        <Toasts />
+                        <Alert />
+                        <Confirm />
+                        <Prompt />
+                        <WindowTests />
+                        <WindowSettings />
+                        <WindowAbout />
+                    </div>
+                </ErrorHandler>
             </Provider>
         );
     }
