@@ -20,7 +20,7 @@ import StartButton from './StartButton';
 
 import theme from './theme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AlertBox from '../../components/Alertbox';
+import Toasts from '../../components/Toasts';
 import Prompt from '@/components/Prompt';
 
 import Styles from './styles.scss';
@@ -50,7 +50,7 @@ export default class App extends Component {
                     <Bar />
                     <Tabs />
                     <StartButton />
-                    <AlertBox />
+                    <Toasts />
                     <Prompt />
                     <WindowTests />
                     <WindowSettings />
