@@ -11,20 +11,21 @@ import Styles from './styles.scss';
 
 export default class ToolbarSingleplayer extends React.Component {
     static propTypes = {
-        iwads:        type.array.isRequired,
-        showDrop:     type.number.isRequired,
-        sortDrop:     type.number.isRequired,
-        iwadDrop:     type.string.isRequired,
-        onChangeShow: type.func.isRequired,
-        onChangeSort: type.func.isRequired,
-        onChangeIwad: type.func.isRequired,
+        iwads:              type.array.isRequired,
+        showDrop:           type.number.isRequired,
+        sortDrop:           type.number.isRequired,
+        iwadDrop:           type.string.isRequired,
+        onChangeShow:       type.func.isRequired,
+        onChangeSort:       type.func.isRequired,
+        onChangeIwad:       type.func.isRequired,
+        onCreateCollection: type.func.isRequired,
     }
 
     render() {
         const {
             iwads,
             showDrop, iwadDrop, // sortDrop, onChangeSort
-            onChangeShow, onChangeIwad } = this.props;
+            onChangeShow, onChangeIwad, onCreateCollection } = this.props;
 
         const iwadsJsx = iwads.map(iwad => <MenuItem primaryText={iwad.name} value={iwad.name} key={iwad.path} />);
 
@@ -40,7 +41,7 @@ export default class ToolbarSingleplayer extends React.Component {
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
-                    <RaisedButton primary label='Создать коллекцию' />
+                    <RaisedButton primary label='Создать коллекцию' onClick={onCreateCollection} />
                     {/* <ToolbarTitle text='Сортировка' />
                     <DropDownMenu value={sortDrop} onChange={onChangeSort}>
                         <MenuItem primaryText='по имени' value={0} />

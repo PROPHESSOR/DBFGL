@@ -10,6 +10,16 @@ export default class CollectionList extends Component {
         style: type.object,
     }
 
+    constructor() {
+        super();
+
+        DBFGL.on('singleplayer.collections.update', this.forceUpdate);
+    }
+
+    componentWillUnmount() {
+        DBFGL.removeListener('singleplayer.collections.update', this.forceUpdate);
+    }
+
     /**
      * @param {{name: string, wads: Array<DoomFile>}} collection
      */
@@ -19,14 +29,15 @@ export default class CollectionList extends Component {
         DBFGL.emit('singleplayer.wadlist.selected.update');
     }
 
+    forceUpdate = () => super.forceUpdate();
+
     render() {
         const collectinos = DBFGL.singleplayer.collections
             .map((collection, i) => (<ListItem key={i} style={{ userSelect: 'none' }} primaryText={collection.name} onClick={() => this.onSelect(collection)} />));
 
         return (
             <List
-                style={{ ...this.props.style, height: '-webkit-fill-available' }}
-                onChange={this.onSelect}>
+                style={{ ...this.props.style, height: '-webkit-fill-available' }}>
                 {collectinos}
             </List>
         );

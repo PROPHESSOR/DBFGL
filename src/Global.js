@@ -15,7 +15,7 @@ const electron = isNative ? require('electron') : null;
             "tab.change"|
             "window.minimize"|"window.restore"|"window.close"|"window.open"|
             "panel.open"|"panel.close"|
-            "singleplayer.wadlist.selected.update"|"singleplayer.wadlist.iwad.update"|"singleplayer.wadlist.update"|
+            "singleplayer.wadlist.selected.update"|"singleplayer.wadlist.iwad.update"|"singleplayer.wadlist.update"|"singleplayer.collections.update"|
             "game.start"|"game.stop"|"game.kill"|
             "notification.alert"|"notification.prompt"|"notification.confirm"|"notification.toast"
         } GlobalEvents

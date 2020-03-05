@@ -47,6 +47,18 @@ export default class Singleplayer extends Component {
         DBFGL.emit('singleplayer.wadlist.iwad.update', wad.path);
     };
 
+    onCreateCollection = async() => {
+        const name = await DBFGL.prompt({ title: 'Создание коллекции', placeholder: 'Введите имя для коллекции' });
+
+        if (!name) return;
+
+        DBFGL.singleplayer.collections.push({
+            name,
+            wads: [...DBFGL.singleplayer.selected],
+        });
+        DBFGL.emit('singleplayer.collections.update');
+    }
+
     render() {
         return (
             <div
@@ -61,6 +73,7 @@ export default class Singleplayer extends Component {
                     onChangeShow={this.onChangeShow}
                     onChangeSort={this.onChangeSort}
                     onChangeIwad={this.onChangeIwad}
+                    onCreateCollection={this.onCreateCollection}
                 />
                 {
                     this.state.showDrop === 0

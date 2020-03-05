@@ -26,12 +26,16 @@ export default class WadList extends Component {
             wads: [],
         };
         DBFGL.on('singleplayer.wadlist.update', this.updateWads);
-        DBFGL.on('singleplayer.wadlist.selected.update', () => this.forceUpdate()); // FIXME: Используется для отлавливания изменений в WadClass.selected
+        DBFGL.on('singleplayer.wadlist.selected.update', this.forceUpdate); // FIXME: Используется для отлавливания изменений в WadClass.selected
     }
-
 
     componentDidMount = () => {
         this.updateWads();
+    }
+
+    componentWillUnmount() {
+        DBFGL.removeListener('singleplayer.wadlist.update', this.updateWads);
+        DBFGL.removeListener('singleplayer.wadlist.selected.update', this.forceUpdate);
     }
 
     updateWads = () => {
@@ -40,6 +44,8 @@ export default class WadList extends Component {
         });
         console.log('Список вадов обновлен');
     }
+
+    forceUpdate = () => super.forceUpdate();
 
     /**
      * @param {DoomFile} wad

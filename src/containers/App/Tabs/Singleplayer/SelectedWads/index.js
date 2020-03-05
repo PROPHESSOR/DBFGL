@@ -37,6 +37,10 @@ export default class SelectedWads extends Component {
         this.updateWads();
     }
 
+    componentWillUnmount() {
+        DBFGL.removeListener('singleplayer.wadlist.selected.update', this.updateWads);
+    }
+
     updateWads = () => {
         this.setState({
             wads: DBFGL.singleplayer.selected, //.map((name) => new WadClass({ name }))
