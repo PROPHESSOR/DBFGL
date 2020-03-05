@@ -60,6 +60,29 @@ class GlobalClass extends EventEmitter {
 
     /**
      * Usage: const result: (string|null) = await DBFGL.prompt({title?, placeholder?, defaultValue?});
+     * @param {object} options
+     * @param {string} [options.title] - Заголовок
+     * @param {string} [options.text] - Текст
+     * @returns {string|null}
+     */
+    alert({ title='Сообщение', text='Нажмите Ок, чтобы продолжить' }) {
+        return new Promise(res => {
+            this.emit('notification.alert', { title, text });
+
+            this.once('notification.alert.closed', () => {
+                this.removeAllListeners('notification.alert.closed');
+
+                return res();
+            });
+        });
+    }
+
+    /**
+     * Usage: const result: (string|null) = await DBFGL.prompt({title?, placeholder?, defaultValue?});
+     * @param {object} options
+     * @param {string} [options.title] - Заголовок
+     * @param {string} [options.placeholder] - Подсказка для ввода
+     * @param {string} [options.defaultValue] - Значение по умолчанию
      * @returns {string|null}
      */
     prompt({ title='Ввод текста', placeholder='Писать сюда', defaultValue='' }) {
