@@ -23,8 +23,8 @@ export default class ToolbarSingleplayer extends React.Component {
     render() {
         const {
             iwads,
-            showDrop, sortDrop, iwadDrop,
-            onChangeShow, onChangeSort, onChangeIwad } = this.props;
+            showDrop, iwadDrop, // sortDrop, onChangeSort
+            onChangeShow, onChangeIwad } = this.props;
 
         const iwadsJsx = iwads.map(iwad => <MenuItem primaryText={iwad.name} value={iwad.name} key={iwad.path} />);
 
@@ -41,11 +41,11 @@ export default class ToolbarSingleplayer extends React.Component {
                 </ToolbarGroup>
                 <ToolbarGroup>
                     <RaisedButton primary label='Создать коллекцию' />
-                    <ToolbarTitle text='Сортировка' />
+                    {/* <ToolbarTitle text='Сортировка' />
                     <DropDownMenu value={sortDrop} onChange={onChangeSort}>
                         <MenuItem primaryText='по имени' value={0} />
                         <MenuItem primaryText='по дате' value={1} />
-                    </DropDownMenu>
+                    </DropDownMenu> */}
                 </ToolbarGroup>
                 <ToolbarGroup>
                     <ToolbarTitle text='IWAD' style={{ paddingRight: 0 }} />
