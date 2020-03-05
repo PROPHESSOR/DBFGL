@@ -6,6 +6,8 @@ import Toolbar from './Toolbar';
 import WadController from './WadController';
 import SelectedWads from './SelectedWads';
 import { getIWads } from '@/utils/getWadsFromFs';
+import TabWads from './TabWads';
+import TabCollections from './TabCollections';
 
 export default class Singleplayer extends Component {
     constructor() {
@@ -60,16 +62,11 @@ export default class Singleplayer extends Component {
                     onChangeSort={this.onChangeSort}
                     onChangeIwad={this.onChangeIwad}
                 />
-                <WadController
-                    style={{
-                        float: 'left',
-                    }}
-                />
-                <SelectedWads
-                    style={{
-                        marginLeft: '50%',
-                    }}
-                />
+                {
+                    this.state.showDrop === 0
+                        ? <TabCollections />
+                        : <TabWads />
+                }
             </div>
         );
     }
