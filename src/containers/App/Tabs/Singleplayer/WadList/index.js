@@ -10,7 +10,7 @@ import Wad from './wad'; // Component
 import DoomFile from '@/classes/DoomFile'; // Class
 import { getZDoomLaunchFilesWithoutIWads } from '@/utils/getWadsFromFs';
 
-export default class WadController extends Component {
+export default class WadList extends Component {
     static propTypes = {
         style: type.object,
     }

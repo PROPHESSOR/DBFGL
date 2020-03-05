@@ -6,7 +6,7 @@ import { List } from 'material-ui/List';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import Wad from '../WadController/wad'; // Component
+import Wad from '../WadList/wad'; // Component
 // eslint-disable-next-line no-unused-vars
 import DoomFile from '@/classes/DoomFile'; // Class
 

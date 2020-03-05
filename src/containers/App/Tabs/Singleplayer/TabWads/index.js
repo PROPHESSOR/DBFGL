@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import WadController from '../WadController';
+import WadList from '../WadList';
 import SelectedWads from '../SelectedWads';
 
 export default class TabWads extends React.Component {
     render() {
         return (<Fragment>
-            <WadController
+            <WadList
                 style={{
                     float: 'left',
                 }}

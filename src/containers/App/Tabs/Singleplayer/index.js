@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import DBFGL from '@/Global';
 
 import Toolbar from './Toolbar';
-import WadController from './WadController';
+import WadList from './WadList';
 import SelectedWads from './SelectedWads';
 import { getIWads } from '@/utils/getWadsFromFs';
 import TabWads from './TabWads';
