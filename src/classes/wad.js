@@ -27,8 +27,65 @@ export default class Wad {
     }
 
     /**
-     * 
-     * @param {string} iwad 
+     * @returns {string} File extension like "wad"
+     */
+    get extension() {
+        const pathTokens = this.path.split(/[\\/]/g);
+
+        const filename = pathTokens[pathTokens.length - 1];
+
+        const [, extension] = filename.split('.');
+
+        return extension.toLowerCase();
+    }
+
+    /**
+     * @returns {boolean} Is it a wad file
+     */
+    get isWad() {
+        return this.extension === 'wad';
+    }
+
+    /**
+     * @returns {boolean} Is it a pk3 file
+     */
+    get isPk3() {
+        return this.extension === 'pk3';
+    }
+
+    /**
+     * @returns {boolean} Is it a pk7 file
+     */
+    get isPk7() {
+        return this.extension === 'pk7';
+    }
+
+    /**
+     * @returns {boolean} Is it a pk3 or pk7 file
+     */
+    get isPk() {
+        return this.isPk3 || this.isPk7;
+    }
+
+    /**
+     * @returns {string} Path to wad folder
+     */
+    get folder() {
+        return this.path.slice(0, -this.name.length);
+    }
+
+    /**
+     * [NOT IMPLEMENTED!]
+     * @returns {boolean} Is it a IWAD, IPK3 or IPK7
+     */
+    get isIWad() {
+        throw new Error('Wad::isIWad not implemented yet!');
+    }
+
+
+    /**
+     *
+     * @param {string} iwad
      * @returns {string} like "doom2"
      */
     static getIWADcoverName(iwad) {
@@ -58,8 +115,8 @@ export default class Wad {
     }
 
     /**
-     * 
-     * @param {string} iwad 
+     *
+     * @param {string} iwad
      * @returns {string} "like public/assets/.../doom2.jpg"
      */
     static getIWADcover(iwad) {
