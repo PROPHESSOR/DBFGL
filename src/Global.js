@@ -21,6 +21,11 @@ const electron = isNative ? require('electron') : null;
         } GlobalEvents
  */
 
+/**
+ * @typedef { { name: string, iwad: DoomFile, wads: Array<DoomFile> } } Collection
+ * @typedef { { name: string, iwad: string, wads: Array<string> } } CollectionJSON
+ */
+
 class GlobalClass extends EventEmitter {
     constructor() {
         super();
@@ -32,9 +37,9 @@ class GlobalClass extends EventEmitter {
             selected: [],
 
             /**
-             * @type {Array<{name: string, wads: Array<DoomFile>}>}
+             * @type {Array<Collection>}
              */
-            collections: [], // [{name: string, wads: [DoomFile]}]
+            collections: [],
 
             /**
              * path to iwad // TODO: Make it <DoomFile>

@@ -34,6 +34,9 @@ export default class Singleplayer extends Component {
             sortDrop: 0,
             iwadDrop: defaultiwad.name,
         };
+
+        DBFGL.on('singleplayer.wadlist.iwad.update', () => this.setState({ iwadDrop: DBFGL.singleplayer.iwad.split(/[\\/]/g).pop() }));
+        // FIXME: Явный костыль
     }
 
     onChangeShow = (event, index, value) => this.setState({ showDrop: value });
@@ -52,8 +55,12 @@ export default class Singleplayer extends Component {
 
         if (!name) return;
 
+        const [iwad] = getIWads().filter(curiwad => curiwad.path === DBFGL.singleplayer.iwad);
+        // TODO: Кешировать
+
         DBFGL.singleplayer.collections.push({
             name,
+            iwad,
             wads: [...DBFGL.singleplayer.selected],
         });
         DBFGL.emit('singleplayer.collections.update');

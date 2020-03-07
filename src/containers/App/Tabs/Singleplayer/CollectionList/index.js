@@ -22,12 +22,17 @@ export default class CollectionList extends Component {
     }
 
     /**
-     * @param {{name: string, wads: Array<DoomFile>}} collection
+     * @param {import('@/Global').Collection} collection
      */
     onSelect = collection => { // (wad, index)
         DBFGL.singleplayer.selected.forEach(wad => wad.selected = false);
         DBFGL.singleplayer.selected = [...collection.wads];
         DBFGL.emit('singleplayer.wadlist.selected.update');
+
+        if (collection.iwad) {
+            DBFGL.singleplayer.iwad = collection.iwad.path;
+            DBFGL.emit('singleplayer.wadlist.iwad.update');
+        }
     }
 
     forceUpdate = () => super.forceUpdate();
