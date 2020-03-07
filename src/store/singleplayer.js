@@ -1,5 +1,6 @@
 import DoomFile from '@/classes/DoomFile';
 import { getIWads, getZDoomLaunchFilesWithoutIWads } from '@/utils/getWadsFromFs';
+import Config from '@/utils/Config';
 
 /* eslint-disable camelcase, default-case */
 
@@ -13,12 +14,12 @@ const store = {
     /**
      * @type {Array<DoomFile>}
      */
-    wadlist: [],
+    wadlist: getZDoomLaunchFilesWithoutIWads(),
 
     /**
      * @type {Array<DoomFile>}
      */
-    iwads: [],
+    iwads: getIWads(),
 
     /**
      * @type {Array<import('@/Global').Collection}
@@ -30,6 +31,24 @@ const store = {
      */
     iwad: null,
 };
+
+{
+    // Import collections
+    console.log('Importing collections...');
+
+    /**
+     * @type {Array<import('@/Global.js').CollectionJSON>}
+     */
+    const collections = Config.get('collections');
+    const { iwads } = store;
+
+    store.collections = collections
+        .map(collection => ({
+            name: collection.name,
+            iwad: iwads.filter(iwad => iwad.name === collection.iwad).pop(),
+            wads: collection.wads.map(wadpath => new DoomFile(wadpath)),
+        }));
+}
 
 export const actions = {
     singleplayer_wadlist_selected_add:    'singleplayer.wadlist.selected.add',
@@ -46,6 +65,7 @@ export const actions = {
  */
 // eslint-disable-next-line complexity
 export function reducer(state = store, action) {
+
     const { type, payload } = action;
 
     switch (type) {

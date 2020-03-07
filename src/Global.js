@@ -28,24 +28,6 @@ const electron = require('electron');
 class GlobalClass extends EventEmitter {
     constructor() {
         super();
-        this.singleplayer = {
-
-            /**
-             * @type {Array<DoomFile>}
-             */
-            selected: [],
-
-            /**
-             * @type {Array<Collection>}
-             */
-            collections: [],
-
-            /**
-             * path to iwad // TODO: Make it <DoomFile>
-             * @type {string}
-             */
-            iwad: null,
-        };
 
         this._notifblock = false;
 

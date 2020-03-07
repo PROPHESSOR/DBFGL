@@ -19,8 +19,8 @@ export default connect(
             style:       type.object,
         }
 
-        constructor() {
-            super();
+        constructor(props) {
+            super(props);
 
             DBFGL.on('singleplayer.collections.update', this.forceUpdate);
         }
@@ -35,17 +35,10 @@ export default connect(
         onSelect = collection => { // (wad, index)
             const { act, actions } = this.props;
 
-            // act(actions.singleplayer_selected_clear);
-            // DBFGL.singleplayer.selected.forEach(wad => wad.selected = false);
-            act(actions.singleplayer_selected_update, [...collection.wads]);
-            // DBFGL.singleplayer.selected = [...collection.wads];
-            // DBFGL.emit('singleplayer.wadlist.selected.update');
+            act(actions.singleplayer_wadlist_selected_update, [...collection.wads]);
 
-            if (collection.iwad) {
-                // DBFGL.singleplayer.iwad = collection.iwad.path;
-                // DBFGL.emit('singleplayer.wadlist.iwad.update');
-                act(actions.singleplayer_iwad_update, collection.iwad);
-            }
+            if (collection.iwad) act(actions.singleplayer_wadlist_iwad_update, collection.iwad);
+
         }
 
         forceUpdate = () => super.forceUpdate();
