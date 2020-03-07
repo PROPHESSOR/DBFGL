@@ -16,7 +16,11 @@ mac:
     - dmg
 win:
   target:
-    - target: nsis
+    # - target: nsis
+    #   arch:
+    #     - x64
+    #     - ia32
+    - target: nsis-web
       arch:
         - x64
         - ia32
