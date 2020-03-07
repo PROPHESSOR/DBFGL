@@ -14,10 +14,12 @@ export const actions = {
 
 
 export function reducer(state = store, action) {
-    switch (action) {
+    const { type, payload } = action;
+
+    switch (type) {
         case actions.interface_tab_change:
             return {
-                tab: action.payload,
+                tab: payload,
             };
     }
 
