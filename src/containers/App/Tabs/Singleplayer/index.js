@@ -6,6 +6,7 @@ import Toolbar from './Toolbar';
 import { getIWads } from '@/utils/getWadsFromFs';
 import TabWads from './TabWads';
 import TabCollections from './TabCollections';
+import Config from '@/utils/Config';
 
 export default class Singleplayer extends Component {
     constructor() {
@@ -62,6 +63,14 @@ export default class Singleplayer extends Component {
             wads: [...DBFGL.singleplayer.selected],
         });
         DBFGL.emit('singleplayer.collections.update');
+
+        Config.set('collections', DBFGL.singleplayer.collections.map(collection => ({
+            name: collection.name,
+            iwad: collection.iwad.name,
+            wads: collection.wads.map(wadfile => wadfile.path),
+        })));
+
+        Config.save();
     }
 
     render() {

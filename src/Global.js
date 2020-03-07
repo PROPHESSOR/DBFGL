@@ -10,6 +10,7 @@ const electron = require('electron');
 // Когда хочешь использовать IntelliSense, но лень переходить на TypeScript =D
 /**
  * @typedef {
+            "ready"|
             "tab.change"|
             "window.minimize"|"window.restore"|"window.close"|"window.open"|
             "panel.open"|"panel.close"|
@@ -53,8 +54,6 @@ class GlobalClass extends EventEmitter {
          */
         this.tab = 'singleplayer';
 
-        this.on('ready', () => this._importCollections);
-
         this.on('tab.change', tab => {
             if (!(tab === 'singleplayer' || tab === 'multiplayer')) throw new TypeError('Нет такого таба!');
 
@@ -70,6 +69,8 @@ class GlobalClass extends EventEmitter {
             if (this.os === 'Linux') electron.remote.BrowserWindow.getAllWindows().forEach(win => win.show());
             else electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
         });
+
+        setTimeout(() => this.emit('ready'), 50); // FIXME: Вызывать при полной загрузке
     }
 
     /**

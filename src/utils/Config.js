@@ -1,16 +1,46 @@
 import defaultConfig from '../declarations/defaultconfig.json';
 import DBFGL from '@/Global';
+import { getIWads } from './getWadsFromFs.js';
+import DoomFile from '@/classes/DoomFile.js';
 
 const nconf = require('nconf');
 const path = require('path');
 
-nconf
-    .argv()
-    .env()
-    .file({ file: path.join(DBFGL.appData, 'config.json') })
-    .defaults(defaultConfig);
+class Config {
+    constructor() {
+        nconf
+            .argv()
+            .env()
+            .file({ file: path.join(DBFGL.appData, 'config.json') })
+            .defaults(defaultConfig);
 
-export default {
+        this.nconf = nconf;
+
+        DBFGL.on('ready', () => this.init());
+    }
+
+    /**
+     * Loads initial data from config to DBFGL
+     */
+    init() {
+        // Import collections
+        console.log('Importing collections...');
+
+        /**
+         * @type {Array<import('@/Global.js').CollectionJSON>}
+         */
+        const collections = this.get('collections');
+        const IWADs = getIWads();
+
+        DBFGL.singleplayer.collections = collections
+            .map(collection => ({
+                name: collection.name,
+                iwad: IWADs.filter(iwad => iwad.name === collection.iwad).pop(),
+                wads: collection.wads.map(wadpath => new DoomFile(wadpath)),
+            }));
+
+        DBFGL.emit('singleplayer.collections.update');
+    }
 
     /**
      *
@@ -19,7 +49,7 @@ export default {
      */
     get(key, ...args) {
         return nconf.get(key, ...args);
-    },
+    }
 
     /**
      *
@@ -29,7 +59,7 @@ export default {
      */
     set(key, value, ...args) {
         nconf.set(key, value, ...args);
-    },
+    }
 
     save() {
         nconf.save(err => {
@@ -37,5 +67,7 @@ export default {
 
             throw new Error('При сохранении конфига произошла ошибка', err);
         });
-    },
-};
+    }
+}
+
+export default new Config();

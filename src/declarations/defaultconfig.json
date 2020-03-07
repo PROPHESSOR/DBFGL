@@ -40,13 +40,10 @@
     "collections": [
         {
             "name": "Test",
-            "descriptions": "Description",
             "iwad": "doom2.wad",
             "wads": [
-                "brutalv21b.pk3"
-            ],
-            "customConfig": null,
-            "preview": "doom2"
+                "brutalv21.pk3"
+            ]
         }
     ],
     "ports": {
@@ -155,24 +152,24 @@
             "supportZandronumServers": false
         }
     },
-    "theme": {
+    "unused$theme": {
         "theme": "default",
         "colors": {
-            "primary1Color":      "green500",
-            "primary2Color":      "green700",
-            "primary3Color":      "grey400",
-            "accent1Color":       "blueA200",
-            "accent2Color":       "grey800",
-            "accent3Color":       "grey500",
-            "textColor":          "fullWhite",
+            "primary1Color": "green500",
+            "primary2Color": "green700",
+            "primary3Color": "grey400",
+            "accent1Color": "blueA200",
+            "accent2Color": "grey800",
+            "accent3Color": "grey500",
+            "textColor": "fullWhite",
             "secondaryTextColor": "rgba(255, 255, 255, 0.7)",
             "alternateTextColor": "white",
-            "canvasColor":        "#303030",
-            "borderColor":        "grey300",
-            "disabledColor":      "rgba(0, 0, 0, 0.3)",
-            "pickerHeaderColor":  "green500",
-            "clockCircleColor":   "rgba(0, 0, 0, 0.07)",
-            "shadowColor":        "fullBlack"
+            "canvasColor": "#303030",
+            "borderColor": "grey300",
+            "disabledColor": "rgba(0, 0, 0, 0.3)",
+            "pickerHeaderColor": "green500",
+            "clockCircleColor": "rgba(0, 0, 0, 0.07)",
+            "shadowColor": "fullBlack"
         }
     }
 }
