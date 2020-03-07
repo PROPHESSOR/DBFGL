@@ -49,7 +49,7 @@ export default connect(
             if (!iwad) throw new Error('No IWAD selected!');
 
 
-            args.push(argformat.iwad, iwad);
+            args.push(argformat.iwad, iwad.path);
 
             for (const wad of selected) args.push(argformat.wads, wad.path);
 
