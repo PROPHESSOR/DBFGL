@@ -121,7 +121,7 @@ export default class ErrorHandler extends React.Component {
             actions={actions}
             onRequestClose={this.onCancel}>
             {text}
-            <small style={{ position: 'absolute', left: 0, bottom: 0, color: 'rgba(128, 128, 128, .2)' }} onContextMenu={this.openDevtools}>DBFGL{getVersion()}</small>
+            <small style={{ position: 'absolute', left: 0, bottom: 0, color: 'rgba(128, 128, 128, .2)' }} onContextMenu={this.openDevtools}>DBFGL{version}</small>
         </Dialog>);
     }
 }
