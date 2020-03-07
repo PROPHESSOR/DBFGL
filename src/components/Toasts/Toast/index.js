@@ -4,6 +4,8 @@ import Snackbar from 'material-ui/Snackbar';
 
 // import palette from '../../../containers/App/9';
 
+
+
 export default class Toast extends React.Component {
     static propTypes = {
         message: type.string.isRequired,
@@ -24,6 +26,7 @@ export default class Toast extends React.Component {
 
         return (
             <Snackbar
+                style={{ border: '1px solid gray' }}
                 autoHideDuration={4000}
                 message={message}
                 open={this.state.open}
