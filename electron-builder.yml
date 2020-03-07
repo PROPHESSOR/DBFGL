@@ -12,8 +12,8 @@ directories:
 mac:
   category: public.app-category.game
   target:
-    # - zip
-    - dmg
+    - zip
+    # - dmg
 win:
   target:
     # - target: nsis
