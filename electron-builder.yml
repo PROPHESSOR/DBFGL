@@ -12,7 +12,7 @@ directories:
 mac:
   category: public.app-category.game
   target:
-    - zip
+    # - zip
     - dmg
 win:
   target:
