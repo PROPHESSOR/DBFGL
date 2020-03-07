@@ -5,7 +5,6 @@ import Snackbar from 'material-ui/Snackbar';
 // import palette from '../../../containers/App/9';
 
 
-
 export default class Toast extends React.Component {
     static propTypes = {
         message: type.string.isRequired,

@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import DBFGL from '@/Global';
 
 import Toolbar from './Toolbar';
-import WadList from './WadList';
-import SelectedWads from './SelectedWads';
 import { getIWads } from '@/utils/getWadsFromFs';
 import TabWads from './TabWads';
 import TabCollections from './TabCollections';
@@ -70,7 +68,7 @@ export default class Singleplayer extends Component {
         return (
             <div
                 style={{
-                    height: 'calc(100vh - 110px)', // FIXME: Это что за хрень?
+                    height: 'calc(100vh - 110px)', // FIXME: Это что за хрень? (Исправляет высоту скроллинга)
                 }}>
                 <Toolbar
                     iwads={this.state.iwads}

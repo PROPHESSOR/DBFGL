@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2018 PROPHESSOR
- * 
+ *
  * В данном файле находится управление основными состояниями программы
- * 
+ *
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */

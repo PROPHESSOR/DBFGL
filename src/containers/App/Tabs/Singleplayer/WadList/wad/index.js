@@ -18,7 +18,7 @@ export default class Wad extends Component {
       const click = () => onClick(wad, value);
 
       return (
-          <ListItem style={{userSelect: 'none'}} leftAvatar={<Avatar src={Cover[wad.picture] || Cover.doom2} />} primaryText={wad.name} value={wad.value} onClick={click} />
+          <ListItem style={{ userSelect: 'none' }} leftAvatar={<Avatar src={Cover[wad.picture] || Cover.doom2} />} primaryText={wad.name} value={wad.value} onClick={click} />
       );
   }
 }
