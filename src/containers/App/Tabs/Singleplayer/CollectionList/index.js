@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import type from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import DBFGL from '@/Global';
