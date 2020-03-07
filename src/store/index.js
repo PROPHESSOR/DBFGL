@@ -46,6 +46,8 @@ export function createBindStateToProps(...properties) {
         for (const prop of properties) {
             const [module, property] = prop.split('.');
 
+            if (!module || !property) throw new Error(`[Redux] Wrong path ${prop}`);
+
             values[property] = store[module][property];
         }
 
@@ -72,13 +74,14 @@ export function createBindActToProps() {
                 return dispatch(createAction(action, payload));
             },
             actions,
+            dispatch,
         };
     };
 }
 
 export const storeProps = {
     act:      propType.func.isRequired,
-    actions:  propType.array.isRequired,
+    actions:  propType.object.isRequired,
     dispatch: propType.func.isRequired,
 };
 

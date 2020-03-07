@@ -7,6 +7,8 @@ import DBFGL from '@/Global';
 import Spawner from '@/utils/Spawner';
 
 import MenuItem from 'material-ui/MenuItem';
+import { connect } from 'react-redux';
+import { createBindStateToProps, createBindActToProps, storeProps } from '@/store';
 
 /**
  * @typedef {object} ArgFormat
@@ -20,41 +22,49 @@ import MenuItem from 'material-ui/MenuItem';
  * @property {string} other
  */
 
-export default class Port extends Component {
-    static propTypes = {
-        port: type.object.isRequired,
+export default connect(
+    createBindStateToProps('singleplayer.iwad', 'singleplayer.selected'),
+    createBindActToProps(),
+)(
+    class Port extends Component {
+        static propTypes = {
+            ...storeProps,
+            port:     type.object.isRequired,
+            selected: type.array.isRequired,
+            iwad:     type.object,
+        }
+
+        run = () => {
+            DBFGL.emit('panel.close', 'right');
+
+            const { port, iwad, selected } = this.props;
+
+            const args = [];
+
+            /**
+             * @type {ArgFormat}
+             */
+            const argformat = PortClass.argFormat(port.argformat);
+
+            if (!iwad) throw new Error('No IWAD selected!');
+
+
+            args.push(argformat.iwad, iwad);
+
+            for (const wad of selected) args.push(argformat.wads, wad.path);
+
+
+            console.log(`Запускаю ${port.name}...`, args);
+
+            console.log(Spawner.spawn('game', port.path, args));
+        }
+
+        render() {
+            const { port } = this.props;
+
+            return (
+                <MenuItem onClick={this.run}>{port.name}</MenuItem>
+            );
+        }
     }
-
-    run = () => {
-        DBFGL.emit('panel.close', 'right');
-
-        const { port } = this.props;
-
-        const args = [];
-
-        /**
-         * @type {ArgFormat}
-         */
-        const argformat = PortClass.argFormat(port.argformat);
-
-        if (!DBFGL.singleplayer.iwad) throw new Error('No IWAD selected!');
-
-
-        args.push(argformat.iwad, DBFGL.singleplayer.iwad);
-
-        for (const wad of DBFGL.singleplayer.selected) args.push(argformat.wads, wad.path);
-
-
-        console.log(`Запускаю ${port.name}...`, args);
-
-        console.log(Spawner.spawn('game', port.path, args));
-    }
-
-    render() {
-        const { port } = this.props;
-
-        return (
-            <MenuItem onClick={this.run}>{port.name}</MenuItem>
-        );
-    }
-}
+);
