@@ -12,28 +12,58 @@ if (DBFGL.isNative) {
         .defaults(defaultConfig);
 }
 
+function checkNative() {
+    if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+}
+
 export default {
-    get(...args) {
+    nconf,
 
-        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+    /**
+     * @param {string} key Config key like "wads:folders"
+     * @returns {Promise}
+     */
+    get: key => new Promise((res, rej) => {
+        checkNative();
 
+        return nconf.get(key, error => {
+            if (error) return rej(error);
 
-        return nconf.get(...args);
-    },
-    set(...args) {
+            return res();
+        });
+    }),
 
-        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+    /**
+     * @param {string} key Config key like "wads:folders"
+     * @param {*} value Value to save
+     * @returns {Promise}
+     */
+    set: (key, value) => new Promise((res, rej) => {
+        checkNative();
 
-        nconf.set(...args);
-    },
-    save() {
+        nconf.set(key, value, error => {
+            if (error) return rej(error);
 
-        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
+            return res();
+        });
+    }),
+
+    /**
+     * @returns {Promise}
+     */
+    save: () => new Promise((res, rej) => {
+        checkNative();
 
         nconf.save(err => {
-            if (!err) return console.log('Конфиг успешно сохранен!');
+            if (err) {
+                console.error('При сохранении конфига произошла ошибка ', err);
 
-            throw new Error('При сохранении конфига произошла ошибка', err);
+                return rej(err);
+            }
+
+            console.log('Конфиг успешно сохранен!');
+
+            return res();
         });
-    },
+    }),
 };
