@@ -8,8 +8,8 @@
   "main": "app.js",
   "node-remote": "http://localhost:3000",
   "scripts": {
-    "start-server": "node scripts/start.js",
     "start": "node scripts/start.js",
+    "dev": "./node_modules/.bin/electron . --devmode --livereload",
     "open": "./node_modules/.bin/electron .",
     "test": "node scripts/test.js --env=jsdom",
     "build": "node scripts/build.js",
