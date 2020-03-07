@@ -80,13 +80,13 @@ export function getWads() {
 export function getPWads() {
     const iwads = new Set(DoomFile.knownIWADs);
 
-    return getWads().filter(wad => !iwads.has(wad.name));
+    return getWads().filter(wad => !iwads.has(wad.name.toLowerCase()));
 }
 
 export function getZDoomLaunchFilesWithoutIWads() {
     const iwads = new Set(DoomFile.knownIWADs);
 
-    return getZDoomLaunchFiles().filter(wad => !iwads.has(wad.name));
+    return getZDoomLaunchFiles().filter(wad => !iwads.has(wad.name.toLowerCase()));
 }
 
 /**
@@ -95,7 +95,7 @@ export function getZDoomLaunchFilesWithoutIWads() {
 export function getIWads() {
     const iwads = new Set(DoomFile.knownIWADs);
 
-    return getWads().filter(wad => iwads.has(wad.name));
+    return getWads().filter(wad => iwads.has(wad.name.toLowerCase()));
 }
 
 export default getWads;
