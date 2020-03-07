@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+import propType from 'prop-types';
 
 import * as Singleplayer from './singleplayer';
 import * as Interface from './interface';
@@ -19,17 +20,67 @@ export const reducers = combineReducers({
 
 /**
  *
- * @param {Action} action
+ * @param {string} action
  * @param {*} payload?
  */
 export function createAction(action, payload = null) {
-    if (!actions.includes(action.type)) throw new Error(`[Redux] There's no action ${action}`);
+    if (!action) throw new Error(`[Redux] You haven't specified the action!`);
+    if (!Object.values(actions).includes(action)) throw new Error(`[Redux] There's no action ${action}`);
 
     return {
-        action,
+        type: action,
         payload,
     };
 }
+
+/**
+ * Usage: connect(createBindStateToProps('module1.property', 'module2.property2'))
+ * @factory
+ * @param  {...string} properties - Like 'singleplayer.iwad'
+ * @returns {(store: {}) => {}}
+ */
+export function createBindStateToProps(...properties) {
+    return function(store) {
+        const values = {};
+
+        for (const prop of properties) {
+            const [module, property] = prop.split('.');
+
+            values[property] = store[module][property];
+        }
+
+        return values;
+    };
+}
+
+/**
+ * Usage: connect(..., createBindActionToProps())
+ * @factory
+ * @param  {...string} properties - Like 'singleplayer.iwad'
+ * @returns {(dispatch: function) => {action: function}}
+ */
+export function createBindActToProps() {
+    return function(dispatch) {
+        return {
+
+            /**
+             *
+             * @param {Action} action
+             * @param {*} payload?
+             */
+            act(action, payload=null) {
+                return dispatch(createAction(action, payload));
+            },
+            actions,
+        };
+    };
+}
+
+export const storeProps = {
+    act:      propType.func.isRequired,
+    actions:  propType.array.isRequired,
+    dispatch: propType.func.isRequired,
+};
 
 const store = createStore(reducers);
 
