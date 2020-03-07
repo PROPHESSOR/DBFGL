@@ -3,19 +3,14 @@ import Config from '@/utils/Config';
 import DoomFile from '@/classes/DoomFile';
 import DBFGL from '@/Global';
 
-const fs = DBFGL.isNative ? require('fs') : null;
-const path = DBFGL.isNative ? require('path') : null;
+const fs = require('fs');
+const path = require('path');
 
 /**
  * @param {Array<string>} types - Типы файлов ['wad', 'pk3']
  * @returns {Array<DoomFile>}
  */
 export function getFiles(types) {
-    if (!DBFGL.isNative) {
-        console.warn('Получение списка вадов не работает в браузере!');
-
-        return [];
-    }
     const wadPathes = Config
         .get('wads:folders')
         .map(folder => folder

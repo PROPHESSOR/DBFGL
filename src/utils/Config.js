@@ -1,35 +1,37 @@
 import defaultConfig from '../declarations/defaultconfig.json';
 import DBFGL from '@/Global';
 
-const nconf = DBFGL.isNative ? require('nconf') : null;
-const path = DBFGL.isNative ? require('path') : null;
+const nconf = require('nconf');
+const path = require('path');
 
-if (DBFGL.isNative) {
-    nconf
-        .argv()
-        .env()
-        .file({ file: path.join(DBFGL.appData, 'config.json') })
-        .defaults(defaultConfig);
-}
+nconf
+    .argv()
+    .env()
+    .file({ file: path.join(DBFGL.appData, 'config.json') })
+    .defaults(defaultConfig);
 
 export default {
-    get(...args) {
 
-        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
-
-
-        return nconf.get(...args);
+    /**
+     *
+     * @param {string} key Config ey like "wads:folders"
+     * @param  {...any} args
+     */
+    get(key, ...args) {
+        return nconf.get(key, ...args);
     },
-    set(...args) {
 
-        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
-
-        nconf.set(...args);
+    /**
+     *
+     * @param {string} key Config ey like "wads:folders"
+     * @param {any} value Value to set
+     * @param  {...any} args
+     */
+    set(key, value, ...args) {
+        nconf.set(key, value, ...args);
     },
+
     save() {
-
-        if (!DBFGL.isNative) throw new Error('Я не могу работать с файлом конфигурации из браузера!');
-
         nconf.save(err => {
             if (!err) return console.log('Конфиг успешно сохранен!');
 

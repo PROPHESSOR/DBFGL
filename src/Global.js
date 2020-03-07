@@ -1,13 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import DoomFile from './classes/DoomFile';
 
-// import { EventEmitter } from 'events';
-
 const { EventEmitter } = require('events');
 
-const isNative = Boolean(window && window.process && window.process.type);
+export const isNative = Boolean(window && window.process && window.process.type);
 
-const electron = isNative ? require('electron') : null;
+const electron = require('electron');
 
 // Когда хочешь использовать IntelliSense, но лень переходить на TypeScript =D
 /**
@@ -48,10 +46,14 @@ class GlobalClass extends EventEmitter {
             iwad: null,
         };
 
+        this._notifblock = false;
+
         /**
          * @type {"singleplayer"|"multiplayer"}
          */
         this.tab = 'singleplayer';
+
+        this.on('ready', () => this._importCollections);
 
         this.on('tab.change', tab => {
             if (!(tab === 'singleplayer' || tab === 'multiplayer')) throw new TypeError('Нет такого таба!');
@@ -60,21 +62,14 @@ class GlobalClass extends EventEmitter {
         });
 
         this.on('window.minimize', () => {
-            if (!isNative) return;
             if (this.os === 'Linux') electron.remote.BrowserWindow.getFocusedWindow().hide();
             else electron.remote.BrowserWindow.getFocusedWindow().minimize();
-
         });
 
         this.on('window.restore', () => {
-            if (!isNative) return;
-
             if (this.os === 'Linux') electron.remote.BrowserWindow.getAllWindows().forEach(win => win.show());
             else electron.remote.BrowserWindow.getAllWindows().forEach(win => win.restore());
-
         });
-
-        this._notifblock = false;
     }
 
     /**
@@ -187,17 +182,10 @@ class GlobalClass extends EventEmitter {
         super.emit(event, ...payload);
     }
 
-    get isNative() {
-        return isNative;
-    }
-
     /**
-     * @returns {"Browser"|"Windows"|"Linux"|"Mac"|"Unknown"}
+     * @returns {"Windows"|"Linux"|"Mac"|"Unknown"}
      */
     get os() {
-        if (!isNative) return 'Browser';
-
-
         const os = require('os').type();
 
         switch (os) {
@@ -215,9 +203,6 @@ class GlobalClass extends EventEmitter {
     }
 
     get appData() {
-        if (!isNative) throw new Error('Не могу получить путь папки лаунчера в браузере!');
-
-
         const path = require('path');
 
         return path.join(electron.remote.app.getPath('appData'), 'doom-bfg-launcher');

@@ -1,15 +1,12 @@
 import React from 'react';
 import types from 'prop-types';
 
-import DBFGL from '@/Global';
+import DBFGL, { isNative } from '@/Global';
 import Config from '@/utils/Config';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-
-function getVersion() {
-    return DBFGL.isNative ? ` v${require('../../../../package.json').version}` : '';
-}
+const { version } = require('../../../../package.json');
 
 /**
  *
@@ -39,13 +36,11 @@ function errorInterpreter(error) {
 function getErrorTracebackToCopy(error, info) {
     const lines = [];
 
-    const { isNative } = DBFGL;
-
     lines.push('## DBFGL Error Traceback ##');
+    lines.push(`DBFGL v${version}`);
     lines.push(`generated on ${Date.now()}`);
     lines.push(`DBFGL.isNative: ${isNative}`);
     lines.push(`DBFGL.os: ${DBFGL.os}`);
-    if (isNative) lines.push(`version${getVersion()}`);
     lines.push(`Error message: «${error.message}»`);
     lines.push(`Error stack: «${error.stack}»`);
     lines.push(`Components stack: «${info.componentStack}»`);
@@ -90,7 +85,6 @@ export default class ErrorHandler extends React.Component {
     }
 
     copyTraceback = () => {
-        // isNative
         const { error, info } = this.state;
 
         const text = getErrorTracebackToCopy(error, info);
@@ -112,16 +106,13 @@ export default class ErrorHandler extends React.Component {
                 label='Перезагрузить'
                 onClick={this.restart}
             />,
-        ];
-
-        if (DBFGL.isNative) {
-            actions.push(<FlatButton
+            <FlatButton
                 primary
                 key={2}
                 label='Скопировать детали ошибки'
                 onClick={this.copyTraceback}
-            />);
-        }
+            />,
+        ];
 
         return (<Dialog
             open

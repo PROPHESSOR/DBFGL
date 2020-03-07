@@ -2,17 +2,15 @@ import DBFGL from '@/Global';
 import Huffman from './huff';
 import Config from '../utils/Config';
 
-const dgram = DBFGL.isNative ? require('dgram') : null;
-const Buffer = DBFGL.isNative ? require('buffer').Buffer : null;
+const dgram = require('dgram');
+const { Buffer } = require('buffer');
 
 const huff = new Huffman();
 
 const TIMEOUT = 10000;
-const [HOST, PORT] = DBFGL.isNative ? Config.get('servers:master:zandronum').split(':') : ['127.0.0.1', '10666'];
+const [HOST, PORT] = Config.get('servers:master:zandronum').split(':');
 
 export default () => new Promise((resolve, reject) => {
-    if (!DBFGL.isNative) return reject(new Error('Не могу получить список серверов из браузера!'));
-
     const socket = dgram.createSocket('udp4');
     let done = false;
     const rmessage = Buffer.from([0x7C, 0x5D, 0x56, 0x00, 0x02, 0x00]);

@@ -14,9 +14,7 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import DBFGL from '@/Global';
-
-const Buffer = DBFGL.isNative ? require('buffer').Buffer : null;
+const { Buffer } = require('buffer');
 
 const huffmanFreqs = [
     0.14473691, 0.01147017, 0.00167522, 0.03831121, 0.00356579, 0.03811315, 0.00178254, 0.00199644,

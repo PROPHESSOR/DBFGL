@@ -1,8 +1,6 @@
 import DBFGL from '@/Global';
 
-const { isNative } = DBFGL;
-
-const cp = isNative ? require('child_process') : null;
+const cp = require('child_process');
 
 class Spawner {
     constructor() {
@@ -20,9 +18,6 @@ class Spawner {
      * @returns {number} ID процесса
      */
     spawn = (idname, exec, args=[]) => {
-        if (!isNative) throw new Error('Не могу запустить процесс из браузера!');
-
-
         if (this.processes.has(idname)) throw new Error('Данный процесс уже запущен!');
 
 
@@ -47,9 +42,6 @@ class Spawner {
      * @returns {bool} Процесс остановлен?
      */
     stop = idname => {
-        if (!isNative) throw new Error('Не могу остановить процесс из браузера!');
-
-
         if (!this.processes.has(idname)) throw new Error('Нет такого процесса!');
 
 
@@ -67,9 +59,6 @@ class Spawner {
      * @returns {bool} Процесс остановлен?
      */
     kill = idname => {
-        if (!isNative) throw new Error('Не могу убить процесс из браузера!');
-
-
         if (!this.processes.has(idname)) throw new Error('Нет такого процесса!');
 
 
