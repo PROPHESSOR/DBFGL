@@ -1,100 +1,105 @@
 import React, { Component } from 'react';
+import types from 'prop-types';
 
 import DBFGL from '@/Global';
 
 import Toolbar from './Toolbar';
-import { getIWads } from '@/utils/getWadsFromFs';
 import TabWads from './TabWads';
 import TabCollections from './TabCollections';
 import Config from '@/utils/Config';
+import { connect } from 'react-redux';
+import { createBindStateToProps, createBindActToProps, storeProps } from '@/store';
 
-export default class Singleplayer extends Component {
-    constructor() {
-        super();
-
-        const iwads = getIWads();
-
-        let defaultiwad = iwads.filter(iwad => iwad.name === 'doom2.wad')[0];
-
-        if (!defaultiwad) defaultiwad = iwads[0];
-
-
-        if (!defaultiwad) throw new Error('No IWADs found!');
-
-
-        if (!DBFGL.singleplayer.iwad) {
-            DBFGL.singleplayer.iwad = defaultiwad.path;
-            DBFGL.emit('singleplayer.wadlist.iwad.update');
+export default connect(
+    createBindStateToProps(
+        'singleplayer.iwads', 'singleplayer.wadlist', 'singleplayer.selected',
+        'singleplayer.iwad', 'singleplayer.collections'),
+    createBindActToProps(),
+)(
+    class Singleplayer extends Component {
+        static propTypes = {
+            ...storeProps,
+            iwads:       types.array.isRequired,
+            wadlist:     types.array.isRequired,
+            selected:    types.array.isRequired,
+            collections: types.array.isRequired,
+            iwad:        types.object,
         }
 
-        this.state = {
-            iwads,
-            showDrop: 1,
-            sortDrop: 0,
-            iwadDrop: defaultiwad.name,
+        constructor(props) {
+            super(props);
+
+            const { iwads, iwad, act, actions } = this.props;
+
+            let defaultiwad = iwads.filter(curiwad => curiwad.name === 'doom2.wad')[0];
+
+            if (!defaultiwad) defaultiwad = iwads[0];
+
+            if (!defaultiwad) throw new Error('No IWADs found!');
+
+            if (!iwad) act(actions.singleplayer_wadlist_iwad_update, defaultiwad);
+
+            this.state = {
+                showDrop: 1,
+                sortDrop: 0,
+            };
+        }
+
+        onChangeShow = (event, index, value) => this.setState({ showDrop: value });
+        onChangeSort = (event, index, value) => this.setState({ sortDrop: value });
+        onChangeIwad = (event, index, value) => {
+            const { act, actions } = this.props;
+
+            act(actions.singleplayer_wadlist_iwad_update, value);
         };
 
-        DBFGL.on('singleplayer.wadlist.iwad.update', () => this.setState({ iwadDrop: DBFGL.singleplayer.iwad.split(/[\\/]/g).pop() }));
-        // FIXME: Явный костыль
+        onCreateCollection = async() => {
+            const name = await DBFGL.prompt({ title: 'Создание коллекции', placeholder: 'Введите имя для коллекции' });
+
+            if (!name) return;
+
+            const { iwad, collections, selected, act, actions } = this.props;
+
+            act(actions.singleplayer_wadlist_collections_update, [...collections, {
+                name,
+                iwad,
+                wads: [...selected],
+            }]);
+
+            Config.set('collections', collections.map(collection => ({
+                name: collection.name,
+                iwad: collection.iwad.name,
+                wads: collection.wads.map(wadfile => wadfile.path),
+            })));
+
+            Config.save();
+        }
+
+        render() {
+            const { iwads, iwad } = this.props;
+
+            return (
+                <div
+                    style={{
+                        height: 'calc(100vh - 110px)', // FIXME: Это что за хрень? (Исправляет высоту скроллинга)
+                    }}>
+                    <Toolbar
+                        iwads={iwads}
+                        showDrop={this.state.showDrop}
+                        sortDrop={this.state.sortDrop}
+                        iwadDrop={iwad ? iwad.name : 'Unknown'}
+                        onChangeShow={this.onChangeShow}
+                        onChangeSort={this.onChangeSort}
+                        onChangeIwad={this.onChangeIwad}
+                        onCreateCollection={this.onCreateCollection}
+                    />
+                    {
+                        this.state.showDrop === 0
+                            ? <TabCollections />
+                            : <TabWads />
+                    }
+                </div>
+            );
+        }
     }
-
-    onChangeShow = (event, index, value) => this.setState({ showDrop: value });
-    onChangeSort = (event, index, value) => this.setState({ sortDrop: value });
-    onChangeIwad = (event, index, value) => {
-        this.setState({ iwadDrop: value });
-        const { iwads } = this.state;
-        const [wad] = iwads.filter(iwad => iwad.name === value);
-
-        DBFGL.singleplayer.iwad = wad.path;
-        DBFGL.emit('singleplayer.wadlist.iwad.update', wad.path);
-    };
-
-    onCreateCollection = async() => {
-        const name = await DBFGL.prompt({ title: 'Создание коллекции', placeholder: 'Введите имя для коллекции' });
-
-        if (!name) return;
-
-        const [iwad] = getIWads().filter(curiwad => curiwad.path === DBFGL.singleplayer.iwad);
-        // TODO: Кешировать
-
-        DBFGL.singleplayer.collections.push({
-            name,
-            iwad,
-            wads: [...DBFGL.singleplayer.selected],
-        });
-        DBFGL.emit('singleplayer.collections.update');
-
-        Config.set('collections', DBFGL.singleplayer.collections.map(collection => ({
-            name: collection.name,
-            iwad: collection.iwad.name,
-            wads: collection.wads.map(wadfile => wadfile.path),
-        })));
-
-        Config.save();
-    }
-
-    render() {
-        return (
-            <div
-                style={{
-                    height: 'calc(100vh - 110px)', // FIXME: Это что за хрень? (Исправляет высоту скроллинга)
-                }}>
-                <Toolbar
-                    iwads={this.state.iwads}
-                    showDrop={this.state.showDrop}
-                    sortDrop={this.state.sortDrop}
-                    iwadDrop={this.state.iwadDrop}
-                    onChangeShow={this.onChangeShow}
-                    onChangeSort={this.onChangeSort}
-                    onChangeIwad={this.onChangeIwad}
-                    onCreateCollection={this.onCreateCollection}
-                />
-                {
-                    this.state.showDrop === 0
-                        ? <TabCollections />
-                        : <TabWads />
-                }
-            </div>
-        );
-    }
-}
+);

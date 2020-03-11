@@ -8,10 +8,13 @@
  */
 
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import DBFGL from '@/Global';
 
+import store from '@/store';
+
 // Components
-import Provider from 'material-ui/styles/MuiThemeProvider';
+import ThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Bar from './Bar';
 import Tabs from './Tabs';
 import Panel from './Panel';
@@ -46,23 +49,25 @@ DBFGL.on('game.start', () => {
 export default class App extends Component {
     render() {
         return (
-            <Provider muiTheme={getMuiTheme(theme)}>
-                <ErrorHandler>
-                    <div className={Styles.app} style={{ background: theme.palette.canvasColor }}>
-                        <Panel />
-                        <PortPanel />
-                        <Bar />
-                        <Tabs />
-                        <StartButton />
-                        <Toasts />
-                        <Alert />
-                        <Confirm />
-                        <Prompt />
-                        <WindowTests />
-                        <WindowSettings />
-                        <WindowAbout />
-                    </div>
-                </ErrorHandler>
+            <Provider store={store}>
+                <ThemeProvider muiTheme={getMuiTheme(theme)}>
+                    <ErrorHandler>
+                        <div className={Styles.app} style={{ background: theme.palette.canvasColor }}>
+                            <Panel />
+                            <PortPanel />
+                            <Bar />
+                            <Tabs />
+                            <StartButton />
+                            <Toasts />
+                            <Alert />
+                            <Confirm />
+                            <Prompt />
+                            <WindowTests />
+                            <WindowSettings />
+                            <WindowAbout />
+                        </div>
+                    </ErrorHandler>
+                </ThemeProvider>
             </Provider>
         );
     }
