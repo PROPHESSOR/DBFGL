@@ -46,8 +46,8 @@
             ]
         }
     ],
-    "ports": {
-        "gzdoom": {
+    "ports": [
+        {
             "name": "GZDoom",
             "description": "(G)ZDoom",
             "path": "gzdoom",
@@ -60,7 +60,7 @@
             "supportDeHacked": true,
             "supportZandronumServers": false
         },
-        "zandronum": {
+        {
             "name": "Zandronum",
             "description": "Client-Server Source Port",
             "path": "zandronum",
@@ -73,7 +73,7 @@
             "supportDeHacked": true,
             "supportZandronumServers": true
         },
-        "qzdoom": {
+        {
             "name": "QZDoom",
             "description": "",
             "path": "qzdoom",
@@ -86,7 +86,7 @@
             "supportDeHacked": true,
             "supportZandronumServers": false
         },
-        "lzdoom": {
+        {
             "name": "LZDoom",
             "description": "",
             "path": "lzdoom",
@@ -99,7 +99,7 @@
             "supportDeHacked": true,
             "supportZandronumServers": false
         },
-        "prboom": {
+        {
             "name": "PRBoom +",
             "description": "PRBoom-Plus",
             "path": "prboom-plus",
@@ -112,7 +112,7 @@
             "supportDeHacked": false,
             "supportZandronumServers": false
         },
-        "chocolatedoom": {
+        {
             "name": "Chocolate Doom",
             "description": "Vanilla-Like Source port",
             "path": "chocolate-doom",
@@ -125,7 +125,7 @@
             "supportDeHacked": false,
             "supportZandronumServers": false
         },
-        "doom": {
+        {
             "name": "Doom (1993)",
             "description": "Vanilla DooM",
             "path": "doom",
@@ -138,7 +138,7 @@
             "supportDeHacked": false,
             "supportZandronumServers": false
         },
-        "doom2": {
+        {
             "name": "Doom 2 (1994)",
             "description": "Doom II: Hell on Earth",
             "path": "doom2",
@@ -151,7 +151,7 @@
             "supportDeHacked": false,
             "supportZandronumServers": false
         }
-    },
+    ],
     "unused$theme": {
         "theme": "default",
         "colors": {

@@ -6,7 +6,7 @@ import AppBar from 'material-ui/AppBar';
 import Port from './Port';
 import Config from '../../../utils/Config';
 
-const knownPorts = Object.values(Config.get('ports'));
+const knownPorts = Config.get('ports');
 
 export default class Panel extends React.Component {
     constructor() {
