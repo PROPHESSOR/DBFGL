@@ -17,7 +17,8 @@ export default class Settings extends React.Component {
         super();
 
         this.state = {
-            open: false,
+            open:       false,
+            wadFolders: Config.get('wads:folders'),
         };
 
         DBFGL.on('window.open', name => {
@@ -36,8 +37,23 @@ export default class Settings extends React.Component {
     };
 
     save = () => {
-        console.warn('Сохранение настроек через форму пока не реализовано!');
-        // TODO:
+        Config.set('wads:folders', this.state.wadFolders);
+        Config.save();
+        DBFGL.emit('window.close', 'settings');
+        DBFGL.emit('notification.toast', 'Настройки успешно сохранены!');
+    }
+
+    addWadFolder = () => {
+        this.setState({
+            wadFolders: [...this.state.wadFolders, ''],
+        });
+    }
+
+    onWadFolderChange = (cindex, text) => {
+        this.setState({
+            wadFolders: this.state.wadFolders
+                .map((folder, index) => index === cindex ? text : folder),
+        });
     }
 
     render() {
@@ -56,9 +72,9 @@ export default class Settings extends React.Component {
             />,
         ];
 
-        const wadFolders = Config.get('wads:folders')
+        const wadFolders = this.state.wadFolders
             .map(folder => folder.replace('{appdata}', DBFGL.appData))
-            .map(folder => <TextField readOnly disabled value={folder} key={folder} inputStyle={{ color: 'white' }} />); // FIXME: Use theme colors
+            .map((folder, index) => <TextField fullWidth name={`wadfolder${index}`} value={folder} key={index} inputStyle={{ color: 'white' }} onChange={(_, text) => this.onWadFolderChange(index, text)} />); // FIXME: Use theme colors
 
         return (
             <Dialog
@@ -73,6 +89,12 @@ export default class Settings extends React.Component {
                     title='Папки для поиска wad файлов'>
                     <div>
                         {wadFolders}
+                        <FlatButton
+                            primary
+                            key='addwadfolder'
+                            label='Добавить папку'
+                            onClick={this.addWadFolder}
+                        />
                     </div>
                 </Section>
                 <Section
