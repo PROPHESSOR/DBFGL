@@ -13,7 +13,8 @@ import DBFGL from '@/Global';
 
 // import Server from './Server'; //TODO:
 import ServerClass from '@/classes/Server';
-import pingServers from '@/utils/Servers';
+import ServerComponent from './Server';
+import { pingServers, fetchServerStatus } from '@/utils/Servers';
 
 /* const servers = [
     new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),
@@ -32,15 +33,11 @@ export default class ServerList extends Component {
                 console.info('Обновляю сервера...');
                 pingServers()
                     .then(servers => {
-                        const serverList = servers.map(server => new ServerClass({
-                            ping:    128,
-                            name:    'Unknown',
-                            players: ['PROPHESSOR'],
-                            ip:      `${server[0].join('.')}:${server[1]}`,
-                        }));
-
                         this.setState({
-                            servers: serverList,
+                            servers: servers.map(server => ({
+                                ip:   server[0].join('.'),
+                                port: server[1],
+                            })),
                         }, () => console.info('Обновление серверов завершено!'));
                     })
                     .catch(error => {
@@ -51,20 +48,6 @@ export default class ServerList extends Component {
     }
 
     render() {
-        const a = this.state.servers.map((e, i) =>
-            (
-                <TableRow key={i}>
-                    <TableRowColumn>{e.ping}|{e.players.length}</TableRowColumn>
-                    <TableRowColumn>{e.country}</TableRowColumn>
-                    <TableRowColumn>{e.name}</TableRowColumn>
-                    <TableRowColumn>{e.ip}</TableRowColumn>
-                    <TableRowColumn>{e.wads}</TableRowColumn>
-                    <TableRowColumn>{e.mode}</TableRowColumn>
-                </TableRow>
-            )
-        );
-
-
         return (
             <Table
                 adjustForCheckbox={false}>
@@ -79,7 +62,11 @@ export default class ServerList extends Component {
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false}>
-                    {a}
+                    {
+                        this.state.servers.map(server =>
+                            <ServerComponent server={server} key={`${server.ip}:${server.port}`} />
+                        )
+                    }
                 </TableBody>
             </Table>
         );
