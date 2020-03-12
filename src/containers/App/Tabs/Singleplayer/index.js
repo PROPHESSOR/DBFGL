@@ -43,6 +43,11 @@ export default connect(
                 showDrop: 1,
                 sortDrop: 0,
             };
+
+            DBFGL.on('singleplayer.update', () => {
+                act(actions.singleplayer_wadlist_selected_update);
+                act(actions.singleplayer_wadlist_update);
+            });
         }
 
         onChangeShow = (event, index, value) => this.setState({ showDrop: value });

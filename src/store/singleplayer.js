@@ -109,7 +109,13 @@ export function reducer(state = store, action) {
             throw new Error(`Unknown payload ${payload}`);
 
         case actions.singleplayer_wadlist_update:
-            if (!payload) throw new Error('You tried to remove wadlist!');
+            if (!payload) {
+                return {
+                    ...state,
+                    iwads:   getIWads(),
+                    wadlist: getZDoomLaunchFilesWithoutIWads(),
+                };
+            }
 
             if (payload instanceof Array) return { ...state, wadlist: [...payload]};
 
