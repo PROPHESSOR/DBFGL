@@ -26,25 +26,29 @@ export default class ServerList extends Component {
             servers: [],
         };
 
-        DBFGL.on('tab.change', async tab => {
-            if (tab === 'multiplayer') {
-                console.info('Обновляю сервера...');
+        DBFGL.on('multiplayer.update', () => this.updateServers());
+    }
 
-                try {
-                    const servers = await getServers();
+    componentWillMount() {
+        this.updateServers();
+    }
 
-                    this.setState({
-                        servers: servers.map(server => ({
-                            ip:   server[0].join('.'),
-                            port: server[1],
-                        })),
-                    });
-                    console.info('Обновление серверов завершено!');
-                } catch (error) {
-                    console.error(`Возникла ошибка при получении списка серверов: `, error);
-                }
-            }
-        });
+    async updateServers() {
+        console.info('Обновляю сервера...');
+
+        try {
+            const servers = await getServers();
+
+            this.setState({
+                servers: servers.map(server => ({
+                    ip:   server[0].join('.'),
+                    port: server[1],
+                })),
+            });
+            console.info('Обновление серверов завершено!');
+        } catch (error) {
+            console.error(`Возникла ошибка при получении списка серверов: `, error);
+        }
     }
 
     render() {
