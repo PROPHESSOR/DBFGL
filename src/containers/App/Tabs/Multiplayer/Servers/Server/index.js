@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { fetchServerStatus } from '@/utils/Servers';
+import { getServerInfo } from '@/utils/Servers';
 
 import {
     TableRow,
@@ -16,7 +16,7 @@ export const widths = {
     name:    null,
     ip:      140, // xxx.xxx.xxx.xxx:xxxxxx
     wads:    100, // freedoom2.wad
-    mode:    64,
+    mode:    80, // Cooperative
 };
 
 export default class ServerComponent extends Component {
@@ -33,7 +33,7 @@ export default class ServerComponent extends Component {
 
     async componentDidMount() {
         try {
-            const serverStatus = await fetchServerStatus(this.props.server.ip, this.props.server.port);
+            const serverStatus = await getServerInfo(this.props.server.ip, this.props.server.port);
 
             this.setState({ serverStatus }); // eslint-disable-line
         } catch (error) {
@@ -50,8 +50,12 @@ export default class ServerComponent extends Component {
                 <TableRowColumn style={{ width: widths.players }}>{serverStatus && serverStatus.numPlayers}</TableRowColumn>
                 <TableRowColumn style={{ width: widths.name }}>{serverStatus ? serverStatus.name : 'Loading...'}</TableRowColumn>
                 <TableRowColumn style={{ width: widths.ip }}>{`${ip}:${port}`}</TableRowColumn>
-                <TableRowColumn style={{ width: widths.wads }}><i>smthnd.wad</i></TableRowColumn>
-                <TableRowColumn style={{ width: widths.mode }}>Unknown</TableRowColumn>
+                <TableRowColumn
+                    style={{ width: widths.wads, cursor: serverStatus ? 'help' : null }}
+                    title={serverStatus && serverStatus.pwads.join(', ')}>
+                    <i>{serverStatus && serverStatus.iwad}</i>
+                </TableRowColumn>
+                <TableRowColumn style={{ width: widths.mode }}>{serverStatus && serverStatus.gameType && serverStatus.gameType.type}</TableRowColumn>
             </TableRow>
         );
     }

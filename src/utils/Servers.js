@@ -162,7 +162,33 @@ const queryServerResponces = {
     BANNED:   5660025,
 };
 
-export function fetchServerStatus(host, port) {
+export const gameModes = {
+    GAMEMODE_COOPERATIVE:     0,
+    GAMEMODE_SURVIVAL:        1,
+    GAMEMODE_INVASION:        2,
+    GAMEMODE_DEATHMATCH:      3,
+    GAMEMODE_TEAMPLAY:        4,
+    GAMEMODE_DUEL:            5,
+    GAMEMODE_TERMINATOR:      6,
+    GAMEMODE_LASTMANSTANDING: 7,
+    GAMEMODE_TEAMLMS:         8,
+    GAMEMODE_POSSESSION:      9,
+    GAMEMODE_TEAMPOSSESSION:  10,
+    GAMEMODE_TEAMGAME:        11,
+    GAMEMODE_CTF:             12,
+    GAMEMODE_ONEFLAGCTF:      13,
+    GAMEMODE_SKULLTAG:        14,
+    GAMEMODE_DOMINATION:      15,
+};
+
+export const gameTypes = [
+    'Cooperative', 'Survival', 'Invasion', 'DM',
+    'Team Play', 'Duel', 'Terminator', 'LMS',
+    'Team LMS', 'Possession', 'Team Possession', 'Team Game',
+    'CTF', 'One Flag CTF', 'Skulltag', 'Domination',
+];
+
+export function getServerInfo(host, port) {
     // console.log(`fetchServerStatus ${host}:${port}`);
 
     return new Promise((res, rej) => {
@@ -170,7 +196,7 @@ export function fetchServerStatus(host, port) {
 
         const socket = dgram.createSocket('udp4');
 
-        const fieldsToRequest = SQF.SQF_NAME | SQF.SQF_NUMPLAYERS | SQF.SQF_EXTENDED_INFO;
+        const fieldsToRequest = SQF.SQF_NAME | SQF.SQF_NUMPLAYERS | SQF.SQF_IWAD | SQF.SQF_PWADS | SQF.SQF_GAMETYPE;
 
         const rmessage = Buffer.alloc(16);
 
@@ -194,19 +220,40 @@ export function fetchServerStatus(host, port) {
 
             switch (packetType) {
                 case queryServerResponces.ACCEPTED: {
-                    console.log(`server ip ${host}:${port} version ${cursor.readString()}`);
-                    const rflags = cursor.readUInt32LE();
+                    const version = cursor.readString();
+                    const rflags = cursor.readUInt32LE(); // Available fields flags
 
                     const name = rflags & SQF.SQF_NAME ? cursor.readString() : 'unknown';
-                    const numPlayers = rflags & SQF.SQF_NUMPLAYERS ? cursor.readUInt8() : -1;
 
-                    console.log(`server name ${name}, players ${numPlayers}`);
+                    const pwads = [];
+
+                    if (rflags & SQF.SQF_PWADS) {
+                        const wadnum = cursor.readUInt8();
+
+                        for (let i = 0; i < wadnum; i++) pwads.push(cursor.readString());
+
+                    }
+
+                    const gameType = !(rflags & SQF.SQF_GAMETYPE) ? null : {
+                        mode:     cursor.readUInt8(),
+                        type:     gameTypes[cursor.seek('-', 1) && cursor.readUInt8()], // mode =D
+                        instagib: Boolean(cursor.readUInt8()),
+                        buckshot: Boolean(cursor.readUInt8()),
+                    };
+
+                    const iwad = rflags & SQF.SQF_IWAD ? cursor.readString() : null;
+
+                    const numPlayers = rflags & SQF.SQF_NUMPLAYERS ? cursor.readUInt8() : -1;
 
                     done = true;
 
                     return res({
                         name,
                         numPlayers,
+                        pwads,
+                        gameType,
+                        iwad,
+                        version,
                     });
                 }
                 case queryServerResponces.IGNORED: return reject('rate limit');
