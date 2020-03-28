@@ -36,6 +36,8 @@ export default class ServerList extends Component {
     async updateServers(silent = false) {
         if (!silent) DBFGL.preloader('Обновляю список серверов...');
 
+        this.setState({ servers: []});
+
         try {
             const servers = await getServers();
 
