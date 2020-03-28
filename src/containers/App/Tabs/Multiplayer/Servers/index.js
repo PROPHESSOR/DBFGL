@@ -30,11 +30,11 @@ export default class ServerList extends Component {
     }
 
     componentWillMount() {
-        this.updateServers();
+        this.updateServers(true);
     }
 
-    async updateServers() {
-        console.info('Обновляю сервера...');
+    async updateServers(silent = false) {
+        if (!silent) DBFGL.preloader('Обновляю список серверов...');
 
         try {
             const servers = await getServers();
@@ -45,9 +45,14 @@ export default class ServerList extends Component {
                     port: server[1],
                 })),
             });
-            console.info('Обновление серверов завершено!');
+
+            if (!silent) DBFGL.toast('Обновление серверов завершено!');
         } catch (error) {
-            console.error(`Возникла ошибка при получении списка серверов: `, error);
+            if (error.message === 'Too fast requests') return DBFGL.toast('Необходимо подождать перед следующим обновлением!');
+
+            return DBFGL.toast(`Возникла ошибка при получении списка серверов: ${error.message}`);
+        } finally {
+            if (!silent) DBFGL.preloader();
         }
     }
 
