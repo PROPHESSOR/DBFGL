@@ -1,4 +1,3 @@
-import DBFGL from '@/Global';
 import Huffman from './huff';
 import Config from '../utils/Config';
 

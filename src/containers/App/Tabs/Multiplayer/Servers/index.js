@@ -10,14 +10,8 @@ import {
 
 import DBFGL from '@/Global';
 
-// import Server from './Server'; //TODO:
 import ServerComponent, { widths } from './Server';
 import { getServers } from '@/utils/Servers';
-
-/* const servers = [
-    new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),
-    new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server 2', ip: [127, 0, 0, 2], mode: 'Cooperative' })
-]; */
 
 export default class ServerList extends Component {
     constructor() {

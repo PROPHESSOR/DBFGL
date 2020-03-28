@@ -24,7 +24,7 @@ class Config {
      * Loads initial data from config to DBFGL
      */
     init() {
-        
+
     }
 
     /**
