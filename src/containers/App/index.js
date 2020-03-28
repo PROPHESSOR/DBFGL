@@ -27,6 +27,7 @@ import Toasts from '../../components/Toasts';
 import Alert from '@/components/Alert';
 import Confirm from '@/components/Confirm';
 import Prompt from '@/components/Prompt';
+import Preloader from '@/components/Preloader';
 
 import Styles from './styles.scss';
 
@@ -62,6 +63,7 @@ export default class App extends Component {
                             <Alert />
                             <Confirm />
                             <Prompt />
+                            <Preloader />
                             <WindowTests />
                             <WindowSettings />
                             <WindowAbout />

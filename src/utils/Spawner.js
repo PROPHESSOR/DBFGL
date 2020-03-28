@@ -27,6 +27,13 @@ class Spawner {
 
         this.processes.set(idname, process);
 
+        process.on('error', (e, ...etc) => {
+            this.kill(idname);
+            DBFGL.emit('window.restore');
+            console.error(e, etc);
+            DBFGL.emit('notification.toast', 'При запуске порта возникла ошибка! Проверте настройки порта.');
+        });
+
         process.on('exit', () => {
             this.kill(idname);
             DBFGL.emit('window.restore');

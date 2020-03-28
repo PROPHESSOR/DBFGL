@@ -14,9 +14,9 @@ const electron = require('electron');
             "tab.change"|
             "window.minimize"|"window.restore"|"window.close"|"window.open"|
             "panel.open"|"panel.close"|
-            "singleplayer.wadlist.selected.update"|"singleplayer.wadlist.iwad.update"|"singleplayer.wadlist.update"|"singleplayer.collections.update"|
+            "singleplayer.wadlist.selected.update"|"singleplayer.wadlist.iwad.update"|"singleplayer.wadlist.update"|"singleplayer.collections.update"|"singleplayer.update"|"multiplayer.update"|
             "game.start"|"game.stop"|"game.kill"|
-            "notification.alert"|"notification.prompt"|"notification.confirm"|"notification.toast"
+            "notification.alert"|"notification.prompt"|"notification.confirm"|"notification.toast"|"notification.preloader"
         } GlobalEvents
  */
 
@@ -142,6 +142,15 @@ class GlobalClass extends EventEmitter {
                 return res(null);
             });
         });
+    }
+
+    /**
+     *
+     * @param {string|null} text - Null to hide preloader
+     */
+    preloader(text=null) {
+        if (text && typeof text !== 'string') throw new TypeError('text value must be a String or Null');
+        this.emit('notification.preloader', text);
     }
 
     /**

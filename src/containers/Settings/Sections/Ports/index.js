@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import Config from '../../../../utils/Config';
+import DBFGL from '@/Global';
 
-import Section from '../../Section';
 import FlatButton from 'material-ui/FlatButton';
+import SPort from './Port';
 
 export default class SettingsPorts extends Component {
     state = {
@@ -11,7 +12,7 @@ export default class SettingsPorts extends Component {
 
     componentDidMount = () => {
         this.setState({
-            ports: Object.values(Config.get('ports')),
+            ports: Config.get('ports'),
         });
     }
 
@@ -19,27 +20,26 @@ export default class SettingsPorts extends Component {
         console.log('addPort');
     }
 
+    changePort = (index, diff) => {
+        this.setState({
+            ports: this.state.ports.map((port, idx) => idx === index ? { ...this.state.ports[idx], ...diff } : port),
+        });
+    }
+
+    savePorts = () => {
+        Config.set('ports', this.state.ports);
+        Config.save();
+        DBFGL.emit('notification.toast', 'Настройки портов успешно сохранены!');
+        DBFGL.emit('window.close', 'settings');
+    }
+
     render() {
         const { ports } = this.state;
         const jsxPorts = [];
 
-        for (const port of ports) {
+        for (const [index, port] of ports.entries()) {
             jsxPorts.push(
-                <Section
-                    key={port.name + port.path}
-                    subtitle={`Настройка порта ${port.name}`}
-                    title={port.name}>
-                    <ul>
-                        <li>Путь к порту: {port.path}</li>
-                        <li>Поддержка pk3: {port.supportPk3.toString()}</li>
-                        <li>Поддержка pk7: {port.supportPk7.toString()}</li>
-                        <li>Поддержка Decorate: {port.supportDecorate.toString()}</li>
-                        <li>Поддержка мультиплеера: {port.supportMultiplayer.toString()}</li>
-                        <li>Поддержка 3д полов: {port.support3dFloors.toString()}</li>
-                        <li>Поддержка DeHacked: {port.supportDeHacked.toString()}</li>
-                        <li>Поддержка Zandronum серверов: {port.supportZandronumServers.toString()}</li>
-                    </ul>
-                </Section>
+                <SPort port={port} key={port.name + index} onChange={diff => this.changePort(index, diff)} />
             );
         }
 
@@ -48,8 +48,16 @@ export default class SettingsPorts extends Component {
                 {jsxPorts}
                 <FlatButton
                     primary
+                    fullWidth
+                    disabled
                     label='Добавить порт'
                     onClick={this.addPort}
+                />
+                <FlatButton
+                    primary
+                    fullWidth
+                    label='Сохранить'
+                    onClick={this.savePorts}
                 />
             </Fragment>
         );

@@ -53,7 +53,6 @@ export default class Panel extends React.Component {
                 open={open}
                 onRequestChange={this.togglePanel}>
                 <Bar />
-                <MenuItem>Oblige</MenuItem>
                 <MenuItem onClick={this.openSettingsMenu}>Настройки</MenuItem>
                 <MenuItem onClick={this.openAboutMenu}>О программе</MenuItem>
                 <MenuItem onClick={this.openTestMenu}>Тестирование</MenuItem>
