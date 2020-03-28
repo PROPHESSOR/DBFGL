@@ -20,38 +20,39 @@ export const widths = {
 };
 
 export default class ServerComponent extends Component {
-  static propTypes = {
-      server: PropTypes.object,
-  }
+    static propTypes = {
+        server: PropTypes.object,
+    }
 
-  constructor(props) {
-      super(props);
-      this.state = {
-          serverStatus: null,
-      };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            serverStatus: null,
+        };
+    }
 
-  componentDidMount() {
-      fetchServerStatus(this.props.server.ip, this.props.server.port)
-          .then(serverStatus => {
-              this.setState({
-                  serverStatus,
-              });
-          })
-          .catch(error => {
-              console.error(`Возникла ошибка при получении списка серверов: `, error);
-          });
-  }
+    async componentDidMount() {
+        try {
+            const serverStatus = await fetchServerStatus(this.props.server.ip, this.props.server.port);
 
-  render() {
-      return (
-          <TableRow>
-              <TableRowColumn style={{ width: widths.players }}>0</TableRowColumn>
-              <TableRowColumn style={{ width: widths.name }}>{this.state.serverStatus === null ? 'Loading...' : this.state.serverStatus.name}</TableRowColumn>
-              <TableRowColumn style={{ width: widths.ip }}>{`${this.props.server.ip}:${this.props.server.port}`}</TableRowColumn>
-              <TableRowColumn style={{ width: widths.wads }}><i>smthnd.wad</i></TableRowColumn>
-              <TableRowColumn style={{ width: widths.mode }}>Unknown</TableRowColumn>
-          </TableRow>
-      );
-  }
+            this.setState({ serverStatus }); // eslint-disable-line
+        } catch (error) {
+            console.error(`Возникла ошибка при получении списка серверов: `, error);
+        }
+    }
+
+    render() {
+        const { serverStatus } = this.state;
+        const { ip, port } = this.props.server;
+
+        return (
+            <TableRow>
+                <TableRowColumn style={{ width: widths.players }}>{serverStatus && serverStatus.numPlayers}</TableRowColumn>
+                <TableRowColumn style={{ width: widths.name }}>{serverStatus ? serverStatus.name : 'Loading...'}</TableRowColumn>
+                <TableRowColumn style={{ width: widths.ip }}>{`${ip}:${port}`}</TableRowColumn>
+                <TableRowColumn style={{ width: widths.wads }}><i>smthnd.wad</i></TableRowColumn>
+                <TableRowColumn style={{ width: widths.mode }}>Unknown</TableRowColumn>
+            </TableRow>
+        );
+    }
 }

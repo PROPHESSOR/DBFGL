@@ -27,11 +27,9 @@ const ExtendedCursor = Cursor.extend({
 });
 
 /**
- * https://wiki.zandronum.com/Launcher_protocol
+ * https://wiki.zandronum.com/Launcher_protocol#Getting_the_list_of_servers
  */
 export const responses = {
-    MASTER_SERVER_VERSION: 2,
-
     // Errors
     MSC_IPISBANNED:     3,
     MSC_REQUESTIGNORED: 4,
@@ -42,6 +40,8 @@ export const responses = {
     MSC_ENDSERVERLISTPART:   7,
     MSC_SERVERBLOCK:         8,
 };
+
+const MSC = responses;
 
 export function getServers() {
     return new Promise((res, rej) => {
@@ -60,11 +60,11 @@ export function getServers() {
             const msg = huff.decode(_msg);
 
             switch (msg.readUInt32LE(0)) {
-                case responses.MSC_IPISBANNED: return reject('Banned on master server');
-                case responses.MSC_REQUESTIGNORED: return reject('Too fast requests');
-                case responses.MSC_WRONGVERSION: return reject('Please update the launcher');
-                case responses.MSC_BEGINSERVERLISTPART: {
-                    if (msg.readUInt8(5) !== responses.MSC_SERVERBLOCK) return reject(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt8(5)}`);
+                case MSC.MSC_IPISBANNED: return reject('Banned on master server');
+                case MSC.MSC_REQUESTIGNORED: return reject('Too fast requests');
+                case MSC.MSC_WRONGVERSION: return reject('Please update the launcher');
+                case MSC.MSC_BEGINSERVERLISTPART: {
+                    if (msg.readUInt8(5) !== MSC.MSC_SERVERBLOCK) return reject(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt8(5)}`);
 
                     let offset = 6;
 
@@ -89,7 +89,7 @@ export function getServers() {
                         }
                     } while (msg.readUInt8(offset) !== 0);
 
-                    if (msg.readUInt8(++offset) === responses.MSC_ENDSERVERLISTPART) {
+                    if (msg.readUInt8(++offset) === MSC.MSC_ENDSERVERLISTPART) {
                         done = true;
                         socket.close();
 
@@ -119,18 +119,69 @@ export function getServers() {
     });
 }
 
+
+/**
+ * https://wiki.zandronum.com/Launcher_protocol#Querying_individual_servers
+ */
+export const serverFields = {
+    SQF_NAME:              0x00000001,
+    SQF_URL:               0x00000002,
+    SQF_EMAIL:             0x00000004,
+    SQF_MAPNAME:           0x00000008,
+    SQF_MAXCLIENTS:        0x00000010,
+    SQF_MAXPLAYERS:        0x00000020,
+    SQF_PWADS:             0x00000040,
+    SQF_GAMETYPE:          0x00000080,
+    SQF_GAMENAME:          0x00000100,
+    SQF_IWAD:              0x00000200,
+    SQF_FORCEPASSWORD:     0x00000400,
+    SQF_FORCEJOINPASSWORD: 0x00000800,
+    SQF_GAMESKILL:         0x00001000,
+    SQF_BOTSKILL:          0x00002000,
+    SQF_LIMITS:            0x00010000,
+    SQF_TEAMDAMAGE:        0x00020000,
+    SQF_NUMPLAYERS:        0x00080000,
+    SQF_PLAYERDATA:        0x00100000,
+    SQF_TEAMINFO_NUMBER:   0x00200000,
+    SQF_TEAMINFO_NAME:     0x00400000,
+    SQF_TEAMINFO_COLOR:    0x00800000,
+    SQF_TEAMINFO_SCORE:    0x01000000,
+    SQF_TESTING_SERVER:    0x02000000,
+    SQF_ALL_DMFLAGS:       0x08000000,
+    SQF_SECURITY_SETTINGS: 0x10000000,
+    SQF_OPTIONAL_WADS:     0x20000000,
+    SQF_DEH:               0x40000000,
+    SQF_EXTENDED_INFO:     0x80000000,
+};
+
+const SQF = serverFields;
+
+const queryServerResponces = {
+    ACCEPTED: 5660023,
+    IGNORED:  5660024,
+    BANNED:   5660025,
+};
+
 export function fetchServerStatus(host, port) {
     // console.log(`fetchServerStatus ${host}:${port}`);
 
-    return new Promise((resolve, reject) => {
-        const socket = dgram.createSocket('udp4');
+    return new Promise((res, rej) => {
         let done = false;
+
+        const socket = dgram.createSocket('udp4');
+
+        const fieldsToRequest = SQF.SQF_NAME | SQF.SQF_NUMPLAYERS | SQF.SQF_EXTENDED_INFO;
+
         const rmessage = Buffer.alloc(16);
 
-        rmessage.writeInt32LE(199, 0);
-        rmessage.writeInt32LE(0x1, 4); // SQF_NAME
-        rmessage.writeInt32LE(Math.floor(new Date().getTime() / 1000), 8); // SQF_NAME
-        rmessage.writeInt32LE(0, 12); // SQF_NAME
+        const LAUNCHER_CHALLENGE_MAGIC = 199;
+
+        rmessage.writeInt32LE(LAUNCHER_CHALLENGE_MAGIC, 0);
+        rmessage.writeInt32LE(fieldsToRequest, 4);
+        rmessage.writeInt32LE(~~(Date.now() / 1000), 8); // Current date to determine ping
+        rmessage.writeInt32LE(0, 12); // Additional flags
+
+        const reject = message => rej(done = true && new Error(message));
 
         socket.on('message', _msg => {
             const msg = huff.decode(_msg);
@@ -142,32 +193,25 @@ export function fetchServerStatus(host, port) {
             const time = cursor.readUInt32LE();
 
             switch (packetType) {
-                case 5660023: {
+                case queryServerResponces.ACCEPTED: {
                     console.log(`server ip ${host}:${port} version ${cursor.readString()}`);
                     const rflags = cursor.readUInt32LE();
 
-                    let serverName = 'unknown';
+                    const name = rflags & SQF.SQF_NAME ? cursor.readString() : 'unknown';
+                    const numPlayers = rflags & SQF.SQF_NUMPLAYERS ? cursor.readUInt8() : -1;
 
-                    if (rflags & 0x1) serverName = cursor.readString();
-
-                    console.log(`server name ${serverName}`);
+                    console.log(`server name ${name}, players ${numPlayers}`);
 
                     done = true;
-                    resolve({
-                        name: serverName,
+
+                    return res({
+                        name,
+                        numPlayers,
                     });
                 }
-                    break;
-                case 5660024:
-                    reject('rate limit');
-                    break;
-                case 5660025:
-                    reject('ban-ip');
-                    break;
-                default:
-                    done = true;
-                    reject('unknown');
-                    break;
+                case queryServerResponces.IGNORED: return reject('rate limit');
+                case queryServerResponces.BANNED: return reject('ban-ip');
+                default: return reject('unknown');
             }
         });
 
@@ -178,14 +222,14 @@ export function fetchServerStatus(host, port) {
             if (err) {
                 console.error(err);
                 done = true;
-                reject(err);
+                rej(err);
             }
         });
 
         setTimeout(() => {
             if (!done) {
                 socket.close();
-                reject(new Error('Time is out'));
+                rej(new Error('Time is out'));
             }
         }, TIMEOUT);
     });
