@@ -38,6 +38,14 @@ export const actions = {
 
 /**
  *
+ * @param {Array<ServerInstance>} serverlist
+ */
+function sortServerlist(serverlist) {
+    return serverlist.sort((a, b) => (b.numPlayers || -1) - (a.numPlayers || -1));
+}
+
+/**
+ *
  * @param {import('./index').Action} action
  */
 // eslint-disable-next-line complexity
@@ -49,19 +57,19 @@ export function reducer(state = store, action) {
         case actions.multiplayer_serverlist_update:
             if (!(payload instanceof Array)) throw new Error('You must specify an array to update serverlist');
 
-            return { ...state, serverlist: payload };
+            return { ...state, serverlist: sortServerlist(payload) };
 
         case actions.multiplayer_serverlist_add:
             if (!payload || payload instanceof Array) throw new Error('You must specify a server to add');
 
-            return { ...state, serverlist: [...state.serverlist, payload]};
+            return { ...state, serverlist: sortServerlist([...state.serverlist, payload])};
 
         case actions.multiplayer_serverlist_server_update: {
             const { index, diff } = payload;
 
             if (!(typeof index === 'string' && index.includes('.') && index.includes(':') && diff)) throw new Error(`You must specify 'index' ("ip:port") and 'diff' values!`);
 
-            return { ...state, serverlist: state.serverlist.map(server => `${server.ip}:${server.port}` === index ? { ...server, ...diff } : server) };
+            return { ...state, serverlist: sortServerlist(state.serverlist.map(server => `${server.ip}:${server.port}` === index ? { ...server, ...diff } : server)) };
         }
     }
 
