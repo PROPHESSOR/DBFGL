@@ -53,6 +53,12 @@ export default connect(
             }
         }
 
+        updateServerInfo = (index, diff) => {
+            const { act, actions } = this.props;
+
+            act(actions.multiplayer_serverlist_server_update, { index, diff });
+        }
+
         render() {
             const { serverlist } = this.props;
 
@@ -62,7 +68,7 @@ export default connect(
                         height: 'calc(100vh - 110px)',
                     }}>
                     <Toolbar />
-                    <Servers servers={serverlist} />
+                    <Servers servers={serverlist} updateServerInfo={this.updateServerInfo} />
                 </div>
             );
         }

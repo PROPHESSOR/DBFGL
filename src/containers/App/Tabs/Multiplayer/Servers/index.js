@@ -13,12 +13,13 @@ import ServerComponent, { widths } from './Server';
 
 export default class ServerList extends PureComponent {
     static propTypes = {
-        servers: type.array.isRequired,
+        servers:          type.array.isRequired,
+        updateServerInfo: type.func.isRequired,
     }
 
     render() {
         const serverList = this.props.servers.map(server =>
-            <ServerComponent server={server} key={`${server.ip}:${server.port}`} />
+            <ServerComponent server={server} key={`${server.ip}:${server.port}`} updateServerInfo={this.props.updateServerInfo} />
         );
 
         return (

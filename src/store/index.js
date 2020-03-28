@@ -51,8 +51,6 @@ export function createBindStateToProps(...properties) {
 
             if (!module || !property) throw new Error(`[Redux] Wrong path ${prop}`);
 
-            console.log('redux', module, property);
-
             values[property] = store[module][property];
         }
 
