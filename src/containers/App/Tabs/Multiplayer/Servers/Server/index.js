@@ -20,7 +20,7 @@ export const widths = {
 };
 
 export default class ServerComponent extends Component {
-  propTypes = {
+  static propTypes = {
       server: PropTypes.object,
   }
 

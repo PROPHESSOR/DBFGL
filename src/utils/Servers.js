@@ -26,61 +26,52 @@ const ExtendedCursor = Cursor.extend({
     },
 });
 
-export function pingServers() {
-    return new Promise((resolve, reject) => {
+/**
+ * https://wiki.zandronum.com/Launcher_protocol
+ */
+export const responses = {
+    MASTER_SERVER_VERSION: 2,
+
+    // Errors
+    MSC_IPISBANNED:     3,
+    MSC_REQUESTIGNORED: 4,
+    MSC_WRONGVERSION:   5,
+
+    // Successful
+    MSC_BEGINSERVERLISTPART: 6,
+    MSC_ENDSERVERLISTPART:   7,
+    MSC_SERVERBLOCK:         8,
+};
+
+export function getServers() {
+    return new Promise((res, rej) => {
+        let done = false; // Used to check timeout
+
         const socket = dgram.createSocket('udp4');
-        let done = false;
-        const rmessage = Buffer.from([0x7C, 0x5D, 0x56, 0x00, 0x02, 0x00]);
+
+        function reject(message) {
+            done = true;
+            socket.close();
+
+            return rej(new Error(message));
+        }
 
         socket.on('message', _msg => {
             const msg = huff.decode(_msg);
 
-            // console.log(msg);
-
             switch (msg.readUInt32LE(0)) {
-                case 3:
-                    console.error('Banned on master server');
-                    done = true;
-                    reject(new Error('Banned on master server'));
-                    socket.close();
-                    break;
-                case 4:
-                    console.error('Too fast requests');
-                    done = true;
-                    reject(new Error('Too fast requests'));
-                    socket.close();
-                    break;
-                case 5:
-                    console.error('Please update the launcher');
-                    done = true;
-                    reject(new Error('Please update the launcher'));
-                    socket.close();
-                    break;
-                case 6:
-                {
-                    if (msg.readUInt8(5) !== 8) {
-                        console.error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`);
-                        done = true;
-                        reject(new Error(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt32LE(5)}`));
-                        socket.close();
+                case responses.MSC_IPISBANNED: return reject('Banned on master server');
+                case responses.MSC_REQUESTIGNORED: return reject('Too fast requests');
+                case responses.MSC_WRONGVERSION: return reject('Please update the launcher');
+                case responses.MSC_BEGINSERVERLISTPART: {
+                    if (msg.readUInt8(5) !== responses.MSC_SERVERBLOCK) return reject(`Expected MSC_SERVERBLOCK (8), got ${msg.readUInt8(5)}`);
 
-                        return;
-                    }
                     let offset = 6;
 
                     const serverList = [];
 
-                    while (true) {
-                        if (msg.readUInt8(offset) === 0) {
-                            offset++;
-                            if (msg.readUInt8(offset) === 2) {
-                                done = true;
-                                resolve(serverList);
-                                socket.close();
-                            }
-
-                            return;
-                        }
+                    // Push IPs
+                    do {
                         const size = msg.readUInt8(offset++);
                         const ip = [
                             msg.readUInt8(offset++),
@@ -89,43 +80,47 @@ export function pingServers() {
                             msg.readUInt8(offset++),
                         ];
 
+                        // Parse ports for current IP
                         for (let i = 0; i < size; i++) {
                             const port = msg.readUInt16LE(offset);
 
                             serverList.push([ip, port]);
                             offset += 2;
                         }
-                    }
-                }
-                default:
-                    console.error('Unknown error');
-                    done = true;
-                    reject(new Error('Unknown error'));
-                    socket.close();
-                    break;
-            }
-        });
-        const encoded = Buffer.from(huff.encode(rmessage));
+                    } while (msg.readUInt8(offset) !== 0);
 
-        // console.log(encoded);
-        socket.send(encoded, PORT, HOST, err => {
-            if (err) {
-                console.error(err);
-                done = true;
-                reject(err);
+                    if (msg.readUInt8(++offset) === responses.MSC_ENDSERVERLISTPART) {
+                        done = true;
+                        socket.close();
+
+                        console.log(`Got ${serverList.length} servers`);
+
+                        return res(serverList);
+                    }
+
+                    return reject(`msg.readUInt8(offset) !== MSC_ENDSERVERLISTPART (7) ${msg.readUInt8(offset)}`);
+                }
+                default: return rej('Unknown error');
             }
         });
+
+
+        const getServersMessage = Buffer.from([0x7C, 0x5D, 0x56, 0x00, 0x02, 0x00]);
+        const encoded = Buffer.from(huff.encode(getServersMessage));
+
+        socket.send(encoded, PORT, HOST, err => {
+            if (err) return reject(err.message);
+        });
+
         setTimeout(() => {
-            if (!done) {
-                socket.close();
-                reject(new Error('Time is out'));
-            }
+            if (!done) return reject('Time is out');
+
         }, TIMEOUT);
     });
 }
 
 export function fetchServerStatus(host, port) {
-    console.log(`fetchServerStatus ${host}:${port}`);
+    // console.log(`fetchServerStatus ${host}:${port}`);
 
     return new Promise((resolve, reject) => {
         const socket = dgram.createSocket('udp4');

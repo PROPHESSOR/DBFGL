@@ -12,7 +12,7 @@ import DBFGL from '@/Global';
 
 // import Server from './Server'; //TODO:
 import ServerComponent, { widths } from './Server';
-import { pingServers } from '@/utils/Servers';
+import { getServers } from '@/utils/Servers';
 
 /* const servers = [
     new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),
@@ -26,21 +26,23 @@ export default class ServerList extends Component {
             servers: [],
         };
 
-        DBFGL.on('tab.change', tab => {
+        DBFGL.on('tab.change', async tab => {
             if (tab === 'multiplayer') {
                 console.info('Обновляю сервера...');
-                pingServers()
-                    .then(servers => {
-                        this.setState({
-                            servers: servers.map(server => ({
-                                ip:   server[0].join('.'),
-                                port: server[1],
-                            })),
-                        }, () => console.info('Обновление серверов завершено!'));
-                    })
-                    .catch(error => {
-                        console.error(`Возникла ошибка при получении списка серверов: `, error);
+
+                try {
+                    const servers = await getServers();
+
+                    this.setState({
+                        servers: servers.map(server => ({
+                            ip:   server[0].join('.'),
+                            port: server[1],
+                        })),
                     });
+                    console.info('Обновление серверов завершено!');
+                } catch (error) {
+                    console.error(`Возникла ошибка при получении списка серверов: `, error);
+                }
             }
         });
     }
