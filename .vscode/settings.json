@@ -1,5 +1,6 @@
 {
 	"editor.detectIndentation": false,
 	"easysass.compileAfterSave": false,
-	"editor.insertSpaces": true
+  "editor.insertSpaces": true,
+  "prettier.tabWidth": 4
 }
