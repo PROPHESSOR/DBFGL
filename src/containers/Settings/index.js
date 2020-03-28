@@ -12,7 +12,7 @@ import SPorts from './Sections/Ports';
 import Config from '../../utils/Config';
 import { TextField } from 'material-ui';
 
-export default class Settings extends React.Component {
+export default class Settings extends React.PureComponent {
     constructor() {
         super();
 

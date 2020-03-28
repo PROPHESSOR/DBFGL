@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
-export default class Section extends Component {
+export default class Section extends PureComponent {
   static propTypes = {
       title:    type.string.isRequired,
       children: type.object,

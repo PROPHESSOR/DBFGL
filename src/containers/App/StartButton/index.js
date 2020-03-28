@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import DBFGL from '@/Global';
 
 import Styles from './styles.scss';
 
-export default class StartButton extends Component {
+export default class StartButton extends PureComponent {
     onClick = () => {
         DBFGL.emit('panel.open', 'right');
     }

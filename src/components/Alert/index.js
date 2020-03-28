@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import DBFGL from '@/Global';
 
-export default class Alert extends React.Component {
+export default class Alert extends React.PureComponent {
     constructor() {
         super();
         this.state = {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 
 import { ListItem } from 'material-ui/List';
@@ -6,7 +6,7 @@ import Avatar from 'material-ui/Avatar';
 
 import Cover from '../../../../../../theme/assets/wadcovers';
 
-export default class Wad extends Component {
+export default class Wad extends PureComponent {
   static propTypes = {
       wad:     type.object.isRequired,
       value:   type.number,

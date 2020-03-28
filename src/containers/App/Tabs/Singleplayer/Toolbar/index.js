@@ -9,7 +9,7 @@ import DoomFile from '@/classes/DoomFile';
 
 import Styles from './styles.scss';
 
-export default class ToolbarSingleplayer extends React.Component {
+export default class ToolbarSingleplayer extends React.PureComponent {
     static propTypes = {
         iwads:              type.array.isRequired,
         showDrop:           type.number.isRequired,

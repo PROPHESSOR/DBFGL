@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { getServerInfo } from '@/utils/Servers';
 
@@ -25,7 +25,7 @@ export default connect(
     null,
     createBindActToProps()
 )(
-    class ServerComponent extends Component {
+    class ServerComponent extends PureComponent {
         static propTypes = {
             ...storeProps,
             server: PropTypes.object,

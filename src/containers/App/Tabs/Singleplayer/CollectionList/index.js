@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import type from 'prop-types';
 import { ListItem } from 'material-ui/List';
@@ -12,7 +12,7 @@ export default connect(
     createBindStateToProps('singleplayer.collections'),
     createBindActToProps(),
 )(
-    class CollectionList extends Component {
+    class CollectionList extends PureComponent {
         static propTypes = {
             ...storeProps,
             collections: type.array.isRequired,

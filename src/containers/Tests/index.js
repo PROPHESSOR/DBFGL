@@ -5,7 +5,7 @@ import DBFGL from '@/Global';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-export default class DialogExampleScrollable extends React.Component {
+export default class STestWindow extends React.PureComponent {
     constructor() {
         super();
 

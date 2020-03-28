@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import Config from '../../../../utils/Config';
 import DBFGL from '@/Global';
 
 import FlatButton from 'material-ui/FlatButton';
 import SPort from './Port';
 
-export default class SettingsPorts extends Component {
+export default class SettingsPorts extends PureComponent {
     state = {
         ports: [],
     }

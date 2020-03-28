@@ -5,7 +5,7 @@ import Bar from './Bar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 
-export default class Panel extends React.Component {
+export default class Panel extends React.PureComponent {
     constructor() {
         super();
 

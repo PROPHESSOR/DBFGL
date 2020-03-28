@@ -6,7 +6,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, /* ToolbarSeparator, */ ToolbarTitle } from 'material-ui/Toolbar';
 
-export default class ToolbarMultiplayer extends React.Component {
+export default class ToolbarMultiplayer extends React.PureComponent {
 
     state = {
         value: 1,

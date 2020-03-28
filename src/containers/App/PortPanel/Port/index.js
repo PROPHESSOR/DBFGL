@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 
 import PortClass from '@/classes/port';
@@ -26,7 +26,7 @@ export default connect(
     createBindStateToProps('singleplayer.iwad', 'singleplayer.selected'),
     createBindActToProps(),
 )(
-    class Port extends Component {
+    class Port extends PureComponent {
         static propTypes = {
             ...storeProps,
             port:     type.object.isRequired,

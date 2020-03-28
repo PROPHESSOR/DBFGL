@@ -7,7 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 const { version } = require('../../../package.json');
 
-export default class About extends React.Component {
+export default class About extends React.PureComponent {
     constructor() {
         super();
 

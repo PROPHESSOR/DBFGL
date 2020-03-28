@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 
 import {
@@ -11,7 +11,7 @@ import {
 
 import ServerComponent, { widths } from './Server';
 
-export default class ServerList extends Component {
+export default class ServerList extends PureComponent {
     static propTypes = {
         servers: type.array.isRequired,
     }

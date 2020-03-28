@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 import DBFGL from '@/Global';
 
@@ -12,7 +12,7 @@ export default connect(
     createBindStateToProps('multiplayer.serverlist'),
     createBindActToProps()
 )(
-    class Multiplayer extends Component {
+    class Multiplayer extends PureComponent {
         static propTypes = {
             ...storeProps,
             serverlist: type.array.isRequired,

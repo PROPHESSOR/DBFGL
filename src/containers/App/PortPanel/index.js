@@ -8,7 +8,7 @@ import Config from '../../../utils/Config';
 
 const knownPorts = Config.get('ports');
 
-export default class Panel extends React.Component {
+export default class Panel extends React.PureComponent {
     constructor() {
         super();
 
