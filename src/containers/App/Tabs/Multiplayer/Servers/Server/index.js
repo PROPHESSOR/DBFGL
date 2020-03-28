@@ -6,6 +6,8 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
+import { createBindActToProps, storeProps } from '@/store';
+import { connect } from 'react-redux';
 
 /**
  * Так как шапка и тело таблицы - разные компоненты,
@@ -19,44 +21,52 @@ export const widths = {
     mode:    80, // Cooperative
 };
 
-export default class ServerComponent extends Component {
-    static propTypes = {
-        server: PropTypes.object,
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            serverStatus: null,
-        };
-    }
-
-    async componentDidMount() {
-        try {
-            const serverStatus = await getServerInfo(this.props.server.ip, this.props.server.port);
-
-            this.setState({ serverStatus }); // eslint-disable-line
-        } catch (error) {
-            console.error(`Возникла ошибка при получении списка серверов: `, error);
+export default connect(
+    null,
+    createBindActToProps()
+)(
+    class ServerComponent extends Component {
+        static propTypes = {
+            ...storeProps,
+            server: PropTypes.object,
         }
-    }
 
-    render() {
-        const { serverStatus } = this.state;
-        const { ip, port } = this.props.server;
+        constructor(props) {
+            super(props);
+            this.state = {
+                serverStatus: null,
+            };
+        }
 
-        return (
-            <TableRow>
-                <TableRowColumn style={{ width: widths.players }}>{serverStatus && serverStatus.numPlayers}</TableRowColumn>
-                <TableRowColumn style={{ width: widths.name }}>{serverStatus ? serverStatus.name : 'Loading...'}</TableRowColumn>
-                <TableRowColumn style={{ width: widths.ip }}>{`${ip}:${port}`}</TableRowColumn>
-                <TableRowColumn
-                    style={{ width: widths.wads, cursor: serverStatus ? 'help' : null }}
-                    title={serverStatus && serverStatus.pwads.join(', ')}>
-                    <i>{serverStatus && serverStatus.iwad}</i>
-                </TableRowColumn>
-                <TableRowColumn style={{ width: widths.mode }}>{serverStatus && serverStatus.gameType && serverStatus.gameType.type}</TableRowColumn>
-            </TableRow>
-        );
-    }
-}
+        async componentDidMount() {
+            const { act, actions, server: { ip, port }} = this.props;
+
+            try {
+                const info = await getServerInfo(this.props.server.ip, this.props.server.port);
+
+                act(actions.multiplayer_serverlist_server_update, { index: `${ip}:${port}`, diff: info });
+            } catch (error) {
+                console.error(`Возникла ошибка при получении списка серверов: `, error);
+            }
+        }
+
+        render() {
+            const { server } = this.props;
+            const { ip, port } = server;
+            const serverStatus = typeof server.name === 'string';
+
+            return (
+                <TableRow>
+                    <TableRowColumn style={{ width: widths.players }}>{serverStatus && server.numPlayers}</TableRowColumn>
+                    <TableRowColumn style={{ width: widths.name }}>{serverStatus ? server.name : 'Loading...'}</TableRowColumn>
+                    <TableRowColumn style={{ width: widths.ip }}>{`${ip}:${port}`}</TableRowColumn>
+                    <TableRowColumn
+                        style={{ width: widths.wads, cursor: serverStatus ? 'help' : null }}
+                        title={serverStatus && server.pwads.join(', ')}>
+                        <i>{serverStatus && server.iwad}</i>
+                    </TableRowColumn>
+                    <TableRowColumn style={{ width: widths.mode }}>{serverStatus && server.gameMode && server.gameMode.type}</TableRowColumn>
+                </TableRow>
+            );
+        }
+    });

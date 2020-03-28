@@ -233,7 +233,7 @@ export function getServerInfo(host, port) {
 
                     }
 
-                    const gameType = !(rflags & SQF.SQF_GAMETYPE) ? null : {
+                    const gameMode = !(rflags & SQF.SQF_GAMETYPE) ? null : {
                         mode:     cursor.readUInt8(),
                         type:     gameTypes[cursor.seek('-', 1) && cursor.readUInt8()], // mode =D
                         instagib: Boolean(cursor.readUInt8()),
@@ -250,7 +250,7 @@ export function getServerInfo(host, port) {
                         name,
                         numPlayers,
                         pwads,
-                        gameType,
+                        gameMode,
                         iwad,
                         version,
                     });

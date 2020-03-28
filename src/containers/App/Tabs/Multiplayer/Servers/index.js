@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import type from 'prop-types';
 
 import {
     Table,
@@ -8,51 +9,18 @@ import {
     TableRow,
 } from 'material-ui/Table';
 
-import DBFGL from '@/Global';
-
 import ServerComponent, { widths } from './Server';
-import { getServers } from '@/utils/Servers';
 
 export default class ServerList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            servers: [],
-        };
-
-        DBFGL.on('multiplayer.update', () => this.updateServers());
-    }
-
-    componentWillMount() {
-        this.updateServers(true);
-    }
-
-    async updateServers(silent = false) {
-        if (!silent) DBFGL.preloader('Обновляю список серверов...');
-
-        this.setState({ servers: []});
-
-        try {
-            const servers = await getServers();
-
-            this.setState({
-                servers: servers.map(server => ({
-                    ip:   server[0].join('.'),
-                    port: server[1],
-                })),
-            });
-
-            if (!silent) DBFGL.toast('Обновление серверов завершено!');
-        } catch (error) {
-            if (error.message === 'Too fast requests') return DBFGL.toast('Необходимо подождать перед следующим обновлением!');
-
-            return DBFGL.toast(`Возникла ошибка при получении списка серверов: ${error.message}`);
-        } finally {
-            if (!silent) DBFGL.preloader();
-        }
+    static propTypes = {
+        servers: type.array.isRequired,
     }
 
     render() {
+        const serverList = this.props.servers.map(server =>
+            <ServerComponent server={server} key={`${server.ip}:${server.port}`} />
+        );
+
         return (
             <Table
                 adjustForCheckbox={false}>
@@ -65,13 +33,7 @@ export default class ServerList extends Component {
                         <TableHeaderColumn style={{ width: widths.mode }}>Режим</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody displayRowCheckbox={false}>
-                    {
-                        this.state.servers.map(server =>
-                            <ServerComponent server={server} key={`${server.ip}:${server.port}`} />
-                        )
-                    }
-                </TableBody>
+                <TableBody displayRowCheckbox={false}>{serverList}</TableBody>
             </Table>
         );
     }
