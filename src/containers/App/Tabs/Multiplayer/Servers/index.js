@@ -6,15 +6,13 @@ import {
     TableHeader,
     TableHeaderColumn,
     TableRow,
-    TableRowColumn,
 } from 'material-ui/Table';
 
 import DBFGL from '@/Global';
 
 // import Server from './Server'; //TODO:
-import ServerClass from '@/classes/Server';
-import ServerComponent from './Server';
-import { pingServers, fetchServerStatus } from '@/utils/Servers';
+import ServerComponent, { widths } from './Server';
+import { pingServers } from '@/utils/Servers';
 
 /* const servers = [
     new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),
@@ -53,12 +51,11 @@ export default class ServerList extends Component {
                 adjustForCheckbox={false}>
                 <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                     <TableRow>
-                        <TableHeaderColumn>Состояние</TableHeaderColumn>
-                        <TableHeaderColumn>Флаг</TableHeaderColumn>
-                        <TableHeaderColumn>Название</TableHeaderColumn>
-                        <TableHeaderColumn>IP</TableHeaderColumn>
-                        <TableHeaderColumn>Вады</TableHeaderColumn>
-                        <TableHeaderColumn>Режим</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.players }}>Игроки</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.name }}>Название</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.ip }}>IP</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.wads }}>Вады</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.mode }}>Режим</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false}>
