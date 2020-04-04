@@ -51,13 +51,10 @@ export default connect(
                         ));
                 }
 
-                Promise.all(promises)
-                    .then(() => {
-                        act(actions.multiplayer_serverlist_update, servers);
+                await Promise.all(promises);
+                act(actions.multiplayer_serverlist_update, servers);
 
-                        if (!silent) DBFGL.toast('Обновление серверов завершено!');
-                    })
-                    .catch(error => console.error('Promise.all error', error));
+                if (!silent) DBFGL.toast('Обновление серверов завершено!');
             } catch (error) {
                 if (error.message === 'Too fast requests') return DBFGL.toast('Необходимо подождать перед следующим обновлением!');
 
