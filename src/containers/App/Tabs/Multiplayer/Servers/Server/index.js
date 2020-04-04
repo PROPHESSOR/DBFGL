@@ -1,11 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { getServerInfo } from '@/utils/Servers';
 
-import {
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
+import { TableRow, TableRowColumn } from 'material-ui/Table';
 
 /**
  * Так как шапка и тело таблицы - разные компоненты,
@@ -23,25 +19,6 @@ export default class ServerComponent extends PureComponent {
     static propTypes = {
         updateServerInfo: PropTypes.func.isRequired,
         server:           PropTypes.object.isRequired,
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            serverStatus: null,
-        };
-    }
-
-    async componentDidMount() {
-        const { updateServerInfo, server: { ip, port }} = this.props;
-
-        try {
-            const info = await getServerInfo(this.props.server.ip, this.props.server.port);
-
-            updateServerInfo(`${ip}:${port}`, info);
-        } catch (error) {
-            console.error(`Возникла ошибка при получении списка серверов: `, error);
-        }
     }
 
     render() {

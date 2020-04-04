@@ -6,7 +6,7 @@ import Toolbar from './Toolbar';
 import Servers from './Servers';
 import { connect } from 'react-redux';
 import { createBindStateToProps, createBindActToProps, storeProps } from '@/store';
-import { getServers } from '@/utils/Servers';
+import { getServers, getServerInfo } from '@/utils/Servers';
 
 export default connect(
     createBindStateToProps('multiplayer.serverlist'),
@@ -38,12 +38,26 @@ export default connect(
             try {
                 const servers = await getServers();
 
-                act(actions.multiplayer_serverlist_update, servers.map(server => ({
-                    ip:   server[0].join('.'),
-                    port: server[1],
-                })));
+                const promises = [];
 
-                if (!silent) DBFGL.toast('Обновление серверов завершено!');
+                for (const sid in servers) {
+                    const server = servers[sid];
+
+                    console.log('server', server);
+
+                    promises.push(getServerInfo(server.ip, server.port)
+                        .then(info => Object.assign(servers[sid], info))
+                        .catch(error => console.error('getServerInfo error', sid, server, error)
+                        ));
+                }
+
+                Promise.all(promises)
+                    .then(() => {
+                        act(actions.multiplayer_serverlist_update, servers);
+
+                        if (!silent) DBFGL.toast('Обновление серверов завершено!');
+                    })
+                    .catch(error => console.error('Promise.all error', error));
             } catch (error) {
                 if (error.message === 'Too fast requests') return DBFGL.toast('Необходимо подождать перед следующим обновлением!');
 
