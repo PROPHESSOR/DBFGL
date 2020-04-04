@@ -43,7 +43,7 @@ export const responses = {
 const MSC = responses;
 
 /**
- * @returns {Array<{ip: string, port: number}>}
+ * @returns {Promise<{ip: string, port: number}[]>}
  */
 export function getServers() {
     return new Promise((res, rej) => {
@@ -86,7 +86,7 @@ export function getServers() {
                         for (let i = 0; i < size; i++) {
                             const port = msg.readUInt16LE(offset);
 
-                            serverList.push([ip.join('.'), port]);
+                            serverList.push({ ip: ip.join('.'), port });
                             offset += 2;
                         }
                     } while (msg.readUInt8(offset) !== 0);
