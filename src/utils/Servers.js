@@ -42,6 +42,9 @@ export const responses = {
 
 const MSC = responses;
 
+/**
+ * @returns {Array<{ip: string, port: number}>}
+ */
 export function getServers() {
     return new Promise((res, rej) => {
         let done = false; // Used to check timeout
@@ -83,7 +86,7 @@ export function getServers() {
                         for (let i = 0; i < size; i++) {
                             const port = msg.readUInt16LE(offset);
 
-                            serverList.push([ip, port]);
+                            serverList.push([ip.join('.'), port]);
                             offset += 2;
                         }
                     } while (msg.readUInt8(offset) !== 0);
@@ -187,6 +190,18 @@ export const gameTypes = [
     'CTF', 'One Flag CTF', 'Skulltag', 'Domination',
 ];
 
+/**
+ *
+ * @param {string} host
+ * @param {number} port
+ * @returns {Promise<{
+    name: string,
+    numPlayers: number,
+    pwads: Array<string>,
+    gameMode: {type: string, mode: number, instagib: boolean, buckshot: boolean},
+    iwad: string,
+    version: string}}
+ */
 export function getServerInfo(host, port) {
     // console.log(`fetchServerStatus ${host}:${port}`);
 
