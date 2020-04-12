@@ -19,15 +19,17 @@ export default class ServerComponent extends PureComponent {
     static propTypes = {
         updateServerInfo: PropTypes.func.isRequired,
         server:           PropTypes.object.isRequired,
+        hovered:          PropTypes.bool.isRequired,
+        onClick:          PropTypes.func.isRequired,
     }
 
     render() {
-        const { server } = this.props;
+        const { server, hovered, onClick } = this.props;
         const { ip, port } = server;
         const serverStatus = typeof server.name === 'string';
 
         return (
-            <TableRow>
+            <TableRow hovered={hovered} style={{ cursor: 'pointer' }} onRowClick={onClick}>
                 <TableRowColumn style={{ width: widths.players }}>{serverStatus && server.numPlayers}</TableRowColumn>
                 <TableRowColumn style={{ width: widths.name }}>{serverStatus ? server.name : 'Loading...'}</TableRowColumn>
                 <TableRowColumn style={{ width: widths.ip }}>{`${ip}:${port}`}</TableRowColumn>

@@ -9,13 +9,14 @@ import { createBindStateToProps, createBindActToProps, storeProps } from '@/stor
 import { getServers, getServerInfo } from '@/utils/Servers';
 
 export default connect(
-    createBindStateToProps('multiplayer.serverlist'),
+    createBindStateToProps('multiplayer.serverlist', 'multiplayer.selected'),
     createBindActToProps()
 )(
     class Multiplayer extends PureComponent {
         static propTypes = {
             ...storeProps,
             serverlist: type.array.isRequired,
+            selected:   type.number.isRequired,
         }
 
         constructor() {
@@ -72,8 +73,14 @@ export default connect(
             act(actions.multiplayer_serverlist_server_update, { index, diff });
         }
 
+        onServerClick = index => {
+            const { act, actions } = this.props;
+
+            act(actions.multiplayer_serverlist_select, index);
+        }
+
         render() {
-            const { serverlist } = this.props;
+            const { serverlist, selected } = this.props;
 
             return (
                 <div
@@ -81,7 +88,7 @@ export default connect(
                         height: 'calc(100vh - 110px)',
                     }}>
                     <Toolbar />
-                    <Servers servers={serverlist} updateServerInfo={this.updateServerInfo} />
+                    <Servers servers={serverlist} selected={selected} updateServerInfo={this.updateServerInfo} onServerClick={this.onServerClick} />
                 </div>
             );
         }

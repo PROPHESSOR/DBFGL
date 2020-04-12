@@ -14,17 +14,18 @@ import ServerComponent, { widths } from './Server';
 export default class ServerList extends PureComponent {
     static propTypes = {
         servers:          type.array.isRequired,
+        selected:         type.number.isRequired,
         updateServerInfo: type.func.isRequired,
+        onServerClick:    type.func.isRequired,
     }
 
     render() {
-        const serverList = this.props.servers.map(server =>
-            <ServerComponent server={server} key={`${server.ip}:${server.port}`} updateServerInfo={this.props.updateServerInfo} />
+        const serverList = this.props.servers.map((server, index) =>
+            <ServerComponent hovered={index === this.props.selected} server={server} key={`${server.ip}:${server.port}`} updateServerInfo={this.props.updateServerInfo} onClick={() => this.props.onServerClick(index)} />
         );
 
         return (
-            <Table
-                adjustForCheckbox={false}>
+            <Table adjustForCheckbox={false}>
                 <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                     <TableRow>
                         <TableHeaderColumn style={{ width: widths.players }}>Игроки</TableHeaderColumn>
