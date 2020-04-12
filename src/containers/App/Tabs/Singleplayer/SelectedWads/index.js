@@ -62,7 +62,7 @@ export default connect(
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
-                    <Wad wad={wad} onClick={this.remove} />
+                    <Wad wad={wad} cursor='move' onClick={this.remove} />
                 </div>)}
             </Draggable>));
 
