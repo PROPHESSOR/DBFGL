@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 
 import { List } from 'material-ui/List';
@@ -14,7 +14,7 @@ export default connect(
     createBindStateToProps('singleplayer.wadlist', 'singleplayer.selected'),
     createBindActToProps()
 )(
-    class WadList extends Component {
+    class WadList extends PureComponent {
         static propTypes = {
             ...storeProps,
             wadlist:  type.array.isRequired,

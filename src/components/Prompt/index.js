@@ -5,7 +5,7 @@ import { TextField } from 'material-ui';
 
 import DBFGL from '@/Global';
 
-export default class Prompt extends React.Component {
+export default class Prompt extends React.PureComponent {
     constructor() {
         super();
         this.state = {

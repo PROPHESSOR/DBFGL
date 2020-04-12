@@ -145,6 +145,17 @@ class GlobalClass extends EventEmitter {
     }
 
     /**
+     * Usage: DBFGL.toast(message) && something?;
+     * @param {string} message - Сообщение
+     * @returns {true} Чтобы можно было &&'шить
+     */
+    toast(message) {
+        this.emit('notification.toast', message);
+
+        return true;
+    }
+
+    /**
      *
      * @param {string|null} text - Null to hide preloader
      */

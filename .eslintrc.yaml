@@ -60,7 +60,7 @@ rules:
   default-case: 1
   dot-notation: 1
   eqeqeq: 1
-  guard-for-in: 1
+  guard-for-in: 0
   no-alert: 0
   no-caller: 1
   no-case-declarations: 1

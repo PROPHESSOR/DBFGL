@@ -7,7 +7,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
 import DBFGL from '@/Global';
 
@@ -47,7 +47,7 @@ DBFGL.on('game.start', () => {
     DBFGL.emit('window.minimize');
 });
 
-export default class App extends Component {
+export default class App extends PureComponent {
     render() {
         return (
             <Provider store={store}>

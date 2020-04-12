@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import type from 'prop-types';
 
 import {
     Table,
@@ -6,81 +7,35 @@ import {
     TableHeader,
     TableHeaderColumn,
     TableRow,
-    TableRowColumn,
 } from 'material-ui/Table';
 
-import DBFGL from '@/Global';
+import ServerComponent, { widths } from './Server';
 
-// import Server from './Server'; //TODO:
-import ServerClass from '@/classes/Server';
-import pingServers from '@/utils/Servers';
-
-/* const servers = [
-    new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server', ip: [127, 0, 0, 1], mode: 'Invasion' }),
-    new ServerClass({ ping: 128, players: ['PROPHESSOR'], name: 'Test server 2', ip: [127, 0, 0, 2], mode: 'Cooperative' })
-]; */
-
-export default class ServerList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            servers: [],
-        };
-
-        DBFGL.on('tab.change', tab => {
-            if (tab === 'multiplayer') {
-                console.info('Обновляю сервера...');
-                pingServers()
-                    .then(servers => {
-                        const serverList = servers.map(server => new ServerClass({
-                            ping:    128,
-                            name:    'Unknown',
-                            players: ['PROPHESSOR'],
-                            ip:      `${server[0].join('.')}:${server[1]}`,
-                        }));
-
-                        this.setState({
-                            servers: serverList,
-                        }, () => console.info('Обновление серверов завершено!'));
-                    })
-                    .catch(error => {
-                        console.error(`Возникла ошибка при получении списка серверов: `, error);
-                    });
-            }
-        });
+export default class ServerList extends PureComponent {
+    static propTypes = {
+        servers:          type.array.isRequired,
+        selected:         type.number, // isRequiredOrNull
+        updateServerInfo: type.func.isRequired,
+        onServerClick:    type.func.isRequired,
     }
 
     render() {
-        const a = this.state.servers.map((e, i) =>
-            (
-                <TableRow key={i}>
-                    <TableRowColumn>{e.ping}|{e.players.length}</TableRowColumn>
-                    <TableRowColumn>{e.country}</TableRowColumn>
-                    <TableRowColumn>{e.name}</TableRowColumn>
-                    <TableRowColumn>{e.ip}</TableRowColumn>
-                    <TableRowColumn>{e.wads}</TableRowColumn>
-                    <TableRowColumn>{e.mode}</TableRowColumn>
-                </TableRow>
-            )
+        const serverList = this.props.servers.map((server, index) =>
+            <ServerComponent hovered={index === this.props.selected} server={server} key={`${server.ip}:${server.port}`} updateServerInfo={this.props.updateServerInfo} onClick={() => server.version && this.props.onServerClick(index)} />
         );
 
-
         return (
-            <Table
-                adjustForCheckbox={false}>
+            <Table adjustForCheckbox={false}>
                 <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                     <TableRow>
-                        <TableHeaderColumn>Состояние</TableHeaderColumn>
-                        <TableHeaderColumn>Флаг</TableHeaderColumn>
-                        <TableHeaderColumn>Название</TableHeaderColumn>
-                        <TableHeaderColumn>IP</TableHeaderColumn>
-                        <TableHeaderColumn>Вады</TableHeaderColumn>
-                        <TableHeaderColumn>Режим</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.players }}>Игроки</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.name }}>Название</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.ip }}>IP</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.wads }}>Вады</TableHeaderColumn>
+                        <TableHeaderColumn style={{ width: widths.mode }}>Режим</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody displayRowCheckbox={false}>
-                    {a}
-                </TableBody>
+                <TableBody displayRowCheckbox={false}>{serverList}</TableBody>
             </Table>
         );
     }

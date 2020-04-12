@@ -49,7 +49,7 @@ function getErrorTracebackToCopy(error, info) {
     return lines.join('\n');
 }
 
-export default class ErrorHandler extends React.Component {
+export default class ErrorHandler extends React.PureComponent {
     static propTypes = {
         children: types.element.isRequired,
     }

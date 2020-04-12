@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 
 import DBFGL from '@/Global';
 
-export default class Preloader extends React.Component {
+export default class Preloader extends React.PureComponent {
     constructor() {
         super();
         this.state = {

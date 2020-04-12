@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 
@@ -9,7 +9,7 @@ import DBFGL from '@/Global';
 import Singleplayer from './Singleplayer';
 import Multiplayer from './Multiplayer';
 
-export default class DBFGLTabs extends Component {
+export default class DBFGLTabs extends PureComponent {
     static propTypes = {
         toggleTab: type.func,
     }

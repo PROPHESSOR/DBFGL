@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import WadList from '../WadList';
 import SelectedWads from '../SelectedWads';
 
-export default class TabWads extends React.Component {
+export default class TabWads extends React.PureComponent {
     render() {
         return (<Fragment>
             <WadList

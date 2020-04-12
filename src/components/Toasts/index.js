@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 
 import DBFGL from '@/Global';
 
 import Toast from './Toast';
 
-export default class Toasts extends Component {
+export default class Toasts extends PureComponent {
     constructor() {
         super();
         this.state = {

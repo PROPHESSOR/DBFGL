@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type from 'prop-types';
-import DBFGL from '@/Global';
 
 import { List } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -26,7 +25,7 @@ export default connect(
     createBindStateToProps('singleplayer.selected'),
     createBindActToProps(),
 )(
-    class SelectedWads extends Component {
+    class SelectedWads extends PureComponent {
         static propTypes = {
             ...storeProps,
             selected: type.array.isRequired,
@@ -37,10 +36,10 @@ export default connect(
          * @param {DoomFile} wad
          */
         remove = wad => {
-            const { act, actions } = this.props;
+            const { act, actions, selected } = this.props;
 
             act(actions.singleplayer_wadlist_selected_update,
-                this.selected.filter(selwad => selwad !== wad));
+                selected.filter(selwad => selwad !== wad));
         }
 
         onDragEnd = result => {
@@ -63,7 +62,7 @@ export default connect(
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}>
-                    <Wad wad={wad} onClick={this.remove} />
+                    <Wad wad={wad} cursor='move' onClick={this.remove} />
                 </div>)}
             </Draggable>));
 

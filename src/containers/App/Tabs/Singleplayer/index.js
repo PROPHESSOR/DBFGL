@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import types from 'prop-types';
 
 import DBFGL from '@/Global';
@@ -16,7 +16,7 @@ export default connect(
         'singleplayer.iwad', 'singleplayer.collections'),
     createBindActToProps(),
 )(
-    class Singleplayer extends Component {
+    class Singleplayer extends PureComponent {
         static propTypes = {
             ...storeProps,
             iwads:       types.array.isRequired,

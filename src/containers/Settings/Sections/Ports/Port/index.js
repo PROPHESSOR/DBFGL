@@ -4,7 +4,7 @@ import Section from '@/containers/Settings/Section';
 import { TextField, Toggle, DropDownMenu, MenuItem } from 'material-ui';
 
 
-class SPort extends React.Component {
+class SPort extends React.PureComponent {
     static propTypes = {
         port:     types.object.isRequired,
         onChange: types.func.isRequired, // (diff): void

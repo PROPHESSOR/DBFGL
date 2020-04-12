@@ -2,6 +2,7 @@ import { createStore, combineReducers } from 'redux';
 import propType from 'prop-types';
 
 import * as Singleplayer from './singleplayer';
+import * as Multiplayer from './multiplayer';
 import * as Interface from './interface';
 
 /**
@@ -10,11 +11,13 @@ import * as Interface from './interface';
 
 export const actions = {
     ...Singleplayer.actions,
+    ...Multiplayer.actions,
     ...Interface.actions,
 };
 
 export const reducers = combineReducers({
     singleplayer: Singleplayer.reducer,
+    multiplayer:  Multiplayer.reducer,
     interface:    Interface.reducer,
 });
 
@@ -85,6 +88,6 @@ export const storeProps = {
     dispatch: propType.func.isRequired,
 };
 
-const store = createStore(reducers);
+const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default store;
