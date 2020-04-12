@@ -36,10 +36,10 @@ export default connect(
          * @param {DoomFile} wad
          */
         remove = wad => {
-            const { act, actions } = this.props;
+            const { act, actions, selected } = this.props;
 
             act(actions.singleplayer_wadlist_selected_update,
-                this.selected.filter(selwad => selwad !== wad));
+                selected.filter(selwad => selwad !== wad));
         }
 
         onDragEnd = result => {
