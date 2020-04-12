@@ -148,7 +148,7 @@ export default class Huffman {
         // If huffman-encoding wouldn't save any space, simply return the original
         // buffer with an 0xff signal in front to show the buffer is not compressed.
         if (sbs.length >= data.length) {
-            const encoded = new Buffer(data.length + 1);
+            const encoded = Buffer.alloc(data.length + 1);
 
             encoded.writeUInt8(0xff, 0);
             data.copy(encoded, 1);
@@ -163,7 +163,7 @@ export default class Huffman {
 
 
         // Write out encoded buffer with padding bit count in front
-        const encoded = new Buffer(ords.length + 1);
+        const encoded = Buffer.alloc(ords.length + 1);
 
         encoded.writeUInt8(8 - sbs[sbs.length - 1].length, 0);
         for (let i = 0; i < ords.length; i++) encoded.writeUInt8(ords[i], i + 1);
