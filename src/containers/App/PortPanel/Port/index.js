@@ -46,12 +46,16 @@ export default connect(
              */
             const argformat = PortClass.argFormat(port.argformat);
 
-            if (!iwad) throw new Error('No IWAD selected!');
+            if (DBFGL.tab === 'singleplayer') {
+                if (!iwad) throw new Error('No IWAD selected!');
 
 
-            args.push(argformat.iwad, iwad.path);
+                args.push(argformat.iwad, iwad.path);
 
-            for (const wad of selected) args.push(argformat.wads, wad.path);
+                for (const wad of selected) args.push(argformat.wads, wad.path);
+            } else { // multiplayer
+                return DBFGL.alert({ title: 'Не реализовано!', text: 'Подключение к серверу не реализовано! Ждите в следующем обновлении ;)' });
+            }
 
 
             console.log(`Запускаю ${port.name}...`, args);
