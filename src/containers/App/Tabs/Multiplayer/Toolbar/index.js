@@ -18,14 +18,14 @@ export default class ToolbarMultiplayer extends React.PureComponent {
         return (
             <Toolbar>
                 <ToolbarGroup firstChild >
-                    <DropDownMenu value={this.state.value} onChange={this.handleChange}>
+                    <DropDownMenu value={1}>
                         <MenuItem primaryText='Все сервера' value={1} />
-                        <MenuItem primaryText='Cooperative' value={2} />
+                        {/* <MenuItem primaryText='Cooperative' value={2} />
                         <MenuItem primaryText='Survival' value={3} />
                         <MenuItem primaryText='Deathmatch' value={4} />
                         <MenuItem primaryText='Duel' value={5} />
                         <MenuItem primaryText='Invasion' value={6} />
-                        <MenuItem primaryText='CTF' value={7} />
+                        <MenuItem primaryText='CTF' value={7} /> */}
                     </DropDownMenu>
                 </ToolbarGroup>
                 <ToolbarGroup>
@@ -33,8 +33,8 @@ export default class ToolbarMultiplayer extends React.PureComponent {
                     {/* <ToolbarSeparator /> */}
                     <RaisedButton primary label='Создать сервер' />
                     <ToolbarTitle text='Отображение: ' />
-                    <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-                        <MenuItem primaryText='все' value={1} />
+                    <DropDownMenu value={2}>
+                        {/* <MenuItem primaryText='все' value={1} /> */}
                         <MenuItem primaryText='кратко' value={2} />
                     </DropDownMenu>
                 </ToolbarGroup>
