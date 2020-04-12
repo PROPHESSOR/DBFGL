@@ -10,8 +10,8 @@ import { createBindStateToProps } from '@/store';
 
 export default connect(createBindStateToProps('multiplayer.selected'))(
     class StartButton extends PureComponent {
-        propTypes = {
-            selected: types.number.isRequired,
+        static propTypes = {
+            selected: types.number, // isRequiredOrNull
         }
 
         onClick = () => {

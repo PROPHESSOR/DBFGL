@@ -26,7 +26,7 @@ export default class ServerComponent extends PureComponent {
     render() {
         const { server, hovered, onClick } = this.props;
         const { ip, port } = server;
-        const serverStatus = typeof server.name === 'string';
+        const serverStatus = typeof server.name === 'string' || null;
 
         return (
             <TableRow hovered={hovered} style={{ cursor: 'pointer' }} onRowClick={onClick}>

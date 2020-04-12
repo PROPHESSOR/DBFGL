@@ -14,7 +14,7 @@ import ServerComponent, { widths } from './Server';
 export default class ServerList extends PureComponent {
     static propTypes = {
         servers:          type.array.isRequired,
-        selected:         type.number.isRequired,
+        selected:         type.number, // isRequiredOrNull
         updateServerInfo: type.func.isRequired,
         onServerClick:    type.func.isRequired,
     }

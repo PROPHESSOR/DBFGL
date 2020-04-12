@@ -16,7 +16,7 @@ export default connect(
         static propTypes = {
             ...storeProps,
             serverlist: type.array.isRequired,
-            selected:   type.number.isRequired,
+            selected:   type.number, // isRequiredOrNull
         }
 
         constructor() {
