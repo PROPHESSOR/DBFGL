@@ -21,7 +21,7 @@ export default class ServerList extends PureComponent {
 
     render() {
         const serverList = this.props.servers.map((server, index) =>
-            <ServerComponent hovered={index === this.props.selected} server={server} key={`${server.ip}:${server.port}`} updateServerInfo={this.props.updateServerInfo} onClick={() => this.props.onServerClick(index)} />
+            <ServerComponent hovered={index === this.props.selected} server={server} key={`${server.ip}:${server.port}`} updateServerInfo={this.props.updateServerInfo} onClick={() => server.version && this.props.onServerClick(index)} />
         );
 
         return (

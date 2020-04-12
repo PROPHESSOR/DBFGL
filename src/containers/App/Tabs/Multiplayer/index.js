@@ -39,6 +39,8 @@ export default connect(
             try {
                 const servers = await getServers();
 
+                act(actions.multiplayer_serverlist_update, servers);
+
                 const promises = [];
 
                 const availableServers = [];
