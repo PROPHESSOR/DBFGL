@@ -40,19 +40,21 @@ export default connect(
 
                 const promises = [];
 
+                const availableServers = [];
+
                 for (const sid in servers) {
                     const server = servers[sid];
 
                     console.log('server', server);
 
                     promises.push(getServerInfo(server.ip, server.port)
-                        .then(info => Object.assign(servers[sid], info))
+                        .then(info => availableServers.push({ ...servers[sid], ...info }))
                         .catch(error => console.error('getServerInfo error', sid, server, error)
                         ));
                 }
 
                 await Promise.all(promises);
-                act(actions.multiplayer_serverlist_update, servers);
+                act(actions.multiplayer_serverlist_update, availableServers);
 
                 if (!silent) DBFGL.toast('Обновление серверов завершено!');
             } catch (error) {
