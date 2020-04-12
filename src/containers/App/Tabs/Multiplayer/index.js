@@ -50,7 +50,7 @@ export default connect(
 
                     promises.push(getServerInfo(server.ip, server.port)
                         .then(info => availableServers.push({ ...servers[sid], ...info }))
-                        .catch(error => console.error('getServerInfo error', sid, server, error)
+                        .catch(error => console.info('Не могу получить информацию о сервере ', sid, server, error)
                         ));
                 }
 
