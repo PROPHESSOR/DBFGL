@@ -59,7 +59,7 @@ export function reducer(state = store, action) {
         case actions.multiplayer_serverlist_update:
             if (!(payload instanceof Array)) throw new Error('You must specify an array to update serverlist');
 
-            return { ...state, serverlist: sortServerlist(payload) };
+            return { ...state, serverlist: sortServerlist(payload), selected: null };
 
         case actions.multiplayer_serverlist_add:
             if (!payload || payload instanceof Array) throw new Error('You must specify a server to add');
