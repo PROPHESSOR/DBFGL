@@ -46,8 +46,6 @@ export default connect(
                 for (const sid in servers) {
                     const server = servers[sid];
 
-                    console.log('server', server);
-
                     promises.push(getServerInfo(server.ip, server.port)
                         .then(info => availableServers.push({ ...servers[sid], ...info }))
                         .catch(error => console.error('getServerInfo error', sid, server, error)
