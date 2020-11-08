@@ -1,14 +1,18 @@
-{
+/* eslint-disable quotes, comma-dangle, key-spacing, semi, no-undef */
+
+const waddir = process.env.DOOMWADDIR || "{appdata}/wads";
+
+export default {
     "wads": {
         "folders": [
-            "{appdata}/wads"
+            waddir
         ],
         "finder": {
             "urls": [
                 "http://static.allfearthesentinel.net/wads/",
                 "http://doomshack.org/wads/"
             ],
-            "folder": "{appdata}/wads"
+            "folder": waddir
         },
         "aliases": {
             "doom.wad": [

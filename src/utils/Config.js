@@ -1,8 +1,5 @@
-import defaultConfig from '../declarations/defaultconfig.json';
+import defaultConfig from '../declarations/defaultconfig.js';
 import DBFGL from '@/Global';
-import { getIWads } from './getWadsFromFs.js';
-import DoomFile from '@/classes/DoomFile.js';
-import store, { createAction } from '@/store/index.js';
 
 const nconf = require('nconf');
 const path = require('path');
