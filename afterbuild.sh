@@ -5,6 +5,7 @@
 
 cp app.js build/
 cp package-app.json build/package.json
+cp src/theme/assets/icon.ico build/
 
 # Патч для совместимости с wadcover'ами TODO: Решить на уровне приложения
 mkdir build/public

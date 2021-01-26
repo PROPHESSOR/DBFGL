@@ -30,6 +30,7 @@ win:
         - ia32
 linux:
   category: Games
+  icon: "build/icon.png"
   target:
     - deb
     - AppImage
